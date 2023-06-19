@@ -83,6 +83,7 @@ local mappings = {
   ["q"] = { "<cmd>qal!<CR>", "Quit" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
+  ['p'] = { "<cmd>Telescope neoclip<CR>", "Paste History" },
 
   f = {
     name = "Telescope",
@@ -116,7 +117,6 @@ local mappings = {
   --   S = { "<cmd>PackerStatus<cr>", "Status" },
   --   u = { "<cmd>PackerUpdate<cr>", "Update" },
   -- },
-
 
   r  = {
     name = "SearchReplaceSingleBuffer",
