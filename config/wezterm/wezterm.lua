@@ -9,7 +9,7 @@ return {
   --
   -- Dracula
   -- https://draculatheme.com
-  color_scheme = "Zenburn",
+  color_scheme = "Catppuccin Mocha",
 
 
   -- window_background_opacity = 0.90,

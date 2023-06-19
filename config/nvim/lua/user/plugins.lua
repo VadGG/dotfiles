@@ -84,7 +84,6 @@ return packer.startup(function(use)
   use { "gennaro-tedesco/nvim-peekup" }
   
 	-- Colorschemes
-  use { "sainnhe/everforest" }
   use { "rmehri01/onenord.nvim" }
 
 	-- Cmp 
