@@ -83,7 +83,6 @@ local mappings = {
   ["q"] = { "<cmd>qal!<CR>", "Quit" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
-  ["o"] = { "<cmd>lua require('lf').start()<CR>", "File Browser" },
 
   f = {
     name = "Telescope",
@@ -91,7 +90,6 @@ local mappings = {
     g = { "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>", "Grep Files" },
     b = { "<cmd>lua require'telescope.builtin'.buffers({ ignore_current_buffer = true, sort_mru = true})<cr>", "Buffers" },
     p = { "<cmd>Telescope neoclip theme=dropdown<cr>", "Clipboard" },
-    o = { "<cmd>lua require'telescope'.extensions.projects.projects()<cr>", "Open Project" },
     
     B = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     H = { "<cmd>Telescope help_tags<cr>", "Find Help" },
@@ -102,14 +100,22 @@ local mappings = {
     C = { "<cmd>Telescope commands<cr>", "Commands" },
 
   },
-  p = {
-    name = "Packer",
-    c = { "<cmd>PackerCompile<cr>", "Compile" },
-    i = { "<cmd>PackerInstall<cr>", "Install" },
-    s = { "<cmd>PackerSync<cr>", "Sync" },
-    S = { "<cmd>PackerStatus<cr>", "Status" },
-    u = { "<cmd>PackerUpdate<cr>", "Update" },
+
+  o = {
+    name = "Browse/Edit Files",
+    p = { "<cmd>lua require'telescope'.extensions.projects.projects()<cr>", "Open Project" },
+    e = { "<cmd>lua require'oil'.open()<cr>", "Edit Files" },
+    d = { "<cmd>lua require('lf').start()<CR>", "File Browser" },
   },
+  --
+  -- p = {
+  --   name = "Packer",
+  --   c = { "<cmd>PackerCompile<cr>", "Compile" },
+  --   i = { "<cmd>PackerInstall<cr>", "Install" },
+  --   s = { "<cmd>PackerSync<cr>", "Sync" },
+  --   S = { "<cmd>PackerStatus<cr>", "Status" },
+  --   u = { "<cmd>PackerUpdate<cr>", "Update" },
+  -- },
 
 
   r  = {
