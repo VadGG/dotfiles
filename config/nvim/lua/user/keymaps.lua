@@ -52,7 +52,8 @@ keymap("n", "<C-Left>", ":vertical resize +10<cr>", opts)
 -- -- Navigate buffer
 keymap("n", "<S-l>", ":bnext<cr>", opts)
 keymap("n", "<S-h>", ":bprevious<cr>", opts)
-keymap("n", "<C-q>", "<cmd>lua MiniBufremove.delete()<cr>", opts)
+keymap("n", "<C-x>", "<cmd>lua MiniBufremove.delete()<cr>", opts)
+keymap("v", "<C-g>", "<cmd>lua require('telescope-live-grep-args.shortcuts').grep_visual_selection()<cr>", opts)
 --
 -- -- Move text up and down
 -- keymap("n", "<A-j>", "<Esc>:m .+1<cr>==gi", opts)
@@ -81,7 +82,7 @@ keymap("v", ">", ">gv", opts)
 -- keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 --
 -- -- Nvim Tree --
-keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+-- keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
 -- Terminal --
 -- Better terminal navigation
@@ -108,6 +109,7 @@ function _SET_CLIPBOARD(clip_value)
 end
 
 keymap("n", "`", "<cmd>lua _SET_CLIPBOARD('unnamedplus')<cr>", opts)
+keymap("v", "`", "<cmd>lua _SET_CLIPBOARD('unnamedplus')<cr>", opts)
 
 vim.cmd([[
           function! QuickfixMapping()

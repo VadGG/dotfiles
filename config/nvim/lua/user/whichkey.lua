@@ -80,15 +80,27 @@ local opts = {
 
 local mappings = {
   ["w"] = { "<cmd>w!<CR>", "Save" },
-  ["q"] = { "<cmd>qal!<CR>", "Quit" },
-  ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
   ['p'] = { "<cmd>Telescope neoclip<CR>", "Paste History" },
+
+  x = {
+    name = "Close",
+    ["s"] = { "<cmd>wqal!<CR>", "Save and Quit All" },
+    ["x"] = { "<cmd>qal!<CR>", "Quit All" },
+    ["b"] = { "<cmd>lua MiniBufremove.delete()<cr>", "Close Buffer" },
+    ["B"] = { "<cmd>%bd|e#|bd#<CR>", "Close Buffer" },
+  },
+
+  q = {
+    name = "QuickFix",
+    q = { "<cmd>lua ToggleQuickfixList()<CR>" }
+  },
 
   f = {
     name = "Telescope",
     f = { "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer = false}))<cr>", "Find files" },
     g = { "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>", "Grep Files" },
+    G = { "<cmd>lua  require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>", "Grep Files" },
     b = { "<cmd>lua require'telescope.builtin'.buffers({ ignore_current_buffer = true, sort_mru = true})<cr>", "Buffers" },
     p = { "<cmd>Telescope neoclip theme=dropdown<cr>", "Clipboard" },
     
@@ -105,8 +117,9 @@ local mappings = {
   o = {
     name = "Browse/Edit Files",
     p = { "<cmd>lua require'telescope'.extensions.projects.projects()<cr>", "Open Project" },
-    e = { "<cmd>lua require'oil'.open()<cr>", "Edit Files" },
-    d = { "<cmd>lua require('lf').start()<CR>", "File Browser" },
+    w = { "<cmd>lua require'oil'.open()<cr>", "Edit Files" },
+    f = { "<cmd>lua require('lf').start()<CR>", "File Browser" },
+    e = { "<cmd>NvimTreeToggle<CR>", "File Browser" },
   },
   --
   -- p = {

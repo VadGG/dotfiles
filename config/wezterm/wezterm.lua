@@ -4,11 +4,14 @@ return {
   -- Smart tab bar [distraction-free mode]
   hide_tab_bar_if_only_one_tab = true,
 
-  -- Color scheme
-  -- https://wezfurlong.org/wezterm/config/appearance.html
-  --
-  -- Dracula
-  -- https://draculatheme.com
+  check_for_updates = false,
+  scrollback_lines = 9999,
+  hide_tab_bar_if_only_one_tab = true,
+  hyperlink_rules = {},
+  window_close_confirmation = "NeverPrompt",
+  adjust_window_size_when_changing_font_size = false,
+  warn_about_missing_glyphs = false,
+
   color_scheme = "Catppuccin Mocha",
 
 
@@ -21,8 +24,5 @@ return {
   font = wezterm.font('JetBrains Mono'),
   font_size = 12.0,
 
-  -- Disable ligatures
-  -- https://wezfurlong.org/wezterm/config/font-shaping.html
-  harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
 
 }
