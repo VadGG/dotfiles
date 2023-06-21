@@ -51,7 +51,6 @@ return packer.startup(function(use)
     "kyazdani42/nvim-tree.lua",
     requires = "kyazdani42/nvim-web-devicons",
   }
-  
   use { "akinsho/bufferline.nvim" }
   use { "nvim-lualine/lualine.nvim" }
   use { "akinsho/toggleterm.nvim" }
@@ -120,8 +119,11 @@ return packer.startup(function(use)
 	  }
 	}
   -- use { "nvim-telescope/telescope-project.nvim", requires = { "nvim-telescope/telescope.nvim" } }
+  -- Quick Fix
 	use { "stefandtw/quickfix-reflector.vim" }
 	use { "milkypostman/vim-togglelist" }
+  use {'kevinhwang91/nvim-bqf'} 
+
   use {
     "AckslD/nvim-neoclip.lua",
     requires = {

@@ -29,4 +29,5 @@ require  "user.harpoon"
 require  "user.whichkey"
 require  "user.gitsigns"
 require  "user.oil"
+require  "user.quickfix"
 --

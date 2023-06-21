@@ -110,29 +110,29 @@ end
 
 keymap("n", "`", "<cmd>lua _SET_CLIPBOARD('unnamedplus')<cr>", opts)
 keymap("v", "`", "<cmd>lua _SET_CLIPBOARD('unnamedplus')<cr>", opts)
-
-vim.cmd([[
-          function! QuickfixMapping()
-            " Go to the previous location and stay in the quickfix window
-            nnoremap <buffer> K :cprev<CR>zz<C-w>w
-          " Go to the next location and stay in the quickfix window
-            nnoremap <buffer> J :cnext<CR>zz<C-w>w
-
-            nnoremap <buffer> <Tab> <CR>zz<C-w>w
-            " Begin the search and replace
-            nnoremap <buffer> <leader>r :cdo s/// \| update<C-Left><C-Left><Left><Left><Left>
-          endfunction
-
-          augroup quickfix_group
-            autocmd!
-            
-            " Use custom keybindings
-            autocmd filetype qf call QuickfixMapping()
-            
-            " Add the errorformat to be able to update the quickfix list
-            autocmd filetype qf setlocal errorformat+=%f\|%l\ col\ %c\|%m
-          augroup END
-       ]])
+--
+-- vim.cmd([[
+--           function! QuickfixMapping()
+--             " Go to the previous location and stay in the quickfix window
+--             nnoremap <buffer> K :cprev<CR>zz<C-w>w
+--           " Go to the next location and stay in the quickfix window
+--             nnoremap <buffer> J :cnext<CR>zz<C-w>w
+--
+--             nnoremap <buffer> <Tab> <CR>zz<C-w>w
+--             " Begin the search and replace
+--             nnoremap <buffer> <leader>r :cdo s/// \| update<C-Left><C-Left><Left><Left><Left>
+--           endfunction
+--
+--           augroup quickfix_group
+--             autocmd!
+--
+--             " Use custom keybindings
+--             autocmd filetype qf call QuickfixMapping()
+--
+--             " Add the errorformat to be able to update the quickfix list
+--             autocmd filetype qf setlocal errorformat+=%f\|%l\ col\ %c\|%m
+--           augroup END
+--        ]])
 
 keymap("v", "<C-r>", "<cmd>SearchReplaceSingleBufferVisualSelection<cr>", opts)
 keymap("v", "<C-s>", "<cmd>SearchReplaceWithinVisualSelection<cr>", opts)
