@@ -63,9 +63,7 @@ return packer.startup(function(use)
     'echasnovski/mini.nvim',
     branch = 'stable'
   }
-  use {
-    'stevearc/oil.nvim'
-  }
+
   use {
     'ruifm/gitlinker.nvim',
     requires = 'nvim-lua/plenary.nvim',

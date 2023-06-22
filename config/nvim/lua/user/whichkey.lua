@@ -117,7 +117,6 @@ local mappings = {
   o = {
     name = "Browse/Edit Files",
     p = { "<cmd>lua require'telescope'.extensions.projects.projects()<cr>", "Open Project" },
-    w = { "<cmd>lua require'oil'.open()<cr>", "Edit Files" },
     f = { "<cmd>lua require('lf').start()<CR>", "File Browser" },
     e = { "<cmd>NvimTreeToggle<CR>", "File Browser" },
   },

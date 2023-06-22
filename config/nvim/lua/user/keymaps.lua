@@ -25,7 +25,9 @@ vim.g.maplocalleader = " "
 -- keymap("n", "<C-k>", "<C-w>k", opts)
 -- keymap("n", "<C-l>", "<C-w>l", opts)
 --
-keymap("n", "-", "$", opts)
+keymap("v", "L", "$", opts)
+keymap("v", "H", "^", opts)
+
 keymap("n", "<C-h>", "<cmd> TmuxNavigateLeft<cr>", opts)
 keymap("n", "<C-l>", "<cmd> TmuxNavigateRight<cr>", opts)
 keymap("n", "<C-j>", "<cmd> TmuxNavigateDown<cr>", opts)
@@ -60,7 +62,7 @@ keymap("v", "<C-g>", "<cmd>lua require('telescope-live-grep-args.shortcuts').gre
 -- keymap("n", "<A-k>", "<Esc>:m .-2<cr>==gi", opts)
 --
 -- -- Insert --
--- -- Press jk fast to exit insert mode 
+-- -- Press jk fast to exit insert mode
 -- keymap("i", "jk", "<ESC>", opts)
 -- keymap("i", "kj", "<ESC>", opts)
 --
