@@ -8,7 +8,6 @@ return {
     "ggandor/leap.nvim",
     enabled = false,
   },
-
   {
     "chrisgrieser/nvim-recorder",
     opts = {},

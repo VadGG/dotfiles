@@ -6,6 +6,32 @@ return {
     "ThePrimeagen/harpoon",
     "nvim-lua/plenary.nvim",
     "nvim-lua/popup.nvim",
+    {
+      "ahmedkhalf/project.nvim",
+      opts = {},
+      event = "VeryLazy",
+      config = function(_, opts)
+        require("project_nvim").setup(opts)
+        require("telescope").load_extension("projects")
+      end,
+      keys = {
+        { "<leader>fo", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+      },
+    },
+
+    {
+      "AckslD/nvim-neoclip.lua",
+      opts = {},
+      event = "VeryLazy",
+      config = function()
+        require("neoclip").setup()
+        local telescope = require("telescope")
+        telescope.load_extension("neoclip")
+      end,
+      keys = {
+        { "<leader>fp", "<cmd>Telescope neoclip theme=dropdown<cr>", desc = "Clipboard" },
+      },
+    },
   },
   cmd = "Telescope",
   version = false, -- telescope did only one release, so use HEAD for now
@@ -15,13 +41,13 @@ return {
     telescope.load_extension("fzf")
     telescope.load_extension("live_grep_args")
     -- telescope.load_extension("notify")
-    -- telescope.load_extension("harpoon")
+    telescope.load_extension("harpoon")
   end,
   keys = {
     {
-      "<leader>ff",
+      "<leader><space>",
       "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer = false}))<cr>",
-      desc = "Files",
+      desc = "Find Files (no preview)",
     },
     { "<leader>fg", "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>", desc = "Grep" },
     {
@@ -34,7 +60,6 @@ return {
       "<cmd>lua require'telescope.builtin'.buffers({ ignore_current_buffer = true, sort_mru = true})<cr>",
       desc = "Buffers",
     },
-    { "<leader>fp", "<cmd>Telescope neoclip theme=dropdown<cr>", desc = "Clipboard" },
     { "<leader>/", "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>", desc = "Grep" },
   },
   opts = function()
@@ -46,7 +71,7 @@ return {
         prompt_prefix = "  ",
         selection_caret = "  ",
         path_display = { "absolute" },
-        initial_mode = "normal",
+        initial_mode = "insert",
         layout_config = {
           vertical = {
             prompt_position = "top",
@@ -58,10 +83,9 @@ return {
       pickers = {
         find_files = {
           prompt_prefix = " ",
-          initial_mode = "insert",
+          find_command = { "rg", "--files", "--hidden" },
         },
         live_grep = {
-          initial_mode = "insert",
           layout_strategy = "vertical",
           sorting_strategy = "ascending",
         },
@@ -95,6 +119,15 @@ return {
           override_generic_sorter = true, -- override the generic sorter
           override_file_sorter = true, -- override the file sorter
           case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+        },
+        neoclip = {
+          initial_mode = "normal",
+          layout_strategy = "vertical",
+        },
+        projects = {
+          initial_mode = "normal",
+          layout_strategy = "vertical",
+          previewer = false,
         },
         live_grep_args = {
           initial_mode = "insert",

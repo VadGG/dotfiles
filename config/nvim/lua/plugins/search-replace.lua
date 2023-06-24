@@ -24,7 +24,7 @@ return {
       {
         "<leader>rs",
         "<CMD>SearchReplaceSingleBufferSelections<CR>",
-        desc = "SearchReplaceSingleBuffer [s]elction list",
+        desc = "[s]elction list",
       },
       { "<leader>ro", "<CMD>SearchReplaceSingleBufferOpen<CR>", desc = "[o]pen" },
       { "<leader>rw", "<CMD>SearchReplaceSingleBufferCWord<CR>", desc = "[w]ord" },
@@ -35,7 +35,7 @@ return {
       {
         "<leader>rbs",
         "<CMD>SearchReplaceMultiBufferSelections<CR>",
-        desc = "SearchReplaceMultiBuffer [s]elction list",
+        desc = "[s]elction list",
       },
       { "<leader>rbo", "<CMD>SearchReplaceMultiBufferOpen<CR>", desc = "[o]pen" },
       { "<leader>rbw", "<CMD>SearchReplaceMultiBufferCWord<CR>", desc = "[w]ord" },
@@ -52,6 +52,15 @@ return {
     -- stylua: ignore
     keys = {
       { "<leader>rr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
+    },
+  },
+  {
+    "folke/which-key.nvim",
+    optional = true,
+    opts = {
+      defaults = {
+        ["<leader>rb"] = { name = "+Replace Multi-buffer" },
+      },
     },
   },
 }
