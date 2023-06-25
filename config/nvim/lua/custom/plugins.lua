@@ -1,8 +1,24 @@
 local overrides = require "custom.configs.overrides"
+local is_lsp_enabled = false
 
 ---@type NvPluginSpec[]
 local plugins = {
 
+  -- override plugin configs
+  {
+    "williamboman/mason.nvim",
+    opts = overrides.mason,
+    enabled = is_lsp_enabled,
+  },
+
+  { "neovim/nvim-lspconfig", enabled = is_lsp_enabled },
+  { "hrsh7th/nvim-cmp", enabled = is_lsp_enabled },
+  { "L3MON4D3/LuaSnip", enabled = is_lsp_enabled },
+  { "saadparwaiz1/cmp_luasnip", enabled = is_lsp_enabled },
+  { "hrsh7th/cmp-nvim-lua", enabled = is_lsp_enabled },
+  { "hrsh7th/cmp-nvim-lsp", enabled = is_lsp_enabled },
+  { "hrsh7th/cmp-buffer", enabled = is_lsp_enabled },
+  { "hrsh7th/cmp-path", enabled = is_lsp_enabled },
   -- Override plugin definition options
 
   {
@@ -26,12 +42,6 @@ local plugins = {
     "christoomey/vim-tmux-navigator",
     lazy = false,
   },
-  -- override plugin configs
-  {
-    "williamboman/mason.nvim",
-    opts = overrides.mason,
-  },
-
   {
     "nvim-treesitter/nvim-treesitter",
     opts = overrides.treesitter,
@@ -135,7 +145,7 @@ local plugins = {
 
   {
     "kevinhwang91/nvim-bqf",
-    lazy=false,
+    lazy = false,
     init = function()
       vim.cmd [[
             hi BqfPreviewBorder guifg=#3e8e2d ctermfg=71
@@ -266,7 +276,53 @@ local plugins = {
   --     },
   --   },
   -- },
-
+  -------------------------------------------------------------------------------- INDENTSCOPE
+  {
+    "echasnovski/mini.indentscope",
+    version = false, -- wait till new 0.7.0 release to put it back on semver
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      -- symbol = "▏",
+      symbol = "│",
+      options = { try_as_border = true },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+        },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
+    end,
+  },
+  ---------------------------------------------------------------- TODO
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = { "BufReadPost", "BufNewFile" },
+    config = true,
+    lazy = false,
+    -- stylua: ignore
+    keys = {
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+      { "<leader>tx", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+      { "<leader>tX", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+      { "<leader>ts", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      { "<leader>tS", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+    },
+  },
   ---------------------------------------------------------------- TELESCOPE
   {
     "ahmedkhalf/project.nvim",
