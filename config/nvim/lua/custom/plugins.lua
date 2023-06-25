@@ -1,4 +1,4 @@
-local overrides = require("custom.configs.overrides")
+local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -22,10 +22,14 @@ local plugins = {
     end, -- Override to setup mason-lspconfig
   },
 
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+  },
   -- override plugin configs
   {
     "williamboman/mason.nvim",
-    opts = overrides.mason
+    opts = overrides.mason,
   },
 
   {
@@ -46,6 +50,372 @@ local plugins = {
       require("better_escape").setup()
     end,
   },
+
+  ----------------------------------------------------------- FILE BROWSER
+  {
+    "lmburns/lf.nvim",
+    lazy = false,
+    cmd = "Lf",
+    dependencies = { "nvim-lua/plenary.nvim", "akinsho/toggleterm.nvim" },
+    opts = {
+      winblend = 0,
+      highlights = { NormalFloat = { guibg = "NONE" } },
+      border = "single", -- border kind: single double shadow curved
+      escape_quit = true,
+    },
+    keys = {
+      { "<leader>d", "<cmd>Lf<cr>", desc = "File Explorer" },
+    },
+  },
+  ------------------------------------------------------------ NAVIGATION
+  {
+    "ggandor/lightspeed.nvim",
+    lazy = false,
+    opts = {
+      ignore_case = false,
+      exit_after_idle_msecs = { unlabeled = nil, labeled = nil },
+      --- s/x ---
+      jump_to_unique_chars = false,
+      match_only_the_start_of_same_char_seqs = true,
+      force_beacons_into_match_width = false,
+      -- Display characters in a custom way in the highlighted matches.
+      substitute_chars = { ["\r"] = "¬" },
+      -- Leaving the appropriate list empty effectively disables "smart" mode,
+      -- and forces auto-jump to be on or off.
+      -- safe_labels = { . . . },
+      -- labels = { . . . },
+      -- These keys are captured directly by the plugin at runtime.
+      special_keys = {
+        next_match_group = "<space>",
+        prev_match_group = "<tab>",
+      },
+      --- f/t ---
+      limit_ft_matches = 5,
+      repeat_ft_with_target_char = true,
+    },
+    config = function(_, opts)
+      vim.api.nvim_exec(
+        [[
+              highlight LightspeedCursor guibg=#ffffff guifg=#000000
+              highlight LightspeedOneCharMatch guibg=#fb4934 guifg=#fbf1c7
+
+          ]],
+        false
+      )
+    end,
+  },
+  ------------------------------------------------------- UTILS
+  {
+    "tpope/vim-repeat",
+    lazy = false,
+  },
+
+  {
+    "chrisgrieser/nvim-recorder",
+    opts = {},
+    lazy = false,
+  },
+
+  {
+    "gennaro-tedesco/nvim-peekup",
+    lazy = false,
+    config = function()
+      local config = require "nvim-peekup.config"
+      config.on_keystroke["delay"] = "20ms"
+      config.on_keystroke["paste_reg"] = '"'
+    end,
+    opts = {},
+  },
+  ----------------------------------------------------------- QUICK-FIX
+  {
+    "milkypostman/vim-togglelist",
+    lazy = false,
+    config = function() end,
+  },
+
+  {
+    "kevinhwang91/nvim-bqf",
+    lazy=false,
+    init = function()
+      vim.cmd [[
+            hi BqfPreviewBorder guifg=#3e8e2d ctermfg=71
+            hi BqfPreviewTitle guifg=#3e8e2d ctermfg=71
+            hi BqfPreviewThumb guibg=#3e8e2d ctermbg=71
+            hi link BqfPreviewRange Search
+        ]]
+      local fn = vim.fn
+
+      function _G.qftf(info)
+        local items
+        local ret = {}
+        -- The name of item in list is based on the directory of quickfix window.
+        -- Change the directory for quickfix window make the name of item shorter.
+        -- It's a good opportunity to change current directory in quickfixtextfunc :)
+        --
+        -- local alterBufnr = fn.bufname('#') -- alternative buffer is the buffer before enter qf window
+        -- local root = getRootByAlterBufnr(alterBufnr)
+        -- vim.cmd(('noa lcd %s'):format(fn.fnameescape(root)))
+        --
+        if info.quickfix == 1 then
+          items = fn.getqflist({ id = info.id, items = 0 }).items
+        else
+          items = fn.getloclist(info.winid, { id = info.id, items = 0 }).items
+        end
+        local limit = 31
+        local fnameFmt1, fnameFmt2 = "%-" .. limit .. "s", "…%." .. (limit - 1) .. "s"
+        local validFmt = "%s │%5d:%-3d│%s %s"
+        for i = info.start_idx, info.end_idx do
+          local e = items[i]
+          local fname = ""
+          local str
+          if e.valid == 1 then
+            if e.bufnr > 0 then
+              fname = fn.bufname(e.bufnr)
+              if fname == "" then
+                fname = "[No Name]"
+              else
+                fname = fname:gsub("^" .. vim.env.HOME, "~")
+              end
+              -- char in fname may occur more than 1 width, ignore this issue in order to keep performance
+              if #fname <= limit then
+                fname = fnameFmt1:format(fname)
+              else
+                fname = fnameFmt2:format(fname:sub(1 - limit))
+              end
+            end
+            local lnum = e.lnum > 99999 and -1 or e.lnum
+            local col = e.col > 999 and -1 or e.col
+            local qtype = e.type == "" and "" or " " .. e.type:sub(1, 1):upper()
+            str = validFmt:format(fname, lnum, col, qtype, e.text)
+          else
+            str = e.text
+          end
+          table.insert(ret, str)
+        end
+        return ret
+      end
+
+      vim.o.qftf = "{info -> v:lua._G.qftf(info)}"
+    end,
+    opts = {},
+  },
+  ---------------------------------------- SEARCH AND REPLACE
+  {
+    "roobert/search-replace.nvim",
+    config = function()
+      require("search-replace").setup {
+        -- optionally override defaults
+        default_replace_single_buffer_options = "gcI",
+        default_replace_multi_buffer_options = "egcI",
+      }
+    end,
+    opts = {
+      defaults = {
+        mappings = {
+          v = {
+            ["<C-r>"] = "<CMD>SearchReplaceSingleBufferVisualSelection<CR>",
+            ["<C-s>"] = "<CMD>SearchReplaceWithinVisualSelection<CR>",
+            ["<C-b>"] = "<CMD>SearchReplaceWithinVisualSelectionCWord<CR>",
+          },
+        },
+      },
+    },
+
+    keys = {
+      {
+        "<leader>rs",
+        "<CMD>SearchReplaceSingleBufferSelections<CR>",
+        desc = "[s]elction list",
+      },
+      { "<leader>ro", "<CMD>SearchReplaceSingleBufferOpen<CR>", desc = "[o]pen" },
+      { "<leader>rw", "<CMD>SearchReplaceSingleBufferCWord<CR>", desc = "[w]ord" },
+      { "<leader>rW", "<CMD>SearchReplaceSingleBufferCWORD<CR>", desc = "[W]ord" },
+      { "<leader>re", "<CMD>SearchReplaceSingleBufferCExpr<CR>", desc = "[e]xpr" },
+      { "<leader>rf", "<CMD>SearchReplaceSingleBufferCFile<CR>", desc = "[f]ile" },
+
+      {
+        "<leader>rbs",
+        "<CMD>SearchReplaceMultiBufferSelections<CR>",
+        desc = "[s]elction list",
+      },
+      { "<leader>rbo", "<CMD>SearchReplaceMultiBufferOpen<CR>", desc = "[o]pen" },
+      { "<leader>rbw", "<CMD>SearchReplaceMultiBufferCWord<CR>", desc = "[w]ord" },
+      { "<leader>rbW", "<CMD>SearchReplaceMultiBufferCWORD<CR>", desc = "[W]ord" },
+      { "<leader>rbe", "<CMD>SearchReplaceMultiBufferCExpr<CR>", desc = "[e]xpr" },
+      { "<leader>rbf", "<CMD>SearchReplaceMultiBufferCFile<CR>", desc = "[f]ile" },
+    },
+  },
+  -- search/replace in multiple files
+  {
+    "nvim-pack/nvim-spectre",
+    cmd = "Spectre",
+    opts = { open_cmd = "noswapfile vnew" },
+    -- stylua: ignore
+    keys = {
+      { "<leader>rr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
+    },
+  },
+
+  -- TODO: move to proper place
+  -- {
+  --   "folke/which-key.nvim",
+  --   optional = true,
+  --   opts = {
+  --     defaults = {
+  --       ["<leader>rb"] = { name = "+Replace Multi-buffer" },
+  --     },
+  --   },
+  -- },
+
+  ---------------------------------------------------------------- TELESCOPE
+  {
+    "ahmedkhalf/project.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    opts = {},
+    event = "VeryLazy",
+    config = function(_, opts)
+      require("project_nvim").setup(opts)
+      require("telescope").load_extension "projects"
+    end,
+    keys = {
+      { "<leader>fP", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+    },
+  },
+
+  {
+    "AckslD/nvim-neoclip.lua",
+    opts = {},
+    event = "VeryLazy",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("neoclip").setup()
+      local telescope = require "telescope"
+      telescope.load_extension "neoclip"
+    end,
+    keys = {
+      { "<leader>fp", "<cmd>Telescope neoclip theme=dropdown<cr>", desc = "Clipboard" },
+    },
+  },
+
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    build = "make",
+    config = function(_, opts)
+      local telescope = require "telescope"
+      telescope.setup(opts)
+      require("telescope").load_extension "fzf"
+    end,
+  },
+
+  {
+    "nvim-telescope/telescope-live-grep-args.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    config = function(_, opts)
+      local telescope = require "telescope"
+      telescope.setup(opts)
+      require("telescope").load_extension "live_grep_args"
+    end,
+    keys = {
+      {
+        "<leader>fg",
+        "<Cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>",
+        desc = "Live Grep Args",
+      },
+      {
+        "<leader>fw",
+        "<cmd>lua  require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>",
+        desc = "Live Grep Under Cursor",
+      },
+    },
+  },
+
+  {
+    "nvim-telescope/telescope.nvim",
+    -- dependencies = { "nvim-telescope/telescope-live-grep-args.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
+    keys = {
+      {
+        "<leader><space>",
+        "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer = false}))<cr>",
+        desc = "Find Files",
+      },
+    },
+    -- opts = function()
+    --   return {
+    --     pickers = {
+    --       find_files = {
+    --         prompt_prefix = " ",
+    --         -- find_command = { "rg", "--files", "--hidden" },
+    --       },
+    --       live_grep = {
+    --         -- layout_strategy = "vertical",
+    --         sorting_strategy = "ascending",
+    --       },
+    --       commands = {
+    --         prompt_prefix = " ",
+    --         initial_mode = "insert",
+    --       },
+    --       git_files = {
+    --         prompt_prefix = " ",
+    --         show_untracked = true,
+    --       },
+    --       buffers = {
+    --         initial_mode = "normal",
+    --         prompt_prefix = "﬘ ",
+    --         mappings = {
+    --           i = {
+    --             ["<C-d>"] = require("telescope.actions").delete_buffer,
+    --           },
+    --           n = {
+    --             ["d"] = require("telescope.actions").delete_buffer,
+    --             ["q"] = function(...)
+    --               return require("telescope.actions").close(...)
+    --             end,
+    --           },
+    --         },
+    --       },
+    --     },
+    --     extensions = {
+    --       fzf = {
+    --         fuzzy = true, -- false will only do exact matching
+    --         override_generic_sorter = true, -- override the generic sorter
+    --         override_file_sorter = true, -- override the file sorter
+    --         case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+    --       },
+    --       neoclip = {
+    --         initial_mode = "normal",
+    --         -- layout_strategy = "vertical",
+    --       },
+    --       projects = {
+    --         initial_mode = "normal",
+    --         -- layout_strategy = "vertical",
+    --         previewer = false,
+    --       },
+    --       live_grep_args = {
+    --         initial_mode = "insert",
+    --         -- layout_strategy = "vertical",
+    --         sorting_strategy = "ascending",
+    --       },
+    --     },
+    --   }
+    -- end,
+  },
+
+  -- {
+  --   "nvim-telescope/telescope.nvim",
+  --   opts = {
+  --     defaults = {
+  --       layout_strategy = "vertical",
+  --       layout_config = {
+  --         height = 0.95,
+  --         prompt_position = "top",
+  --         vertical = {
+  --           mirror = true,
+  --           preview_cutoff = 0,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 
   -- To make a plugin not be loaded
   -- {

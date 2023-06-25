@@ -30,8 +30,9 @@ M.general = {
     ["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
 
     -- line numbers
-    ["<leader>n"] = { "<cmd> set nu! <CR>", "Toggle line number" },
-    ["<leader>rn"] = { "<cmd> set rnu! <CR>", "Toggle relative number" },
+    -- TODO: change
+    -- ["<leader>n"] = { "<cmd> set nu! <CR>", "Toggle line number" },
+    -- ["<leader>rn"] = { "<cmd> set rnu! <CR>", "Toggle relative number" },
 
     -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
     -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
@@ -163,12 +164,12 @@ M.lspconfig = {
       "LSP definition type",
     },
 
-    ["<leader>ra"] = {
-      function()
-        require("nvchad_ui.renamer").open()
-      end,
-      "LSP rename",
-    },
+    -- ["<leader>ra"] = {
+    --   function()
+    --     require("nvchad_ui.renamer").open()
+    --   end,
+    --   "LSP rename",
+    -- },
 
     ["<leader>ca"] = {
       function()
@@ -424,13 +425,14 @@ M.gitsigns = {
     },
 
     -- Actions
-    ["<leader>rh"] = {
-      function()
-        require("gitsigns").reset_hunk()
-      end,
-      "Reset hunk",
-    },
-
+    -- TODO: change
+    -- ["<leader>rh"] = {
+    --   function()
+    --     require("gitsigns").reset_hunk()
+    --   end,
+    --   "Reset hunk",
+    -- },
+    --
     ["<leader>ph"] = {
       function()
         require("gitsigns").preview_hunk()
