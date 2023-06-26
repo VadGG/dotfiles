@@ -71,7 +71,7 @@ local plugins = {
       winblend = 0,
       highlights = { NormalFloat = { guibg = "NONE" } },
       border = "single", -- border kind: single double shadow curved
-      escape_quit = true,
+      escape_quit = false,
     },
     keys = {
       { "<leader>d", "<cmd>Lf<cr>", desc = "File Explorer" },
