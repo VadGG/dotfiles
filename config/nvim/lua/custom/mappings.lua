@@ -11,6 +11,10 @@ function _SET_CLIPBOARD(clip_value)
   vim.cmd("set clipboard?")
 end
 
+local function newMapping(shortcut, desc) 
+  return { shortcut, desc, opts = { nowait = true } }
+end
+
 M.general = {
   n = {
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
@@ -41,6 +45,9 @@ M.general = {
   v = {
     ["H"] = { "^", "Begining of line", opts = { nowait = true } },
     ["L"] = { "$", "End of line", opts = { nowait = true } },
+
+    ["<"] = { "<gv", "Indent left"  },
+    [">"] = { ">gv", "Indent Right"  },
     
     ["<leader>\\"] = { "<cmd>vs<CR>", "Vertical split" },
     ["<leader>-"] = { "<cmd>sp<CR>", "Horizontal split" },
@@ -78,10 +85,49 @@ M.tabufline = {
       function()
         require("nvchad_ui.tabufline").closeOtherBufs()
       end,
-      "Solo Buffe",
+      "Solo Buffer",
     },
   },
 }
+
+M.surround = {
+  plugin = true,
+
+  -- n = {
+  --   
+  --   ["gza"] = newMapping("gza", "Add surround"),
+  --   ["gzd"] = newMapping("gzd", "Delete surround"),
+  --   ["gzr"] = newMapping("gzr", "Replace surround"),
+  --   ["gzf"] = newMapping("gzf", "Find surround"),
+  --   ["gzF"] = newMapping("gzF", "Find surround left"),
+  --   ["gzh"] = newMapping("gzh", "Highlight surround"),
+  --   ["gzn"] = newMapping("gzn", "Update n_lines"),
+  --
+  -- }
+}
+
+M.gitlinker = {
+  plugin = true,
+
+  n = {
+     ["<leader>gy"] = { function() require("gitlinker").get_buf_range_url("n") end, "Get Repo Url" },
+  }
+}
+
+
+M.telescope = {
+  plugin = true,
+
+  n = {
+    -- find
+    ["<leader><space>"] = { "<cmd> Telescope find_files <CR>", "Find files" },
+    ["<leader>fF"] ={
+        "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h') })<cr>",
+        desc = "Find files in cwd",
+      },
+  },
+}
+
 
 -- more keybinds!
 

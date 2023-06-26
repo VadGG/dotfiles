@@ -1,14 +1,13 @@
 local overrides = require "custom.configs.overrides"
 local is_lsp_enabled = false
 
--- TODO: comment color fix
 -- TODO: multi clone and rename to LF
 -- TODO: vimdiff windo diffthis, diffoff with colors
 -- TODO: open recent files
 -- TODO: search from the open directory like default
 -- TODO: simple vim config with easy save-quit
 -- TODO: change bracket plugin
---TTODO: lf filter
+-- TODO: lf filter
 --
 
 ---@type NvPluginSpec[]
@@ -82,7 +81,17 @@ local plugins = {
       highlights = { NormalFloat = { guibg = "NONE" } },
       border = "single", -- border kind: single double shadow curved
       escape_quit = false,
+
+      mappings = true,
+
+      layout_mapping = "<A-u>", -- resize window with this key
+
+      views = { -- window dimensions to rotate through
+        { width = 0.950, height = 0.950 },
+        { width = 0.800, height = 0.850 },
+      }
     },
+
     keys = {
       { "<leader>d", "<cmd>Lf<cr>", desc = "File Explorer" },
     },
@@ -130,22 +139,45 @@ local plugins = {
     lazy = false,
   },
 
+  -- auto pairs
+  {
+    "echasnovski/mini.pairs",
+    lazy = false,
+    opts = {},
+  },
+
+  {
+    "echasnovski/mini.move",
+    lazy = false,
+    opts = {},
+  },
+
+
+  -- surround
+  {
+    "echasnovski/mini.surround",
+    lazy = false,
+    opts = {
+      n_lines = 500,
+      mappings = {
+        add = "gza", -- Add surrounding in Normal and Visual modes
+        delete = "gzd", -- Delete surrounding
+        find = "gzf", -- Find surrounding (to the right)
+        find_left = "gzF", -- Find surrounding (to the left)
+        highlight = "gzh", -- Highlight surrounding
+        replace = "gzr", -- Replace surrounding
+        update_n_lines = "gzn", -- Update `n_lines`
+      },
+    }, 
+
+  },
+
   {
     "chrisgrieser/nvim-recorder",
     opts = {},
     lazy = false,
   },
 
-  {
-    "gennaro-tedesco/nvim-peekup",
-    lazy = false,
-    config = function()
-      local config = require "nvim-peekup.config"
-      config.on_keystroke["delay"] = "20ms"
-      config.on_keystroke["paste_reg"] = '"'
-    end,
-    opts = {},
-  },
   ----------------------------------------------------------- QUICK-FIX
   {
     "milkypostman/vim-togglelist",
@@ -325,6 +357,10 @@ local plugins = {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
+    config = function(_, opts)
+      require("core.utils").load_mappings "gitlinker"
+      require("gitlinker").setup(opts)
+    end,
   },
   ---------------------------------------------------------------- TODO
   {
@@ -344,20 +380,6 @@ local plugins = {
     },
   },
   ---------------------------------------------------------------- TELESCOPE
-  -- {
-  --   "ahmedkhalf/project.nvim",
-  --   dependencies = { "nvim-telescope/telescope.nvim" },
-  --   opts = {},
-  --   event = "VeryLazy",
-  --   config = function(_, opts)
-  --     require("project_nvim").setup(opts)
-  --     require("telescope").load_extension "projects"
-  --   end,
-  --   keys = {
-  --     { "<leader>fP", "<Cmd>Telescope projects<CR>", desc = "Projects" },
-  --   },
-  -- },
-
   {
     "AckslD/nvim-neoclip.lua",
     opts = {},
@@ -411,17 +433,13 @@ local plugins = {
     -- dependencies = { "nvim-telescope/telescope-live-grep-args.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
     keys = {
       {
-        "<leader><space>",
-        "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer = false}))<cr>",
-        desc = "Find Files (No Preivew)",
-      },
-      {
         "<leader>fF",
         "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h') })<cr>",
         desc = "Find directory",
       },
 
     },
+
     -- opts = function()
     --   return {
     --     pickers = {
