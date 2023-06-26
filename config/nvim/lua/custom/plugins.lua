@@ -389,7 +389,7 @@ local plugins = {
       },
       {
         "<leader>fw",
-        "<cmd>lua  require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>",
+        "<cmd>lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>",
         desc = "Live Grep Under Cursor",
       },
     },
@@ -402,8 +402,14 @@ local plugins = {
       {
         "<leader><space>",
         "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer = false}))<cr>",
-        desc = "Find Files",
+        desc = "Find Files (No Preivew)",
       },
+      {
+        "<leader>fF",
+        "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h') })<cr>",
+        desc = "Find directory",
+      },
+
     },
     -- opts = function()
     --   return {
