@@ -267,15 +267,16 @@ local plugins = {
   },
 
   -- TODO: move to proper place
-  -- {
-  --   "folke/which-key.nvim",
-  --   optional = true,
-  --   opts = {
-  --     defaults = {
-  --       ["<leader>rb"] = { name = "+Replace Multi-buffer" },
-  --     },
-  --   },
-  -- },
+  {
+    "folke/which-key.nvim",
+    optional = true,
+    lazy=false,
+    opts = {
+      defaults = {
+        ["<leader>rb"] = { name = "+Replace Multi-buffer" },
+      },
+    },
+  },
   -------------------------------------------------------------------------------- INDENTSCOPE
   {
     "echasnovski/mini.indentscope",
@@ -305,6 +306,15 @@ local plugins = {
         end,
       })
     end,
+  },
+
+   
+  {
+    "ruifm/gitlinker.nvim",
+    lazy = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
   },
   ---------------------------------------------------------------- TODO
   {
