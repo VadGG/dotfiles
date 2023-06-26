@@ -1,6 +1,16 @@
 local overrides = require "custom.configs.overrides"
 local is_lsp_enabled = false
 
+-- TODO: comment color fix
+-- TODO: multi clone and rename to LF
+-- TODO: vimdiff windo diffthis, diffoff with colors
+-- TODO: open recent files
+-- TODO: search from the open directory like default
+-- TODO: simple vim config with easy save-quit
+-- TODO: change bracket plugin
+--TTODO: lf filter
+--
+
 ---@type NvPluginSpec[]
 local plugins = {
 
@@ -334,27 +344,27 @@ local plugins = {
     },
   },
   ---------------------------------------------------------------- TELESCOPE
-  {
-    "ahmedkhalf/project.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    opts = {},
-    event = "VeryLazy",
-    config = function(_, opts)
-      require("project_nvim").setup(opts)
-      require("telescope").load_extension "projects"
-    end,
-    keys = {
-      { "<leader>fP", "<Cmd>Telescope projects<CR>", desc = "Projects" },
-    },
-  },
+  -- {
+  --   "ahmedkhalf/project.nvim",
+  --   dependencies = { "nvim-telescope/telescope.nvim" },
+  --   opts = {},
+  --   event = "VeryLazy",
+  --   config = function(_, opts)
+  --     require("project_nvim").setup(opts)
+  --     require("telescope").load_extension "projects"
+  --   end,
+  --   keys = {
+  --     { "<leader>fP", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+  --   },
+  -- },
 
   {
     "AckslD/nvim-neoclip.lua",
     opts = {},
     event = "VeryLazy",
     dependencies = { "nvim-telescope/telescope.nvim" },
-    config = function()
-      require("neoclip").setup()
+    config = function(_, opts)
+      require("neoclip").setup(opts)
       local telescope = require "telescope"
       telescope.load_extension "neoclip"
     end,
@@ -397,6 +407,7 @@ local plugins = {
 
   {
     "nvim-telescope/telescope.nvim",
+    -- extensions_list = { "themes", "terms", "fzf", "live_grep_args", "projects", "neoclip"},
     -- dependencies = { "nvim-telescope/telescope-live-grep-args.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
     keys = {
       {

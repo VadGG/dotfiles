@@ -250,6 +250,7 @@ local default_plugins = {
 
       -- load extensions
       for _, ext in ipairs(opts.extensions_list) do
+        print(ext)
         telescope.load_extension(ext)
       end
     end,
