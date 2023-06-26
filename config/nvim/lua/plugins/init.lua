@@ -260,6 +260,7 @@ local default_plugins = {
   {
     "folke/which-key.nvim",
     keys = { "<leader>", '"', "'", "`", "c", "v", "g" },
+    lazy = false,
     init = function()
       require("core.utils").load_mappings "whichkey"
     end,
