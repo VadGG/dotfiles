@@ -254,6 +254,7 @@ local plugins = {
   ---------------------------------------- SEARCH AND REPLACE
   {
     "roobert/search-replace.nvim",
+    lazy = false,
     config = function()
       require("search-replace").setup {
         -- optionally override defaults
@@ -394,6 +395,24 @@ local plugins = {
       { "<leader>fp", "<cmd>Telescope neoclip theme=dropdown<cr>", desc = "Clipboard" },
     },
   },
+  
+  {
+    "ahmedkhalf/project.nvim",
+    opts = {
+      manual_mode = true,
+    },
+    event = "VeryLazy",
+    config = function(_, opts)
+      require("project_nvim").setup(opts)
+      require("telescope").load_extension("projects")
+    end,
+    keys = {
+      { "<leader>oo", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+      { "<leader>oa", "<Cmd>AddProject<CR>", desc = "Add Project" },
+      { "<leader>or", "<Cmd>ProjectRoot<CR>", desc = "Root Project" },
+    },
+  },
+
 
   {
     "nvim-telescope/telescope-fzf-native.nvim",

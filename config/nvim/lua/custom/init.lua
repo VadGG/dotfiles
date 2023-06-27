@@ -6,3 +6,4 @@
 --   command = "tabdo wincmd =",
 -- })
 
+vim.o.inccommand = "split"
