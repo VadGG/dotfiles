@@ -10,6 +10,7 @@ local is_lsp_enabled = true
 -- TODO: lf filter
 -- TODO: don't auto-show autocomplete menu
 --
+--
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -63,7 +64,7 @@ local plugins = {
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
-    config = overrides.betterescape.config, 
+    config = overrides.betterescape.config,
   },
 
   ----------------------------------------------------------- FILE BROWSER
@@ -82,7 +83,7 @@ local plugins = {
     "ggandor/lightspeed.nvim",
     lazy = false,
     opts = overrides.lightspeed.opts,
-    config = overrides.lightspeed.config
+    config = overrides.lightspeed.config,
   },
   ------------------------------------------------------- UTILS
   {
@@ -109,185 +110,157 @@ local plugins = {
     "echasnovski/mini.surround",
     lazy = false,
     opts = overrides.minisurround.opts,
-  {
-    "chrisgrieser/nvim-recorder",
-    lazy = false,
-    opts = {},
-  },
-
-  ----------------------------------------------------------- QUICK-FIX
-  {
-    "milkypostman/vim-togglelist",
-    lazy = false,
-    config = function() end,
-  },
-
-  {
-    "kevinhwang91/nvim-bqf",
-    lazy = false,
-    init = overrides.bqf.init,
-    opts = {},
-  },
-  ---------------------------------------- SEARCH AND REPLACE
-  {
-    "roobert/search-replace.nvim",
-    lazy = false,
-    opts = overrides.searchreplace.opts,
-    config = overrides.searchreplace.config,
-    keys = {
-      {
-        "<leader>rs",
-        "<CMD>SearchReplaceSingleBufferSelections<CR>",
-        desc = "[s]elction list",
-      },
-      { "<leader>ro", "<CMD>SearchReplaceSingleBufferOpen<CR>", desc = "[o]pen" },
-      { "<leader>rw", "<CMD>SearchReplaceSingleBufferCWord<CR>", desc = "[w]ord" },
-      { "<leader>rW", "<CMD>SearchReplaceSingleBufferCWORD<CR>", desc = "[W]ord" },
-      { "<leader>re", "<CMD>SearchReplaceSingleBufferCExpr<CR>", desc = "[e]xpr" },
-      { "<leader>rf", "<CMD>SearchReplaceSingleBufferCFile<CR>", desc = "[f]ile" },
-
-      {
-        "<leader>rbs",
-        "<CMD>SearchReplaceMultiBufferSelections<CR>",
-        desc = "[s]elction list",
-      },
-      { "<leader>rbo", "<CMD>SearchReplaceMultiBufferOpen<CR>", desc = "[o]pen" },
-      { "<leader>rbw", "<CMD>SearchReplaceMultiBufferCWord<CR>", desc = "[w]ord" },
-      { "<leader>rbW", "<CMD>SearchReplaceMultiBufferCWORD<CR>", desc = "[W]ord" },
-      { "<leader>rbe", "<CMD>SearchReplaceMultiBufferCExpr<CR>", desc = "[e]xpr" },
-      { "<leader>rbf", "<CMD>SearchReplaceMultiBufferCFile<CR>", desc = "[f]ile" },
+    {
+      "chrisgrieser/nvim-recorder",
+      lazy = false,
+      opts = {},
     },
-  },
-  -- search/replace in multiple files
-  {
-    "nvim-pack/nvim-spectre",
-    cmd = "Spectre",
-    opts = overrides.spectre.opts,
+
+    ----------------------------------------------------------- QUICK-FIX
+    {
+      "milkypostman/vim-togglelist",
+      lazy = false,
+      config = function() end,
+    },
+
+    {
+      "kevinhwang91/nvim-bqf",
+      lazy = false,
+      init = overrides.bqf.init,
+      opts = {},
+    },
+    ---------------------------------------- SEARCH AND REPLACE
+    {
+      "roobert/search-replace.nvim",
+      lazy = false,
+      opts = overrides.searchreplace.opts,
+      config = overrides.searchreplace.config,
+    },
+
+    {
+      "nvim-pack/nvim-spectre",
+      cmd = "Spectre",
+      opts = overrides.spectre.opts,
     -- stylua: ignore
     keys = {
       { "<leader>rr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
     },
-  },
+    },
 
-  -- TODO: move to proper place
-  {
-    "folke/which-key.nvim",
-    optional = true,
-    lazy = false,
-    opts = {
-      defaults = {
-        ["<leader>rb"] = { name = "+Replace Multi-buffer" },
+    -- TODO: move to proper place
+    {
+      "folke/which-key.nvim",
+      optional = true,
+      lazy = false,
+      opts = {
+        defaults = {
+          ["<leader>rb"] = { name = "+Replace Multi-buffer" },
+        },
       },
     },
-  },
-  -------------------------------------------------------------------------------- INDENTSCOPE
-  {
-    "echasnovski/mini.indentscope",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = { "BufReadPre", "BufNewFile" },
-    opts = overrides.indentscope.opts,
-    init = overrides.indentscope.init
-  },
-
-  {
-    "ruifm/gitlinker.nvim",
-    lazy = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
+    -------------------------------------------------------------------------------- INDENTSCOPE
+    {
+      "echasnovski/mini.indentscope",
+      version = false, -- wait till new 0.7.0 release to put it back on semver
+      event = { "BufReadPre", "BufNewFile" },
+      opts = overrides.indentscope.opts,
+      init = overrides.indentscope.init,
     },
-    config = function(_, opts)
-      require("core.utils").load_mappings "gitlinker"
-      require("gitlinker").setup(opts)
-    end,
-  },
-  ---------------------------------------------------------------- TODO
-  {
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
-    event = { "BufReadPost", "BufNewFile" },
-    config = true,
-    lazy = false,
-    -- stylua: ignore
-    keys = {
-      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-      { "<leader>tx", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
-      { "<leader>tX", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
-      { "<leader>ts", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-      { "<leader>tS", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
-    },
-  },
-  ---------------------------------------------------------------- TELESCOPE
-  {
-    "AckslD/nvim-neoclip.lua",
-    opts = {},
-    event = "VeryLazy",
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    config = overrides.neoclip.config,
-    keys = {
-      { "<leader>fp", "<cmd>Telescope neoclip theme=dropdown<cr>", desc = "Clipboard" },
-    },
-  },
 
-  {
-    "ahmedkhalf/project.nvim",
-    opts = overrides.project.opts,
-    event = "VeryLazy",
-    config = function(_, opts)
-      require("project_nvim").setup(opts)
-      require("telescope").load_extension "projects"
-    end,
-    keys = {
-      { "<leader>oo", "<Cmd>Telescope projects<CR>", desc = "Projects" },
-      { "<leader>oa", "<Cmd>AddProject<CR>", desc = "Add Project" },
-      { "<leader>or", "<Cmd>ProjectRoot<CR>", desc = "Root Project" },
-    },
-  },
-
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    build = "make",
-    config = function(_, opts)
-      local telescope = require "telescope"
-      telescope.setup(opts)
-      require("telescope").load_extension "fzf"
-    end,
-  },
-
-  {
-    "nvim-telescope/telescope-live-grep-args.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    config = function(_, opts)
-      local telescope = require "telescope"
-      telescope.setup(opts)
-      require("telescope").load_extension "live_grep_args"
-    end,
-    keys = {
-      {
-        "<leader>fg",
-        "<Cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>",
-        desc = "Live Grep Args",
+    {
+      "ruifm/gitlinker.nvim",
+      lazy = false,
+      dependencies = {
+        "nvim-lua/plenary.nvim",
       },
-      {
-        "<leader>fw",
-        "<cmd>lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>",
-        desc = "Live Grep Under Cursor",
+      config = function(_, opts)
+        require("core.utils").load_mappings "gitlinker"
+        require("gitlinker").setup(opts)
+      end,
+    },
+    ---------------------------------------------------------------- TODO
+    {
+      "folke/todo-comments.nvim",
+      lazy = false,
+      cmd = { "TodoTrouble", "TodoTelescope" },
+      event = { "BufReadPost", "BufNewFile" },
+      opts = {},
+      config = function()
+        require "custom.configs.todo"
+      end,
+      -- stylua: ignore
+    },
+    ---------------------------------------------------------------- TELESCOPE
+    {
+      "AckslD/nvim-neoclip.lua",
+      opts = {},
+      event = "VeryLazy",
+      dependencies = { "nvim-telescope/telescope.nvim" },
+      config = overrides.neoclip.config,
+      keys = {
+        { "<leader>fp", "<cmd>Telescope neoclip theme=dropdown<cr>", desc = "Clipboard" },
       },
     },
-  },
 
-  {
-    "nvim-telescope/telescope.nvim",
-    -- extensions_list = { "themes", "terms", "fzf", "live_grep_args", "projects", "neoclip"},
-    -- dependencies = { "nvim-telescope/telescope-live-grep-args.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
-    keys = {
-      {
-        "<leader>fF",
-        "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h') })<cr>",
-        desc = "Find directory",
+    {
+      "ahmedkhalf/project.nvim",
+      opts = overrides.project.opts,
+      event = "VeryLazy",
+      config = function(_, opts)
+        require("project_nvim").setup(opts)
+        require("telescope").load_extension "projects"
+      end,
+      keys = {
+        { "<leader>oo", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+        { "<leader>oa", "<Cmd>AddProject<CR>", desc = "Add Project" },
+        { "<leader>or", "<Cmd>ProjectRoot<CR>", desc = "Root Project" },
       },
     },
-  }
+
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      config = function(_, opts)
+        local telescope = require "telescope"
+        telescope.setup(opts)
+        require("telescope").load_extension "fzf"
+      end,
+    },
+
+    {
+      "nvim-telescope/telescope-live-grep-args.nvim",
+      dependencies = { "nvim-telescope/telescope.nvim" },
+      config = function(_, opts)
+        local telescope = require "telescope"
+        telescope.setup(opts)
+        require("telescope").load_extension "live_grep_args"
+      end,
+      keys = {
+        {
+          "<leader>fg",
+          "<Cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>",
+          desc = "Live Grep Args",
+        },
+        {
+          "<leader>fw",
+          "<cmd>lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>",
+          desc = "Live Grep Under Cursor",
+        },
+      },
+    },
+
+    {
+      "nvim-telescope/telescope.nvim",
+      -- extensions_list = { "themes", "terms", "fzf", "live_grep_args", "projects", "neoclip"},
+      -- dependencies = { "nvim-telescope/telescope-live-grep-args.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
+      keys = {
+        {
+          "<leader>fF",
+          "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h') })<cr>",
+          desc = "Find directory",
+        },
+      },
+    },
 
     -- opts = function()
     --   return {

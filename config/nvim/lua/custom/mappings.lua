@@ -63,9 +63,6 @@ M.general = {
     ["<C-Left>"] = { "<cmd>vertical resize -10<cr>", "Resize Screen Left" },
     ["<C-Right>"] = { "<cmd>vertical resize +10<cr>", "Resize Screen Right" },
 
-    ["<C-r>"] = { "<cmd>SearchReplaceSingleBufferVisualSelection<cr>", "Replace selected", opts = { nowait = true } },
-    ["<C-s>"] = { "<cmd>SearchReplaceWithinVisualSelection<cr>", "Replace within selection", opts = { nowait = true } },
-    ["<C-b>"] = { "<cmd>SearchReplaceWithinVisualSelectionCWord<cr>", "Replace within selection CWord", opts = { nowait = true } },
     ["<C-g>"] = { "<cmd>lua  require('telescope-live-grep-args.shortcuts').grep_visual_selection()<cr>", "Grep Selected", opts = { nowait = true } },
     ["`"] = {
       function()
@@ -73,6 +70,28 @@ M.general = {
       end,
       "Toggle clipboard",
     },
+  }
+}
+
+M.searchreplace = {
+  n = {
+    ["<leader>rs"] = newMapping("<cmd>SearchReplaceSingleBufferSelections<cr>", "[s]election list"),
+    ["<leader>ro"] = newMapping("<CMD>SearchReplaceSingleBufferOpen<CR>", "[o]pen"),
+    ["<leader>rw"] = newMapping("<CMD>SearchReplaceSingleBufferCWord<CR>", "[w]ord"),
+    ["<leader>rW"] = newMapping("<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ord"),
+    ["<leader>re"] = newMapping("<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr"),
+    ["<leader>rf"] = newMapping("<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile"),
+    ["<leader>rbs"] = newMapping("<CMD>SearchReplaceMultiBufferSelections<CR>", "[s]election list"),
+    ["<leader>rbo"] = newMapping("<CMD>SearchReplaceMultiBufferOpen<CR>", "[o]pen"),
+    ["<leader>rbw"] = newMapping("<CMD>SearchReplaceMultiBufferCWord<CR>", "[w]ord"),
+    ["<leader>rbW"] = newMapping("<CMD>SearchReplaceMultiBufferCWORD<CR>", "[W]ord"),
+    ["<leader>rbe"] = newMapping("<CMD>SearchReplaceMultiBufferCExpr<CR>", "[e]xpr"),
+    ["<leader>rbf"] = newMapping("<CMD>SearchReplaceMultiBufferCFile<CR>", "[f]ile"),
+  },
+  v = {
+    ["<C-r>"] = newMapping("<cmd>SearchReplaceSingleBufferVisualSelection<cr>", "Replace selected"),
+    ["<C-s>"] = newMapping("<cmd>SearchReplaceWithinVisualSelection<cr>", "Replace within selection"),
+    ["<C-b>"] = newMapping("<cmd>SearchReplaceWithinVisualSelectionCWord<cr>", "Replace within selection CWord"),
   }
 }
 
@@ -107,10 +126,19 @@ M.surround = {
 }
 
 M.gitlinker = {
-  plugin = true,
-
   n = {
      ["<leader>gy"] = { function() require("gitlinker").get_buf_range_url("n") end, "Get Repo Url" },
+  }
+}
+
+M.todo = {
+  n = {
+      ["]t"] = { function() require("todo-comments").jump_next() end, "Next todo comment" },
+      ["[t"] = {  function() require("todo-comments").jump_prev() end, "Previous todo comment" },
+      ["<leader>tx"] = { "<cmd>TodoTrouble<cr>", "Todo (Trouble)" },
+      ["<leader>tX"] = { "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", "Todo/Fix/Fixme (Trouble)" },
+      ["<leader>ts"] = { "<cmd>TodoTelescope<cr>", "Todo" },
+      ["<leader>tS"] = { "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", "Todo/Fix/Fixme" },
   }
 }
 
