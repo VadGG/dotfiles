@@ -1,8 +1,6 @@
 local overrides = require "custom.configs.overrides"
 local is_lsp_enabled = true
 
--- TODO: multi clone and rename to LF
--- TODO: vimdiff windo diffthis, diffoff with colors
 -- TODO: open recent files
 -- TODO: search from the open directory like default
 -- TODO: simple vim config with easy save-quit
