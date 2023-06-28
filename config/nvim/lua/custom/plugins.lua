@@ -1,5 +1,5 @@
 local overrides = require "custom.configs.overrides"
-local is_lsp_enabled = false
+local is_lsp_enabled = true
 
 -- TODO: multi clone and rename to LF
 -- TODO: vimdiff windo diffthis, diffoff with colors
@@ -8,6 +8,7 @@ local is_lsp_enabled = false
 -- TODO: simple vim config with easy save-quit
 -- TODO: change bracket plugin
 -- TODO: lf filter
+-- TODO: don't auto-show autocomplete menu
 --
 
 ---@type NvPluginSpec[]
@@ -16,8 +17,8 @@ local plugins = {
   -- override plugin configs
   {
     "williamboman/mason.nvim",
-    opts = overrides.mason,
     enabled = is_lsp_enabled,
+    opts = overrides.mason.opts,
   },
 
   { "neovim/nvim-lspconfig", enabled = is_lsp_enabled },
@@ -41,10 +42,7 @@ local plugins = {
         end,
       },
     },
-    config = function()
-      require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
-    end, -- Override to setup mason-lspconfig
+    config = overrides.lspconfig.config,
   },
 
   {
@@ -53,21 +51,19 @@ local plugins = {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = overrides.treesitter,
+    opts = overrides.treesitter.opts,
   },
 
   {
     "nvim-tree/nvim-tree.lua",
-    opts = overrides.nvimtree,
+    opts = overrides.nvimtree.opts,
   },
 
   -- Install a plugin
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
-    config = function()
-      require("better_escape").setup()
-    end,
+    config = overrides.betterescape.config, 
   },
 
   ----------------------------------------------------------- FILE BROWSER
@@ -76,22 +72,7 @@ local plugins = {
     lazy = false,
     cmd = "Lf",
     dependencies = { "nvim-lua/plenary.nvim", "akinsho/toggleterm.nvim" },
-    opts = {
-      winblend = 0,
-      highlights = { NormalFloat = { guibg = "NONE" } },
-      border = "single", -- border kind: single double shadow curved
-      escape_quit = false,
-
-      mappings = true,
-
-      layout_mapping = "<A-u>", -- resize window with this key
-
-      views = { -- window dimensions to rotate through
-        { width = 0.950, height = 0.950 },
-        { width = 0.800, height = 0.850 },
-      }
-    },
-
+    opts = overrides.lfnvim.opts,
     keys = {
       { "<leader>d", "<cmd>Lf<cr>", desc = "File Explorer" },
     },
@@ -100,43 +81,14 @@ local plugins = {
   {
     "ggandor/lightspeed.nvim",
     lazy = false,
-    opts = {
-      ignore_case = false,
-      exit_after_idle_msecs = { unlabeled = nil, labeled = nil },
-      --- s/x ---
-      jump_to_unique_chars = false,
-      match_only_the_start_of_same_char_seqs = true,
-      force_beacons_into_match_width = false,
-      -- Display characters in a custom way in the highlighted matches.
-      substitute_chars = { ["\r"] = "¬" },
-      -- Leaving the appropriate list empty effectively disables "smart" mode,
-      -- and forces auto-jump to be on or off.
-      -- safe_labels = { . . . },
-      -- labels = { . . . },
-      -- These keys are captured directly by the plugin at runtime.
-      special_keys = {
-        next_match_group = "<space>",
-        prev_match_group = "<tab>",
-      },
-      --- f/t ---
-      limit_ft_matches = 5,
-      repeat_ft_with_target_char = true,
-    },
-    config = function(_, opts)
-      vim.api.nvim_exec(
-        [[
-              highlight LightspeedCursor guibg=#ffffff guifg=#000000
-              highlight LightspeedOneCharMatch guibg=#fb4934 guifg=#fbf1c7
-
-          ]],
-        false
-      )
-    end,
+    opts = overrides.lightspeed.opts,
+    config = overrides.lightspeed.config
   },
   ------------------------------------------------------- UTILS
   {
     "tpope/vim-repeat",
     lazy = false,
+    config = function() end,
   },
 
   -- auto pairs
@@ -152,30 +104,15 @@ local plugins = {
     opts = {},
   },
 
-
   -- surround
   {
     "echasnovski/mini.surround",
     lazy = false,
-    opts = {
-      n_lines = 500,
-      mappings = {
-        add = "gza", -- Add surrounding in Normal and Visual modes
-        delete = "gzd", -- Delete surrounding
-        find = "gzf", -- Find surrounding (to the right)
-        find_left = "gzF", -- Find surrounding (to the left)
-        highlight = "gzh", -- Highlight surrounding
-        replace = "gzr", -- Replace surrounding
-        update_n_lines = "gzn", -- Update `n_lines`
-      },
-    }, 
-
-  },
-
+    opts = overrides.minisurround.opts,
   {
     "chrisgrieser/nvim-recorder",
-    opts = {},
     lazy = false,
+    opts = {},
   },
 
   ----------------------------------------------------------- QUICK-FIX
@@ -188,92 +125,15 @@ local plugins = {
   {
     "kevinhwang91/nvim-bqf",
     lazy = false,
-    init = function()
-      vim.cmd [[
-            hi BqfPreviewBorder guifg=#3e8e2d ctermfg=71
-            hi BqfPreviewTitle guifg=#3e8e2d ctermfg=71
-            hi BqfPreviewThumb guibg=#3e8e2d ctermbg=71
-            hi link BqfPreviewRange Search
-        ]]
-      local fn = vim.fn
-
-      function _G.qftf(info)
-        local items
-        local ret = {}
-        -- The name of item in list is based on the directory of quickfix window.
-        -- Change the directory for quickfix window make the name of item shorter.
-        -- It's a good opportunity to change current directory in quickfixtextfunc :)
-        --
-        -- local alterBufnr = fn.bufname('#') -- alternative buffer is the buffer before enter qf window
-        -- local root = getRootByAlterBufnr(alterBufnr)
-        -- vim.cmd(('noa lcd %s'):format(fn.fnameescape(root)))
-        --
-        if info.quickfix == 1 then
-          items = fn.getqflist({ id = info.id, items = 0 }).items
-        else
-          items = fn.getloclist(info.winid, { id = info.id, items = 0 }).items
-        end
-        local limit = 31
-        local fnameFmt1, fnameFmt2 = "%-" .. limit .. "s", "…%." .. (limit - 1) .. "s"
-        local validFmt = "%s │%5d:%-3d│%s %s"
-        for i = info.start_idx, info.end_idx do
-          local e = items[i]
-          local fname = ""
-          local str
-          if e.valid == 1 then
-            if e.bufnr > 0 then
-              fname = fn.bufname(e.bufnr)
-              if fname == "" then
-                fname = "[No Name]"
-              else
-                fname = fname:gsub("^" .. vim.env.HOME, "~")
-              end
-              -- char in fname may occur more than 1 width, ignore this issue in order to keep performance
-              if #fname <= limit then
-                fname = fnameFmt1:format(fname)
-              else
-                fname = fnameFmt2:format(fname:sub(1 - limit))
-              end
-            end
-            local lnum = e.lnum > 99999 and -1 or e.lnum
-            local col = e.col > 999 and -1 or e.col
-            local qtype = e.type == "" and "" or " " .. e.type:sub(1, 1):upper()
-            str = validFmt:format(fname, lnum, col, qtype, e.text)
-          else
-            str = e.text
-          end
-          table.insert(ret, str)
-        end
-        return ret
-      end
-
-      vim.o.qftf = "{info -> v:lua._G.qftf(info)}"
-    end,
+    init = overrides.bqf.init,
     opts = {},
   },
   ---------------------------------------- SEARCH AND REPLACE
   {
     "roobert/search-replace.nvim",
     lazy = false,
-    config = function()
-      require("search-replace").setup {
-        -- optionally override defaults
-        default_replace_single_buffer_options = "gcI",
-        default_replace_multi_buffer_options = "egcI",
-      }
-    end,
-    opts = {
-      defaults = {
-        mappings = {
-          v = {
-            ["<C-r>"] = "<CMD>SearchReplaceSingleBufferVisualSelection<CR>",
-            ["<C-s>"] = "<CMD>SearchReplaceWithinVisualSelection<CR>",
-            ["<C-b>"] = "<CMD>SearchReplaceWithinVisualSelectionCWord<CR>",
-          },
-        },
-      },
-    },
-
+    opts = overrides.searchreplace.opts,
+    config = overrides.searchreplace.config,
     keys = {
       {
         "<leader>rs",
@@ -302,7 +162,7 @@ local plugins = {
   {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
-    opts = { open_cmd = "noswapfile vnew" },
+    opts = overrides.spectre.opts,
     -- stylua: ignore
     keys = {
       { "<leader>rr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
@@ -313,7 +173,7 @@ local plugins = {
   {
     "folke/which-key.nvim",
     optional = true,
-    lazy=false,
+    lazy = false,
     opts = {
       defaults = {
         ["<leader>rb"] = { name = "+Replace Multi-buffer" },
@@ -325,33 +185,10 @@ local plugins = {
     "echasnovski/mini.indentscope",
     version = false, -- wait till new 0.7.0 release to put it back on semver
     event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      -- symbol = "▏",
-      symbol = "│",
-      options = { try_as_border = true },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = {
-          "help",
-          "alpha",
-          "dashboard",
-          "neo-tree",
-          "Trouble",
-          "lazy",
-          "mason",
-          "notify",
-          "toggleterm",
-          "lazyterm",
-        },
-        callback = function()
-          vim.b.miniindentscope_disable = true
-        end,
-      })
-    end,
+    opts = overrides.indentscope.opts,
+    init = overrides.indentscope.init
   },
 
-   
   {
     "ruifm/gitlinker.nvim",
     lazy = false,
@@ -386,25 +223,19 @@ local plugins = {
     opts = {},
     event = "VeryLazy",
     dependencies = { "nvim-telescope/telescope.nvim" },
-    config = function(_, opts)
-      require("neoclip").setup(opts)
-      local telescope = require "telescope"
-      telescope.load_extension "neoclip"
-    end,
+    config = overrides.neoclip.config,
     keys = {
       { "<leader>fp", "<cmd>Telescope neoclip theme=dropdown<cr>", desc = "Clipboard" },
     },
   },
-  
+
   {
     "ahmedkhalf/project.nvim",
-    opts = {
-      manual_mode = true,
-    },
+    opts = overrides.project.opts,
     event = "VeryLazy",
     config = function(_, opts)
       require("project_nvim").setup(opts)
-      require("telescope").load_extension("projects")
+      require("telescope").load_extension "projects"
     end,
     keys = {
       { "<leader>oo", "<Cmd>Telescope projects<CR>", desc = "Projects" },
@@ -412,7 +243,6 @@ local plugins = {
       { "<leader>or", "<Cmd>ProjectRoot<CR>", desc = "Root Project" },
     },
   },
-
 
   {
     "nvim-telescope/telescope-fzf-native.nvim",
@@ -456,8 +286,8 @@ local plugins = {
         "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h') })<cr>",
         desc = "Find directory",
       },
-
     },
+  }
 
     -- opts = function()
     --   return {
@@ -480,7 +310,7 @@ local plugins = {
     --       },
     --       buffers = {
     --         initial_mode = "normal",
-    --         prompt_prefix = "﬘ ",
+    --         prompt_prefix
     --         mappings = {
     --           i = {
     --             ["<C-d>"] = require("telescope.actions").delete_buffer,

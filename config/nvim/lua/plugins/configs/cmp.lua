@@ -46,9 +46,9 @@ end
 
 local options = {
   completion = {
-    completeopt = "menu,menuone",
+    completeopt = "menu,menuone,noinsert,noselect",
   },
-
+  preselect = require('cmp').PreselectMode.None,
   window = {
     completion = {
       side_padding = (cmp_style ~= "atom" and cmp_style ~= "atom_colored") and 1 or 0,
