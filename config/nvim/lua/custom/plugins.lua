@@ -31,6 +31,11 @@ local plugins = {
   { "hrsh7th/cmp-buffer", enabled = is_lsp_enabled },
   { "hrsh7th/cmp-path", enabled = is_lsp_enabled },
   -- Override plugin definition options
+  
+  {
+    "NvChad/nvterm",
+    enabled = false,
+  },
 
   {
     "neovim/nvim-lspconfig",

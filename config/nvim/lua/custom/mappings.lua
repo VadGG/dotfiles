@@ -8,68 +8,63 @@ function _SET_CLIPBOARD(clip_value)
     clip_value = ""
   end
   vim.cmd("set clipboard=" .. clip_value)
-  vim.cmd("set clipboard?")
+  vim.cmd "set clipboard?"
 end
 
-local function newMapping(shortcut, desc) 
+local function newMapping(shortcut, desc)
   return { shortcut, desc, opts = { nowait = true } }
 end
 
 M.general = {
   n = {
-    [";"] = { ":", "enter command mode", opts = { nowait = true } },
-    ["H"] = { "^", "Begining of line", opts = { nowait = true } },
-    ["L"] = { "$", "End of line", opts = { nowait = true } },
+    [";"] = newMapping(":", "enter command mode"),
+    ["H"] = newMapping("^", "Begining of line"),
+    ["L"] = newMapping("$", "End of line"),
 
-    ["<leader>\\"] = { "<cmd>vs<CR>", "Vertical split" },
-    ["<leader>-"] = { "<cmd>sp<CR>", "Horizontal split" },
-    ["<leader>wq"] = { "<cmd>q<CR>", "Close Window" },
+    ["<leader>\\"] = newMapping( "<cmd>vs<CR>", "Vertical split" ),
+    ["<leader>-"] = newMapping( "<cmd>sp<CR>", "Horizontal split" ),
+    ["<leader>wq"] = newMapping( "<cmd>q<CR>", "Close Window" ),
 
-    ["<C-Up>"] = { "<cmd>resize -10<cr>", "Resize Screen Up" },
-    ["<C-Down>"] = { "<cmd>resize +10<cr>", "Resize Screen Down" },
-    ["<C-Left>"] = { "<cmd>vertical resize -10<cr>", "Resize Screen Left" },
-    ["<C-Right>"] = { "<cmd>vertical resize +10<cr>", "Resize Screen Right" },
+    ["<C-Up>"] = newMapping( "<cmd>resize -10<cr>", "Resize Screen Up" ),
+    ["<C-Down>"] = newMapping( "<cmd>resize +10<cr>", "Resize Screen Down" ),
+    ["<C-Left>"] = newMapping( "<cmd>vertical resize -10<cr>", "Resize Screen Left" ),
+    ["<C-Right>"] = newMapping( "<cmd>vertical resize +10<cr>", "Resize Screen Right" ),
 
-    ["<C-h>"] = { "<cmd> TmuxNavigateLeft<cr>", "Move left" },
-    ["<C-l>"] = { "<cmd> TmuxNavigateRight<cr>", "Move right" },
-    ["<C-j>"] = { "<cmd> TmuxNavigateDown<cr>", "Move down" },
-    ["<C-k>"] = { "<cmd> TmuxNavigateUp<cr>", "Move up" },
-    
+    ["<C-h>"] = newMapping( "<cmd> TmuxNavigateLeft<cr>", "Move left" ),
+    ["<C-l>"] = newMapping( "<cmd> TmuxNavigateRight<cr>", "Move right" ),
+    ["<C-j>"] = newMapping( "<cmd> TmuxNavigateDown<cr>", "Move down" ),
+    ["<C-k>"] = newMapping( "<cmd> TmuxNavigateUp<cr>", "Move up" ),
+
     ["`"] = {
       function()
-        _SET_CLIPBOARD('unnamedplus')
+        _SET_CLIPBOARD "unnamedplus"
       end,
       "Toggle clipboard",
     },
   },
   v = {
-    ["H"] = { "^", "Begining of line", opts = { nowait = true } },
-    ["L"] = { "$", "End of line", opts = { nowait = true } },
+    ["H"] = newMapping("^", "Begining of line"),
+    ["L"] = newMapping("$", "End of line"),
 
-    ["<"] = { "<gv", "Indent left"  },
-    [">"] = { ">gv", "Indent Right"  },
-    
-    ["<leader>\\"] = { "<cmd>vs<CR>", "Vertical split" },
-    ["<leader>-"] = { "<cmd>sp<CR>", "Horizontal split" },
-    ["<leader>wq"] = { "<cmd>q<CR>", "Close Window" },
-    
-    ["<C-h>"] = { "<cmd> TmuxNavigateLeft<cr>", "Move left" },
-    ["<C-l>"] = { "<cmd> TmuxNavigateRight<cr>", "Move right" },
-    ["<C-j>"] = { "<cmd> TmuxNavigateDown<cr>", "Move down" },
-    ["<C-k>"] = { "<cmd> TmuxNavigateUp<cr>", "Move up" },
-  
-    ["<C-Up>"] = { "<cmd>resize -10<cr>", "Resize Screen Up" },
-    ["<C-Down>"] = { "<cmd>resize +10<cr>", "Resize Screen Down" },
-    ["<C-Left>"] = { "<cmd>vertical resize -10<cr>", "Resize Screen Left" },
-    ["<C-Right>"] = { "<cmd>vertical resize +10<cr>", "Resize Screen Right" },
+    ["<"] = newMapping( "<gv", "Indent left" ),
+    [">"] = newMapping( ">gv", "Indent Right" ),
 
-    ["`"] = {
-      function()
-        _SET_CLIPBOARD('unnamedplus')
-      end,
-      "Toggle clipboard",
-    },
-  }
+    ["<leader>\\"] = newMapping( "<cmd>vs<CR>", "Vertical split" ),
+    ["<leader>-"] = newMapping( "<cmd>sp<CR>", "Horizontal split" ),
+    ["<leader>wq"] = newMapping( "<cmd>q<CR>", "Close Window" ),
+
+    ["<C-h>"] = newMapping( "<cmd> TmuxNavigateLeft<cr>", "Move left" ),
+    ["<C-l>"] = newMapping( "<cmd> TmuxNavigateRight<cr>", "Move right" ),
+    ["<C-j>"] = newMapping( "<cmd> TmuxNavigateDown<cr>", "Move down" ),
+    ["<C-k>"] = newMapping( "<cmd> TmuxNavigateUp<cr>", "Move up" ),
+
+    ["<C-Up>"] = newMapping( "<cmd>resize -10<cr>", "Resize Screen Up" ),
+    ["<C-Down>"] = newMapping( "<cmd>resize +10<cr>", "Resize Screen Down" ),
+    ["<C-Left>"] = newMapping( "<cmd>vertical resize -10<cr>", "Resize Screen Left" ),
+    ["<C-Right>"] = newMapping( "<cmd>vertical resize +10<cr>", "Resize Screen Right" ),
+
+    ["`"] = newMapping( function() _SET_CLIPBOARD "unnamedplus" end, "Toggle clipboard" ),
+  },
 }
 
 M.searchreplace = {
@@ -91,7 +86,7 @@ M.searchreplace = {
     ["<C-r>"] = newMapping("<cmd>SearchReplaceSingleBufferVisualSelection<cr>", "Replace selected"),
     ["<C-s>"] = newMapping("<cmd>SearchReplaceWithinVisualSelection<cr>", "Replace within selection"),
     ["<C-b>"] = newMapping("<cmd>SearchReplaceWithinVisualSelectionCWord<cr>", "Replace within selection CWord"),
-  }
+  },
 }
 
 M.tabufline = {
@@ -99,82 +94,92 @@ M.tabufline = {
 
   n = {
     -- close buffer + hide terminal buffer
-    ["<leader>X"] = {
-      function()
-        require("nvchad_ui.tabufline").closeOtherBufs()
-      end,
-      "Solo Buffer",
-    },
+    ["<leader>X"] = newMapping(function() require("nvchad_ui.tabufline").closeOtherBufs() end, "Solo Buffer"),
   },
 }
 
 M.surround = {
   plugin = true,
-
-  -- n = {
-  --   
-  --   ["gza"] = newMapping("gza", "Add surround"),
-  --   ["gzd"] = newMapping("gzd", "Delete surround"),
-  --   ["gzr"] = newMapping("gzr", "Replace surround"),
-  --   ["gzf"] = newMapping("gzf", "Find surround"),
-  --   ["gzF"] = newMapping("gzF", "Find surround left"),
-  --   ["gzh"] = newMapping("gzh", "Highlight surround"),
-  --   ["gzn"] = newMapping("gzn", "Update n_lines"),
-  --
-  -- }
+  n = {
+    ["gza"] = newMapping("gza", "Add surround"),
+    ["gzd"] = newMapping("gzd", "Delete surround"),
+    ["gzr"] = newMapping("gzr", "Replace surround"),
+    ["gzf"] = newMapping("gzf", "Find surround"),
+    ["gzF"] = newMapping("gzF", "Find surround left"),
+    ["gzh"] = newMapping("gzh", "Highlight surround"),
+    ["gzn"] = newMapping("gzn", "Update n_lines"),
+  },
 }
 
 M.gitlinker = {
   n = {
-     ["<leader>gy"] = { function() require("gitlinker").get_buf_range_url("n") end, "Get Repo Url" },
-  }
+    ["<leader>gy"] = newMapping( function() require("gitlinker").get_buf_range_url "n" end, "Get Repo Url"),
+  },
 }
 
 M.todo = {
   n = {
-      ["]t"] = { function() require("todo-comments").jump_next() end, "Next todo comment" },
-      ["[t"] = {  function() require("todo-comments").jump_prev() end, "Previous todo comment" },
-      ["<leader>tx"] = { "<cmd>TodoTrouble<cr>", "Todo (Trouble)" },
-      ["<leader>tX"] = { "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", "Todo/Fix/Fixme (Trouble)" },
-      ["<leader>ts"] = { "<cmd>TodoTelescope<cr>", "Todo" },
-      ["<leader>tS"] = { "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", "Todo/Fix/Fixme" },
-  }
+    ["]t"] = newMapping(function() require("todo-comments").jump_next() end, "Next todo comment" ),
+    ["[t"] = newMapping(function() require("todo-comments").jump_prev() end, "Previous todo comment" ),
+    ["<leader>tx"] = newMapping( "<cmd>TodoTrouble<cr>", "Todo (Trouble)" ),
+    ["<leader>tX"] = newMapping( "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", "Todo/Fix/Fixme (Trouble)" ),
+    ["<leader>ts"] = newMapping( "<cmd>TodoTelescope<cr>", "Todo" ),
+    ["<leader>tS"] = newMapping( "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", "Todo/Fix/Fixme" ),
+  },
 }
 
 M.neoclip = {
   n = {
-      ["<leader>fp"] = { "<cmd>Telescope neoclip theme=dropdown<cr>", "Clipboard" },
-  }
+    ["<leader>fp"] = newMapping( "<cmd>Telescope neoclip theme=dropdown<cr>", "Clipboard" ),
+  },
 }
 
 M.filemanager = {
   n = {
-      ["<leader>d"] = { "<cmd>Lf<cr>", "File explorer" },
-  }
+    ["<leader>d"] = newMapping( "<cmd>Lf<cr>", "File explorer" ),
+  },
 }
 
 M.spectre = {
   n = {
-      ["<leader>rr"] = { function() require("spectre").open() end, "Spectre" },
-  }
+    ["<leader>rr"] = {
+      function()
+        require("spectre").open()
+      end,
+      "Spectre",
+    },
+  },
 }
 
 M.project = {
   n = {
-      ["<leader>oo"] = { "<cmd>Telescope projects<cr>", "Find Projects" },
-      ["<leader>oa"] = { "<cmd>AddProject<cr>", "Add Project" },
-      ["<leader>or"] = { "<cmd>ProjectRoot<cr>", "Root Project" },
-  }
+    ["<leader>oo"] = newMapping( "<cmd>Telescope projects<cr>", "Find Projects" ),
+    ["<leader>oa"] = newMapping( "<cmd>AddProject<cr>", "Add Project" ),
+    ["<leader>or"] = newMapping( "<cmd>ProjectRoot<cr>", "Root Project" ),
+  },
 }
 
 M.grepliveargs = {
   n = {
-      ["<leader>fg"] = { function() require'telescope'.extensions.live_grep_args.live_grep_args() end, "Live Grep Args" },
-      ["<leader>fw"] = { function() require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()  end, "Live Grep under cursor" },
+    ["<leader>fg"] = {
+      function()
+        require("telescope").extensions.live_grep_args.live_grep_args()
+      end,
+      "Live Grep Args",
+    },
+    ["<leader>fw"] = {
+      function()
+        require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
+      end,
+      "Live Grep under cursor",
+    },
   },
   v = {
-    ["<C-g>"] = { "<cmd>lua  require('telescope-live-grep-args.shortcuts').grep_visual_selection()<cr>", "Grep Selected" },
-  }
+    ["<C-g>"] = {
+      "<cmd>lua  require('telescope-live-grep-args.shortcuts').grep_visual_selection()<cr>",
+      "Grep Selected",
+    },
+  },
 }
 
 M.telescope = {
@@ -182,14 +187,14 @@ M.telescope = {
 
   n = {
     -- find
-    ["<leader><space>"] = { "<cmd> Telescope find_files <CR>", "Find files" },
-    ["<leader>fF"] ={
-        "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h') })<cr>",
-        desc = "Find files in cwd",
-      },
+    ["<leader><space>"] = newMapping( "<cmd> Telescope find_files <CR>", "Find files" ),
+    ["<leader>fF"] = {
+      "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h') })<cr>",
+      desc = "Find files in cwd",
+    },
+    ["<leader>b"] = newMapping( "<cmd> Telescope buffers <CR>", "Find buffers" ),
   },
 }
-
 
 -- more keybinds!
 
