@@ -63,7 +63,6 @@ M.general = {
     ["<C-Left>"] = { "<cmd>vertical resize -10<cr>", "Resize Screen Left" },
     ["<C-Right>"] = { "<cmd>vertical resize +10<cr>", "Resize Screen Right" },
 
-    ["<C-g>"] = { "<cmd>lua  require('telescope-live-grep-args.shortcuts').grep_visual_selection()<cr>", "Grep Selected", opts = { nowait = true } },
     ["`"] = {
       function()
         _SET_CLIPBOARD('unnamedplus')
@@ -142,6 +141,41 @@ M.todo = {
   }
 }
 
+M.neoclip = {
+  n = {
+      ["<leader>fp"] = { "<cmd>Telescope neoclip theme=dropdown<cr>", "Clipboard" },
+  }
+}
+
+M.filemanager = {
+  n = {
+      ["<leader>d"] = { "<cmd>Lf<cr>", "File explorer" },
+  }
+}
+
+M.spectre = {
+  n = {
+      ["<leader>rr"] = { function() require("spectre").open() end, "Spectre" },
+  }
+}
+
+M.project = {
+  n = {
+      ["<leader>oo"] = { "<cmd>Telescope projects<cr>", "Find Projects" },
+      ["<leader>oa"] = { "<cmd>AddProject<cr>", "Add Project" },
+      ["<leader>or"] = { "<cmd>ProjectRoot<cr>", "Root Project" },
+  }
+}
+
+M.grepliveargs = {
+  n = {
+      ["<leader>fg"] = { function() require'telescope'.extensions.live_grep_args.live_grep_args() end, "Live Grep Args" },
+      ["<leader>fw"] = { function() require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()  end, "Live Grep under cursor" },
+  },
+  v = {
+    ["<C-g>"] = { "<cmd>lua  require('telescope-live-grep-args.shortcuts').grep_visual_selection()<cr>", "Grep Selected" },
+  }
+}
 
 M.telescope = {
   plugin = true,

@@ -74,9 +74,6 @@ local plugins = {
     cmd = "Lf",
     dependencies = { "nvim-lua/plenary.nvim", "akinsho/toggleterm.nvim" },
     opts = overrides.lfnvim.opts,
-    keys = {
-      { "<leader>d", "<cmd>Lf<cr>", desc = "File Explorer" },
-    },
   },
   ------------------------------------------------------------ NAVIGATION
   {
@@ -142,9 +139,6 @@ local plugins = {
       cmd = "Spectre",
       opts = overrides.spectre.opts,
     -- stylua: ignore
-    keys = {
-      { "<leader>rr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
-    },
     },
 
     -- TODO: move to proper place
@@ -174,7 +168,6 @@ local plugins = {
         "nvim-lua/plenary.nvim",
       },
       config = function(_, opts)
-        require("core.utils").load_mappings "gitlinker"
         require("gitlinker").setup(opts)
       end,
     },
@@ -197,9 +190,6 @@ local plugins = {
       event = "VeryLazy",
       dependencies = { "nvim-telescope/telescope.nvim" },
       config = overrides.neoclip.config,
-      keys = {
-        { "<leader>fp", "<cmd>Telescope neoclip theme=dropdown<cr>", desc = "Clipboard" },
-      },
     },
 
     {
@@ -210,11 +200,6 @@ local plugins = {
         require("project_nvim").setup(opts)
         require("telescope").load_extension "projects"
       end,
-      keys = {
-        { "<leader>oo", "<Cmd>Telescope projects<CR>", desc = "Projects" },
-        { "<leader>oa", "<Cmd>AddProject<CR>", desc = "Add Project" },
-        { "<leader>or", "<Cmd>ProjectRoot<CR>", desc = "Root Project" },
-      },
     },
 
     {
@@ -235,31 +220,12 @@ local plugins = {
         telescope.setup(opts)
         require("telescope").load_extension "live_grep_args"
       end,
-      keys = {
-        {
-          "<leader>fg",
-          "<Cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>",
-          desc = "Live Grep Args",
-        },
-        {
-          "<leader>fw",
-          "<cmd>lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>",
-          desc = "Live Grep Under Cursor",
-        },
-      },
     },
 
     {
       "nvim-telescope/telescope.nvim",
       -- extensions_list = { "themes", "terms", "fzf", "live_grep_args", "projects", "neoclip"},
       -- dependencies = { "nvim-telescope/telescope-live-grep-args.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
-      keys = {
-        {
-          "<leader>fF",
-          "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h') })<cr>",
-          desc = "Find directory",
-        },
-      },
     },
 
     -- opts = function()
