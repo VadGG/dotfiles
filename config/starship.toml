@@ -36,25 +36,25 @@ time_range = "-"
 [hostname]
 ssh_only = false
 disabled = false
-format = "[](fg:hostnametext bold)[$hostname](bg:hostnametext fg:themebg bold)[](fg:hostnametext bg:dirtext)"
+format = "[](fg:hostnametext bold)[$hostname](bg:hostnametext fg:themebg bold)[ ](fg:hostnametext bg:dirtext)"
 
 [directory]
-format = "[$path]($style)[$read_only](bg:dirtext fg:themebg bold)[ ](fg:dirtext bold bg:gittext)"
-style = "bg:dirtext fg:themebg bold"
+format = "[$path ]($style)[$read_only](bg:dirtext fg:themebg bold)[ ](fg:dirtext bold)"
+style = "bg:dirtext fg:bold themebg"
 truncation_symbol = "…/"
 truncate_to_repo = false
 truncation_length = 100
 home_symbol = " "
 
 [git_branch]
-format = "[$symbol$branch](fg:bold themebg bg:gittext)[](fg:gittext)"
-symbol = " "
+format = "[$symbol$branch](fg:bold gittext) "
+symbol = "  "
 
 [git_status]
-format = '([\[$all_status$ahead_behind\]](fg:#fff1cf bg:themebg)[ ](fg:#fff1cf bg:themebg))'
+format = '([\[$all_status$ahead_behind\]](fg:bold gitstatustext)[ ](fg:bold gitstatustext))'
 
 [username]
-format = "[](fg:usertext bold)[$user](fg:themebg bg:usertext bold)[ ](fg:usertext bg:themebg bold)"
+format = "[](fg:usertext bold)[$user](fg:themebg bold bg:usertext)[ ](fg:usertext bold bg:themebg)"
 show_always = true
 disabled = false
 
@@ -103,6 +103,7 @@ themebg = "#11111b"
 
 dirtext = "#f9e2af"
 gittext = "#eba0ac"
+gitstatustext = "#f5c2e7"
 
 hostnametext = "#89dceb"
 usertext = "#94e2d5"
