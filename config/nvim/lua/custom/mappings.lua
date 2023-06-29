@@ -21,10 +21,6 @@ M.general = {
     ["H"] = newMapping("^", "Begining of line"),
     ["L"] = newMapping("$", "End of line"),
 
-    ["<leader>\\"] = newMapping("<cmd>vs<CR>", "Vertical split"),
-    ["<leader>-"] = newMapping("<cmd>sp<CR>", "Horizontal split"),
-    ["<leader>wq"] = newMapping("<cmd>q<CR>", "Close Window"),
-
     ["<C-Up>"] = newMapping("<cmd>resize -10<cr>", "Resize Screen Up"),
     ["<C-Down>"] = newMapping("<cmd>resize +10<cr>", "Resize Screen Down"),
     ["<C-Left>"] = newMapping("<cmd>vertical resize -10<cr>", "Resize Screen Left"),
@@ -35,8 +31,6 @@ M.general = {
     ["<C-j>"] = newMapping("<cmd> TmuxNavigateDown<cr>", "Move down"),
     ["<C-k>"] = newMapping("<cmd> TmuxNavigateUp<cr>", "Move up"),
 
-    ["<leader>wd"] = newMapping("<cmd>windo diffthis<cr>", "Diff this"),
-    ["<leader>wD"] = newMapping("<cmd>windo diffoff<cr>", "Diff off"),
     ["`"] = {
       function()
         _SET_CLIPBOARD "unnamedplus"
@@ -47,23 +41,19 @@ M.general = {
   v = {
     ["H"] = newMapping("^", "Begining of line"),
     ["L"] = newMapping("$", "End of line"),
-
+  
     ["<"] = newMapping("<gv", "Indent left"),
     [">"] = newMapping(">gv", "Indent Right"),
-
-    ["<leader>\\"] = newMapping("<cmd>vs<CR>", "Vertical split"),
-    ["<leader>-"] = newMapping("<cmd>sp<CR>", "Horizontal split"),
-    ["<leader>wq"] = newMapping("<cmd>q<CR>", "Close Window"),
-
-    ["<C-h>"] = newMapping("<cmd> TmuxNavigateLeft<cr>", "Move left"),
-    ["<C-l>"] = newMapping("<cmd> TmuxNavigateRight<cr>", "Move right"),
-    ["<C-j>"] = newMapping("<cmd> TmuxNavigateDown<cr>", "Move down"),
-    ["<C-k>"] = newMapping("<cmd> TmuxNavigateUp<cr>", "Move up"),
 
     ["<C-Up>"] = newMapping("<cmd>resize -10<cr>", "Resize Screen Up"),
     ["<C-Down>"] = newMapping("<cmd>resize +10<cr>", "Resize Screen Down"),
     ["<C-Left>"] = newMapping("<cmd>vertical resize -10<cr>", "Resize Screen Left"),
     ["<C-Right>"] = newMapping("<cmd>vertical resize +10<cr>", "Resize Screen Right"),
+
+    ["<C-h>"] = newMapping("<cmd> TmuxNavigateLeft<cr>", "Move left"),
+    ["<C-l>"] = newMapping("<cmd> TmuxNavigateRight<cr>", "Move right"),
+    ["<C-j>"] = newMapping("<cmd> TmuxNavigateDown<cr>", "Move down"),
+    ["<C-k>"] = newMapping("<cmd> TmuxNavigateUp<cr>", "Move up"),
 
     ["`"] = newMapping(function()
       _SET_CLIPBOARD "unnamedplus"
@@ -91,6 +81,27 @@ M.searchreplace = {
     ["<C-s>"] = newMapping("<cmd>SearchReplaceWithinVisualSelection<cr>", "Replace within selection"),
     ["<C-b>"] = newMapping("<cmd>SearchReplaceWithinVisualSelectionCWord<cr>", "Replace within selection CWord"),
   },
+}
+
+M.window = {
+  plugin = false,
+
+  n = {
+    ["<leader>\\"] = newMapping( "<cmd>vs<CR>", "Vertical split" ),
+    ["<leader>-"] = newMapping( "<cmd>sp<CR>", "Horizontal split" ),
+    ["<leader>wq"] = newMapping( "<cmd>q<CR>", "Close Window" ),
+    ["<leader>wd"] = newMapping( "<cmd>windo diffthis<CR>", "Diff windows" ),
+    ["<leader>wD"] = newMapping( "<cmd>windo diffoff<CR>", "Turn diff off" ),
+  },
+
+  v = {
+    ["<leader>\\"] = newMapping( "<cmd>vs<CR>", "Vertical split" ),
+    ["<leader>-"] = newMapping( "<cmd>sp<CR>", "Horizontal split" ),
+    ["<leader>wq"] = newMapping( "<cmd>q<CR>", "Close Window" ),
+    ["<leader>wd"] = newMapping( "<cmd>windo diffthis<CR>", "Diff windows" ),
+    ["<leader>wD"] = newMapping( "<cmd>windo diffoff<CR>", "Turn diff off" ),
+  },
+
 }
 
 M.tabufline = {

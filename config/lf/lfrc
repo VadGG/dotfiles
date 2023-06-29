@@ -62,6 +62,6 @@ cmd bulk-duplicate ${{
     rm $index $index_edit
 }}
 
-map <c-r> bulk-rename
-map <c-c> bulk-duplicate
+map R bulk-rename
+map C bulk-duplicate
 
