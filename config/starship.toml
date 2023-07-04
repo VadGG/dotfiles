@@ -36,7 +36,7 @@ time_range = "-"
 [hostname]
 ssh_only = false
 disabled = false
-format = "[](fg:hostnametext bold)[$hostname](bg:hostnametext fg:themebg bold)[ ](fg:hostnametext bg:dirtext)"
+format = "[](fg:sapphire bold)[$hostname](bg:sapphire fg:themebg bold)[ ](fg:sapphire bg:dirtext)"
 
 [directory]
 format = "[$path ]($style)[$read_only](bg:dirtext fg:themebg bold)[ ](fg:dirtext bold)"
