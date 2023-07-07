@@ -64,3 +64,4 @@ luac.out
 *.hex
 
 config/nvim/plugin/packer_compiled.lua
+config/tmux/plugins/tmux-thumbs/target
