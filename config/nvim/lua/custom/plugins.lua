@@ -70,6 +70,15 @@ local plugins = {
     config = overrides.betterescape.config,
   },
 
+  {
+    "kdheepak/lazygit.nvim",
+    lazy = false,
+    -- optional for floating window border decoration
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+  },
+
   ----------------------------------------------------------- FILE BROWSER
   {
     "lmburns/lf.nvim",

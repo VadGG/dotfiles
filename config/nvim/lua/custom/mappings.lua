@@ -171,6 +171,13 @@ M.spectre = {
   },
 }
 
+M.lazygit = {
+  n = {
+    ["<leader>gg"] = newMapping("<cmd>LazyGit<cr>", "LazyGit"),
+    ["<leader>gc"] = newMapping("<cmd>LazyGitConfig<cr>", "LazyGitConfig"),
+  },
+}
+
 M.project = {
   n = {
     ["<leader>oo"] = newMapping("<cmd>Telescope projects<cr>", "Find Projects"),
