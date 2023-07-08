@@ -20,6 +20,8 @@ M.general = {
     [";"] = newMapping(":", "enter command mode"),
     ["H"] = newMapping("^", "Begining of line"),
     ["L"] = newMapping("$", "End of line"),
+    
+    ["<C-S>"] = newMapping("<cmd>wall<cr>", "Save All"),
 
     ["<C-Up>"] = newMapping("<cmd>resize -10<cr>", "Resize Screen Up"),
     ["<C-Down>"] = newMapping("<cmd>resize +10<cr>", "Resize Screen Down"),
@@ -90,6 +92,7 @@ M.window = {
     ["<leader>\\"] = newMapping( "<cmd>vs<CR>", "Vertical split" ),
     ["<leader>-"] = newMapping( "<cmd>sp<CR>", "Horizontal split" ),
     ["<leader>wq"] = newMapping( "<cmd>q<CR>", "Close Window" ),
+    ["<leader>wQ"] = newMapping( "<cmd>qall<CR>", "Close all" ),
     ["<leader>wd"] = newMapping( "<cmd>windo diffthis<CR>", "Diff windows" ),
     ["<leader>wD"] = newMapping( "<cmd>windo diffoff<CR>", "Turn diff off" ),
   },

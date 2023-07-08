@@ -164,12 +164,12 @@ M.lspconfig = {
       "LSP definition type",
     },
 
-    -- ["<leader>ra"] = {
-    --   function()
-    --     require("nvchad_ui.renamer").open()
-    --   end,
-    --   "LSP rename",
-    -- },
+    ["<leader>ra"] = {
+      function()
+        require("nvchad_ui.renamer").open()
+      end,
+      "LSP rename",
+    },
 
     ["<leader>ca"] = {
       function()
@@ -397,7 +397,7 @@ M.gitsigns = {
 
   n = {
     -- Navigation through hunks
-    ["]c"] = {
+    ["]h"] = {
       function()
         if vim.wo.diff then
           return "]c"
@@ -411,7 +411,7 @@ M.gitsigns = {
       opts = { expr = true },
     },
 
-    ["[c"] = {
+    ["[h"] = {
       function()
         if vim.wo.diff then
           return "[c"
@@ -426,28 +426,28 @@ M.gitsigns = {
     },
 
     -- Actions
-    ["<leader>rh"] = {
+    ["<leader>hr"] = {
       function()
         require("gitsigns").reset_hunk()
       end,
       "Reset hunk",
     },
 
-    ["<leader>ph"] = {
+    ["<leader>hp"] = {
       function()
         require("gitsigns").preview_hunk()
       end,
       "Preview hunk",
     },
 
-    ["<leader>gb"] = {
+    ["<leader>gw"] = {
       function()
         package.loaded.gitsigns.blame_line()
       end,
       "Blame line",
     },
 
-    ["<leader>td"] = {
+    ["<leader>gd"] = {
       function()
         require("gitsigns").toggle_deleted()
       end,
