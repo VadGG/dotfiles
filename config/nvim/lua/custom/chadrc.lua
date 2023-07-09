@@ -1,12 +1,16 @@
 ---@type ChadrcConfig
 local M = {}
 
+local core = require "custom.configs.core"
+
 -- Path to overriding theme and highlights files
 local highlights = require "custom.highlights"
 
 M.ui = {
   theme = "onenord",
   theme_toggle = { "onedark", "one_light" },
+
+  statusline = core.statusline,
 
   hl_override = highlights.override,
   hl_add = highlights.add,

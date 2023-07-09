@@ -79,6 +79,17 @@ local plugins = {
     },
   },
 
+
+  {
+    "folke/noice.nvim",
+    event = "UIEnter",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    config = overrides.noice.config,
+  },
+
   ----------------------------------------------------------- FILE BROWSER
   {
     "lmburns/lf.nvim",
@@ -94,6 +105,7 @@ local plugins = {
     opts = overrides.lightspeed.opts,
     config = overrides.lightspeed.config,
   },
+
   ------------------------------------------------------- UTILS
   {
     "tpope/vim-repeat",

@@ -79,6 +79,60 @@ M.betterescape = {
   end,
 }
 
+M.noice = {
+  config = function()
+      local present, noice = pcall(require, "noice")
+
+      if not present then
+        return
+      end
+
+      noice.setup {
+        cmdline = {
+          format = {
+            search_down = { kind = "search", pattern = "^/", icon = "", lang = "regex" },
+            search_up = { kind = "search", pattern = "^%?", icon = "", lang = "regex" },
+          },
+        },
+        lsp = {
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true,
+          },
+        },
+        routes = {
+          {
+            filter = {
+              event = "msg_show",
+              any = {
+                { find = "%d+L, %d+B" },
+                { find = "; after #%d+" },
+                { find = "; before #%d+" },
+              },
+            },
+            view = "mini",
+          },
+        },
+        presets = {
+          bottom_search = false,
+          command_palette = true,
+          long_message_to_split = true,
+          inc_rename = true,
+        },
+               
+
+        notify = {
+          enabled = true,
+          view = "notify",
+        },
+        
+        
+      }
+
+  end,
+}
+
 -- file browser lf
 M.lfnvim = {
   opts = {

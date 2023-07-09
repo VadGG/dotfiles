@@ -32,13 +32,6 @@ M.general = {
     ["<C-l>"] = newMapping("<cmd> TmuxNavigateRight<cr>", "Move right"),
     ["<C-j>"] = newMapping("<cmd> TmuxNavigateDown<cr>", "Move down"),
     ["<C-k>"] = newMapping("<cmd> TmuxNavigateUp<cr>", "Move up"),
-
-    ["`"] = {
-      function()
-        _SET_CLIPBOARD "unnamedplus"
-      end,
-      "Toggle clipboard",
-    },
   },
   v = {
     ["H"] = newMapping("^", "Begining of line"),
@@ -56,10 +49,6 @@ M.general = {
     ["<C-l>"] = newMapping("<cmd> TmuxNavigateRight<cr>", "Move right"),
     ["<C-j>"] = newMapping("<cmd> TmuxNavigateDown<cr>", "Move down"),
     ["<C-k>"] = newMapping("<cmd> TmuxNavigateUp<cr>", "Move up"),
-
-    ["`"] = newMapping(function()
-      _SET_CLIPBOARD "unnamedplus"
-    end, "Toggle clipboard"),
   },
 }
 
@@ -80,8 +69,13 @@ M.searchreplace = {
   },
   v = {
     ["<C-r>"] = newMapping("<cmd>SearchReplaceSingleBufferVisualSelection<cr>", "Replace selected"),
+    ["<leader>rw"] = newMapping("<cmd>SearchReplaceSingleBufferVisualSelection<cr>", "Replace selected"),
+
     ["<C-s>"] = newMapping("<cmd>SearchReplaceWithinVisualSelection<cr>", "Replace within selection"),
+    ["<leader>ri"] = newMapping("<cmd>SearchReplaceWithinVisualSelection<cr>", "Replace within selection"),
+
     ["<C-b>"] = newMapping("<cmd>SearchReplaceWithinVisualSelectionCWord<cr>", "Replace within selection CWord"),
+    ["<leader>ro"] = newMapping("<cmd>SearchReplaceWithinVisualSelectionCWord<cr>", "Replace within selection CWord"),
   },
 }
 
@@ -156,7 +150,28 @@ M.todo = {
 
 M.neoclip = {
   n = {
-    ["<leader>fp"] = newMapping("<cmd>Telescope neoclip theme=dropdown<cr>", "Clipboard"),
+    ["<leader>pp"] = newMapping("<cmd>Telescope neoclip theme=dropdown<cr>", "Clipboard"),
+    ["<leader>pc"] = newMapping(function()
+      _SET_CLIPBOARD "unnamedplus"
+    end, "Toggle clipboard"),
+  },
+  v = {
+    ["<leader>pc"] = newMapping(function()
+      _SET_CLIPBOARD "unnamedplus"
+    end, "Toggle clipboard"),
+  },
+}
+
+M.noice = {
+  n = {
+      -- ["<S-Enter>"] = newMapping(function() require("noice").redirect(vim.fn.getcmdline()) end, "Redirect Cmdline"),
+      ["<leader>sl"] = newMapping(function() require("noice").cmd("last") end, "Noice Last Message"),
+      ["<leader>sh"] = newMapping(function() require("noice").cmd("history") end, "Noice History"),
+      ["<leader>sa"] = newMapping(function() require("noice").cmd("all") end, "Noice All"),
+      ["<leader>sd"] = newMapping(function() require("noice").cmd("dismiss") end, "Dismiss All"),
+
+      -- { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll forward", mode = {"i", "n", "s"} },
+      -- { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll backward", mode = {"i", "n", "s"}},
   },
 }
 

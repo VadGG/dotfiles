@@ -6,4 +6,8 @@
 --   command = "tabdo wincmd =",
 -- })
 
+local opt = vim.opt
+
 vim.o.inccommand = "split"
+
+opt.clipboard = ""
