@@ -101,6 +101,49 @@ M.window = {
 
 }
 
+M.harpoon = {
+  n = {
+    ["<leader>''"] = {
+      function()
+        require("harpoon.mark").add_file()
+        print("Added to Harpoon")
+      end,
+      "󱡁 Harpoon Add file",
+    },
+    ["<leader>f'"] = { "<cmd>Telescope harpoon marks<CR>", "󱡀 Toggle quick menu" },
+    ["<leader>'s"] = {
+      function()
+        require("harpoon.ui").toggle_quick_menu()
+      end,
+      "󱠿 Harpoon Menu",
+    },
+    ["<leader>1"] = {
+      function()
+        require("harpoon.ui").nav_file(1)
+      end,
+      "󱪼 Navigate to file 1",
+    },
+    ["<leader>2"] = {
+      function()
+        require("harpoon.ui").nav_file(2)
+      end,
+      "󱪽 Navigate to file 2",
+    },
+    ["<leader>3"] = {
+      function()
+        require("harpoon.ui").nav_file(3)
+      end,
+      "󱪾 Navigate to file 3",
+    },
+    ["<leader>4"] = {
+      function()
+        require("harpoon.ui").nav_file(4)
+      end,
+      "󱪿 Navigate to file 4",
+    },
+  },
+}
+
 M.tabufline = {
   plugin = true,
 
@@ -115,13 +158,13 @@ M.tabufline = {
 M.surround = {
   plugin = true,
   n = {
-    ["gza"] = newMapping("gza", "Add surround"),
-    ["gzd"] = newMapping("gzd", "Delete surround"),
-    ["gzr"] = newMapping("gzr", "Replace surround"),
-    ["gzf"] = newMapping("gzf", "Find surround"),
-    ["gzF"] = newMapping("gzF", "Find surround left"),
-    ["gzh"] = newMapping("gzh", "Highlight surround"),
-    ["gzn"] = newMapping("gzn", "Update n_lines"),
+    ["ys"] = newMapping("ys", "Add surround"),
+    ["ds"] = newMapping("ds", "Delete surround"),
+    ["cs"] = newMapping("cs", "Change surround"),
+    -- ["gzf"] = newMapping("gzf", "Find surround"),
+    -- ["gzF"] = newMapping("gzF", "Find surround left"),
+    -- ["gzh"] = newMapping("gzh", "Highlight surround"),
+    -- ["gzn"] = newMapping("gzn", "Update n_lines"),
   },
 }
 
@@ -196,6 +239,16 @@ M.lazygit = {
   },
 }
 
+M.gitview = {
+  n = {
+    ["<leader>gvd"] = newMapping( "<cmd> DiffviewOpen<CR>", "  Show git diff" ),
+    ["<leader>gvf"] = newMapping( "<cmd> DiffviewFileHistory %<CR>", "  Show file history" ),
+    ["<leader>gvp"] = newMapping( "<cmd> DiffviewOpen --cached<CR>", "  Show staged diffs" ),
+    ["<leader>gvr"] = newMapping("<cmd> DiffviewRefresh<CR>", "  Refresh diff view" ),
+    ["<leader>gvc"] = newMapping("<cmd> DiffviewClose<CR>", "  Close diff view" ),
+  }
+}
+
 M.project = {
   n = {
     ["<leader>oo"] = newMapping("<cmd>Telescope projects<cr>", "Find Projects"),
@@ -226,7 +279,7 @@ M.telescope = {
   n = {
     -- find
     ["<leader><space>"] = newMapping(function()
-      require("telescope.builtin").find_files { previewer = false }
+      require('telescope').extensions.frecency.frecency { workspace = 'CWD', previewer = false }
     end, "Find files"),
     ["<leader>fF"] = newMapping(function()
       require("telescope.builtin").find_files { cwd = vim.fn.expand "%:p:h" }

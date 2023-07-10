@@ -1,5 +1,5 @@
 local overrides = require "custom.configs.overrides"
-local is_lsp_enabled = false
+local is_lsp_enabled = true
 
 -- TODO: open recent files
 -- TODO: search from the open directory like default
@@ -29,7 +29,7 @@ local plugins = {
   { "hrsh7th/cmp-buffer", enabled = is_lsp_enabled },
   { "hrsh7th/cmp-path", enabled = is_lsp_enabled },
   -- Override plugin definition options
-  
+
   {
     "NvChad/nvterm",
     enabled = false,
@@ -75,10 +75,9 @@ local plugins = {
     lazy = false,
     -- optional for floating window border decoration
     dependencies = {
-        "nvim-lua/plenary.nvim",
+      "nvim-lua/plenary.nvim",
     },
   },
-
 
   {
     "folke/noice.nvim",
@@ -88,6 +87,50 @@ local plugins = {
       "rcarriga/nvim-notify",
     },
     config = overrides.noice.config,
+  },
+
+  {
+    "hiphish/rainbow-delimiters.nvim",
+    event = "BufReadPost",
+    config = function()
+      local rainbow_delimiters = require "rainbow-delimiters"
+
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [""] = rainbow_delimiters.strategy["global"],
+          vim = rainbow_delimiters.strategy["local"],
+        },
+        query = {
+          [""] = "rainbow-delimiters",
+          lua = "rainbow-blocks",
+        },
+        highlight = {
+          "RainbowDelimiterRed",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterViolet",
+          "RainbowDelimiterCyan",
+        },
+      }
+    end,
+  },
+
+  {
+    "sindrets/diffview.nvim",
+    cmd = "DiffviewOpen",
+    config = function()
+      require("diffview").setup {
+        enhanced_diff_hl = true,
+        view = {
+          merge_tool = {
+            layout = "diff3_mixed",
+            disable_diagnostics = true,
+          },
+        },
+      }
+    end,
   },
 
   ----------------------------------------------------------- FILE BROWSER
@@ -131,204 +174,115 @@ local plugins = {
     "echasnovski/mini.surround",
     lazy = false,
     opts = overrides.minisurround.opts,
-    {
-      "chrisgrieser/nvim-recorder",
-      lazy = false,
-      opts = {},
-    },
-
-    ----------------------------------------------------------- QUICK-FIX
-    {
-      "milkypostman/vim-togglelist",
-      lazy = false,
-      config = function() end,
-    },
-
-    {
-      "kevinhwang91/nvim-bqf",
-      lazy = false,
-      init = overrides.bqf.init,
-      opts = {},
-    },
-    ---------------------------------------- SEARCH AND REPLACE
-    {
-      "roobert/search-replace.nvim",
-      lazy = false,
-      opts = overrides.searchreplace.opts,
-      config = overrides.searchreplace.config,
-    },
-
-    {
-      "nvim-pack/nvim-spectre",
-      cmd = "Spectre",
-      opts = overrides.spectre.opts,
-    -- stylua: ignore
-    },
-
-    -- TODO: move to proper place
-    {
-      "folke/which-key.nvim",
-      optional = true,
-      lazy = false,
-      opts = {
-        defaults = {
-          ["<leader>rb"] = { name = "+Replace Multi-buffer" },
-        },
-      },
-    },
-    -------------------------------------------------------------------------------- INDENTSCOPE
-    {
-      "echasnovski/mini.indentscope",
-      version = false, -- wait till new 0.7.0 release to put it back on semver
-      event = { "BufReadPre", "BufNewFile" },
-      opts = overrides.indentscope.opts,
-      init = overrides.indentscope.init,
-    },
-
-    {
-      "ruifm/gitlinker.nvim",
-      lazy = false,
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-      },
-      config = function(_, opts)
-        require("gitlinker").setup(opts)
-      end,
-    },
-    ---------------------------------------------------------------- TODO
-    {
-      "folke/todo-comments.nvim",
-      lazy = false,
-      cmd = { "TodoTrouble", "TodoTelescope" },
-      event = { "BufReadPost", "BufNewFile" },
-      opts = {},
-      config = function()
-        require "custom.configs.todo"
-      end,
-      -- stylua: ignore
-    },
-    ---------------------------------------------------------------- TELESCOPE
-    {
-      "AckslD/nvim-neoclip.lua",
-      opts = {},
-      event = "VeryLazy",
-      dependencies = { "nvim-telescope/telescope.nvim" },
-      config = overrides.neoclip.config,
-    },
-
-    {
-      "ahmedkhalf/project.nvim",
-      opts = overrides.project.opts,
-      event = "VeryLazy",
-      config = function(_, opts)
-        require("project_nvim").setup(opts)
-        require("telescope").load_extension "projects"
-      end,
-    },
-
-    {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      build = "make",
-      config = function(_, opts)
-        local telescope = require "telescope"
-        telescope.setup(opts)
-        require("telescope").load_extension "fzf"
-      end,
-    },
-
-    {
-      "nvim-telescope/telescope-live-grep-args.nvim",
-      dependencies = { "nvim-telescope/telescope.nvim" },
-      config = function(_, opts)
-        local telescope = require "telescope"
-        telescope.setup(opts)
-        require("telescope").load_extension "live_grep_args"
-      end,
-    },
-
-    {
-      "nvim-telescope/telescope.nvim",
-      -- extensions_list = { "themes", "terms", "fzf", "live_grep_args", "projects", "neoclip"},
-      -- dependencies = { "nvim-telescope/telescope-live-grep-args.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
-    },
-
-    -- opts = function()
-    --   return {
-    --     pickers = {
-    --       find_files = {
-    --         prompt_prefix = " ",
-    --         -- find_command = { "rg", "--files", "--hidden" },
-    --       },
-    --       live_grep = {
-    --         -- layout_strategy = "vertical",
-    --         sorting_strategy = "ascending",
-    --       },
-    --       commands = {
-    --         prompt_prefix = " ",
-    --         initial_mode = "insert",
-    --       },
-    --       git_files = {
-    --         prompt_prefix = " ",
-    --         show_untracked = true,
-    --       },
-    --       buffers = {
-    --         initial_mode = "normal",
-    --         prompt_prefix
-    --         mappings = {
-    --           i = {
-    --             ["<C-d>"] = require("telescope.actions").delete_buffer,
-    --           },
-    --           n = {
-    --             ["d"] = require("telescope.actions").delete_buffer,
-    --             ["q"] = function(...)
-    --               return require("telescope.actions").close(...)
-    --             end,
-    --           },
-    --         },
-    --       },
-    --     },
-    --     extensions = {
-    --       fzf = {
-    --         fuzzy = true, -- false will only do exact matching
-    --         override_generic_sorter = true, -- override the generic sorter
-    --         override_file_sorter = true, -- override the file sorter
-    --         case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-    --       },
-    --       neoclip = {
-    --         initial_mode = "normal",
-    --         -- layout_strategy = "vertical",
-    --       },
-    --       projects = {
-    --         initial_mode = "normal",
-    --         -- layout_strategy = "vertical",
-    --         previewer = false,
-    --       },
-    --       live_grep_args = {
-    --         initial_mode = "insert",
-    --         -- layout_strategy = "vertical",
-    --         sorting_strategy = "ascending",
-    --       },
-    --     },
-    --   }
-    -- end,
   },
 
-  -- {
-  --   "nvim-telescope/telescope.nvim",
-  --   opts = {
-  --     defaults = {
-  --       layout_strategy = "vertical",
-  --       layout_config = {
-  --         height = 0.95,
-  --         prompt_position = "top",
-  --         vertical = {
-  --           mirror = true,
-  --           preview_cutoff = 0,
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
+  {
+    "chrisgrieser/nvim-recorder",
+    lazy = false,
+    opts = {},
+  },
+
+  ----------------------------------------------------------- QUICK-FIX
+  {
+    "milkypostman/vim-togglelist",
+    lazy = false,
+    config = function() end,
+  },
+
+  {
+    "kevinhwang91/nvim-bqf",
+    lazy = false,
+    init = overrides.bqf.init,
+    opts = {},
+  },
+  ---------------------------------------- SEARCH AND REPLACE
+  {
+    "roobert/search-replace.nvim",
+    lazy = false,
+    opts = overrides.searchreplace.opts,
+    config = overrides.searchreplace.config,
+  },
+
+  {
+    "nvim-pack/nvim-spectre",
+    cmd = "Spectre",
+    opts = overrides.spectre.opts,
+    -- stylua: ignore
+  },
+
+  -- TODO: move to proper place
+  {
+    "folke/which-key.nvim",
+    optional = true,
+    lazy = false,
+    opts = {
+      defaults = {
+        ["<leader>rb"] = { name = "+Replace Multi-buffer" },
+      },
+    },
+  },
+  -------------------------------------------------------------------------------- INDENTSCOPE
+  {
+    "echasnovski/mini.indentscope",
+    version = false, -- wait till new 0.7.0 release to put it back on semver
+    event = { "BufReadPre", "BufNewFile" },
+    opts = overrides.indentscope.opts,
+    init = overrides.indentscope.init,
+  },
+
+  {
+    "ruifm/gitlinker.nvim",
+    lazy = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function(_, opts)
+      require("gitlinker").setup(opts)
+    end,
+  },
+  ---------------------------------------------------------------- TODO
+  {
+    "folke/todo-comments.nvim",
+    lazy = false,
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {},
+    config = function()
+      require "custom.configs.todo"
+    end,
+    -- stylua: ignore
+  },
+  ---------------------------------------------------------------- TELESCOPE
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = overrides.telescope,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-fzf-native.nvim",
+      "nvim-telescope/telescope-live-grep-args.nvim",
+      {
+        "AckslD/nvim-neoclip.lua",
+        config = overrides.neoclip.config,
+      },
+
+      {
+        "ahmedkhalf/project.nvim",
+        lazy = false,
+        opts = overrides.project.opts,
+        config = function(_, opts)
+          require("project_nvim").setup(opts)
+        end,
+      },
+      {
+        "ThePrimeagen/harpoon",
+        cmd = "Harpoon",
+      },
+      {
+        "nvim-telescope/telescope-frecency.nvim",
+        dependencies = { "kkharji/sqlite.lua" },
+      },
+    },
+  },
 
   -- To make a plugin not be loaded
   -- {

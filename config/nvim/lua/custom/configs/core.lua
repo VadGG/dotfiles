@@ -7,16 +7,20 @@ M.statusline = {
     local modes = st_modules.modes
 
     -- Load info for harpoon
-    -- local function get_marked()
-    --   local Marked = require "harpoon.mark"
-    --   local filename = vim.api.nvim_buf_get_name(0)
-    --   local success, index = pcall(Marked.get_index_of, filename)
-    --   if success and index and index ~= nil then
-    --     return "󱡀 " .. index .. " "
-    --   else
-    --     return ""
-    --   end
-    -- end
+    local function get_marked()
+      local status_ok, Marked = pcall(require, "harpoon.mark")
+      if not status_ok then
+        return ""
+      end
+
+      local filename = vim.api.nvim_buf_get_name(0)
+      local success, index = pcall(Marked.get_index_of, filename)
+      if success and index and index ~= nil then
+        return "󱡀 " .. index .. " "
+      else
+        return ""
+      end
+    end
     -- Load info for possession
     -- local function get_session()
     --   local session = require("nvim-possession").status()
@@ -58,11 +62,11 @@ M.statusline = {
             local hl_fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID(icon_hl)), "fg")
             local hl_bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID "StText"), "bg")
             vim.api.nvim_set_hl(0, "St_" .. icon_hl, { fg = hl_fg, bg = hl_bg })
-            icon_text = "%#St_" .. icon_hl .. "# " .. icon .. "%#StText# " .. filename .. " "
+            icon_text = "%#St_" .. icon_hl .. "# " .. icon .. "%#StText# " .. get_marked() .. filename .. " "
           end
         end
 
-        return icon_text or ("%#StText# " .. icon .. filename)
+        return icon_text or ("%#StText# " .. icon .. get_marked() .. filename)
       end,
 
       -- LSP_status = function()
@@ -90,9 +94,9 @@ M.statusline = {
       --     .. st_modules.LSP_Diagnostics()
       -- end,
 
-      -- cwd = function()
-      --   return " %#TermHl#%@v:lua.ClickTerm@ " .. " %#NotificationHl#%@v:lua.ClickMe@  " .. st_modules.cwd()
-      -- end,
+      cwd = function()
+        return " %#TermHl#%@v:lua.ClickTerm@ " .. " %#NotificationHl#%@v:lua.ClickMe@  " .. st_modules.cwd()
+      end,
     }
   end,
 }

@@ -81,55 +81,51 @@ M.betterescape = {
 
 M.noice = {
   config = function()
-      local present, noice = pcall(require, "noice")
+    local present, noice = pcall(require, "noice")
 
-      if not present then
-        return
-      end
+    if not present then
+      return
+    end
 
-      noice.setup {
-        cmdline = {
-          format = {
-            search_down = { kind = "search", pattern = "^/", icon = "", lang = "regex" },
-            search_up = { kind = "search", pattern = "^%?", icon = "", lang = "regex" },
-          },
+    noice.setup {
+      cmdline = {
+        format = {
+          search_down = { kind = "search", pattern = "^/", icon = "", lang = "regex" },
+          search_up = { kind = "search", pattern = "^%?", icon = "", lang = "regex" },
         },
-        lsp = {
-          override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true,
-          },
+      },
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
         },
-        routes = {
-          {
-            filter = {
-              event = "msg_show",
-              any = {
-                { find = "%d+L, %d+B" },
-                { find = "; after #%d+" },
-                { find = "; before #%d+" },
-              },
+      },
+      routes = {
+        {
+          filter = {
+            event = "msg_show",
+            any = {
+              { find = "%d+L, %d+B" },
+              { find = "; after #%d+" },
+              { find = "; before #%d+" },
             },
-            view = "mini",
           },
+          view = "mini",
         },
-        presets = {
-          bottom_search = false,
-          command_palette = true,
-          long_message_to_split = true,
-          inc_rename = true,
-        },
-               
+      },
+      presets = {
+        bottom_search = false,
+        command_palette = true,
+        long_message_to_split = true,
+        inc_rename = true,
+      },
 
-        notify = {
-          enabled = true,
-          view = "notify",
-        },
-        
-        
-      }
-
+      notify = {
+        enabled = true,
+        view = "notify",
+      },
+    }
   end,
 }
 
@@ -190,13 +186,13 @@ M.minisurround = {
   opts = {
     n_lines = 500,
     mappings = {
-      add = "gza", -- Add surrounding in Normal and Visual modes
-      delete = "gzd", -- Delete surrounding
-      find = "gzf", -- Find surrounding (to the right)
-      find_left = "gzF", -- Find surrounding (to the left)
-      highlight = "gzh", -- Highlight surrounding
-      replace = "gzr", -- Replace surrounding
-      update_n_lines = "gzn", -- Update `n_lines`
+      add = "ys", -- Add surrounding in Normal and Visual modes
+      delete = "ds", -- Delete surrounding
+      find = "", -- Find surrounding (to the right)
+      find_left = "", -- Find surrounding (to the left)
+      highlight = "", -- Highlight surrounding
+      replace = "cs", -- Replace surrounding
+      update_n_lines = "", -- Update `n_lines`
     },
   },
 }
@@ -319,36 +315,71 @@ M.indentscope = {
   end,
 }
 
+M.telescope = {
+  extensions_list = { "themes", "terms", "fzf", "live_grep_args", "projects", "neoclip", "harpoon", "frecency" },
+  pickers = {
+    find_files = {
+      prompt_prefix = " ",
+      find_command = { "rg", "--files", "--hidden" },
+    },
+    buffers = {
+      initial_mode = "normal",
+      mappings = {
+        i = {
+          ["<C-d>"] = require("telescope.actions").delete_buffer,
+        },
+        n = {
+          ["d"] = require("telescope.actions").delete_buffer,
+          ["q"] = function(...)
+            return require("telescope.actions").close(...)
+          end,
+        },
+      },
+    },
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case",
+    },
+    frecency = {
+      -- auto_validate = true,
+    },
+  },
+}
+
 M.neoclip = {
   opts = {
-      history = 1000,
-      enable_persistent_history = false,
-      length_limit = 1048576,
-      continuous_sync = false,
-      preview = true,
-      prompt = nil,
-      default_register = '"',
-      default_register_macros = 'q',
-      enable_macro_history = true,
-      content_spec_column = false,
-      disable_keycodes_parsing = false,
-      on_select = {
-        move_to_front = false,
-        close_telescope = true,
-      },
-      on_paste = {
-        set_reg = false,
-        move_to_front = false,
-        close_telescope = true,
-      },
-      on_replay = {
-        set_reg = false,
-        move_to_front = false,
-        close_telescope = true,
-      },
-      on_custom_action = {
-        close_telescope = true,
-      },
+    history = 1000,
+    enable_persistent_history = false,
+    length_limit = 1048576,
+    continuous_sync = false,
+    preview = true,
+    prompt = nil,
+    default_register = '"',
+    default_register_macros = "q",
+    enable_macro_history = true,
+    content_spec_column = false,
+    disable_keycodes_parsing = false,
+    on_select = {
+      move_to_front = false,
+      close_telescope = true,
+    },
+    on_paste = {
+      set_reg = false,
+      move_to_front = false,
+      close_telescope = true,
+    },
+    on_replay = {
+      set_reg = false,
+      move_to_front = false,
+      close_telescope = true,
+    },
+    on_custom_action = {
+      close_telescope = true,
+    },
   },
   config = function(_, opts)
     require("neoclip").setup(opts)
