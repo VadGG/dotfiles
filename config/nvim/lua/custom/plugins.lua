@@ -1,5 +1,5 @@
 local overrides = require "custom.configs.overrides"
-local is_lsp_enabled = false
+local is_lsp_enabled = true
 
 -- TODO: open recent files
 -- TODO: search from the open directory like default
@@ -28,6 +28,7 @@ local plugins = {
   { "hrsh7th/cmp-nvim-lsp", enabled = is_lsp_enabled },
   { "hrsh7th/cmp-buffer", enabled = is_lsp_enabled },
   { "hrsh7th/cmp-path", enabled = is_lsp_enabled },
+
   -- Override plugin definition options
 
   {
@@ -87,6 +88,26 @@ local plugins = {
       "rcarriga/nvim-notify",
     },
     config = overrides.noice.config,
+  },
+
+  {
+    "lukas-reineke/virt-column.nvim",
+    event = "BufReadPost",
+    lazy = false,
+    config = function()
+      require("virt-column").setup {
+        char = "┃",
+        virtcolumn = "120",
+      }
+    end,
+  },
+
+  {
+    "Pocco81/true-zen.nvim",
+    lazy = false,
+    config = function()
+      require("true-zen").setup {}
+    end,
   },
 
   {

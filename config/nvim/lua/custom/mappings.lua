@@ -85,8 +85,8 @@ M.window = {
   n = {
     ["<leader>\\"] = newMapping( "<cmd>vs<CR>", "Vertical split" ),
     ["<leader>-"] = newMapping( "<cmd>sp<CR>", "Horizontal split" ),
-    ["<leader>wq"] = newMapping( "<cmd>q<CR>", "Close Window" ),
-    ["<leader>wQ"] = newMapping( "<cmd>qall<CR>", "Close all" ),
+    ["<leader>wc"] = newMapping( "<cmd>q<CR>", "Close Window" ),
+    ["<leader>wq"] = newMapping( "<cmd>qall!<CR>", "Close all" ),
     ["<leader>wd"] = newMapping( "<cmd>windo diffthis<CR>", "Diff windows" ),
     ["<leader>wD"] = newMapping( "<cmd>windo diffoff<CR>", "Turn diff off" ),
   },
@@ -99,6 +99,18 @@ M.window = {
     ["<leader>wD"] = newMapping( "<cmd>windo diffoff<CR>", "Turn diff off" ),
   },
 
+}
+
+M.zen = {
+  n = {
+    ["<leader>zn"] = newMapping( "<cmd>TZNarrow<CR>", "Narrow" ),
+    ["<leader>zf"] = newMapping( "<cmd>TZFocus<CR>", "Focus" ),
+    ["<leader>zm"] = newMapping( "<cmd>TZMinimalist<CR>", "Minimalist" ),
+    ["<leader>za"] = newMapping( "<cmd>TZAtaraxis<CR>", "Ataraxis" ),
+  },
+  v = {
+    ["<leader>zn"] = newMapping( "<cmd>'<,'>TZNarrow<CR>", "Narrow" ),
+  },
 }
 
 M.harpoon = {
