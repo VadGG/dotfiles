@@ -1,5 +1,5 @@
 local overrides = require "custom.configs.overrides"
-local is_lsp_enabled = true
+local is_lsp_enabled = false
 
 -- TODO: open recent files
 -- TODO: search from the open directory like default
