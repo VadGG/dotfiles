@@ -103,10 +103,8 @@ M.window = {
 
 M.zen = {
   n = {
-    ["<leader>zn"] = newMapping( "<cmd>TZNarrow<CR>", "Narrow" ),
     ["<leader>zf"] = newMapping( "<cmd>TZFocus<CR>", "Focus" ),
     ["<leader>zm"] = newMapping( "<cmd>TZMinimalist<CR>", "Minimalist" ),
-    ["<leader>za"] = newMapping( "<cmd>TZAtaraxis<CR>", "Ataraxis" ),
   },
   v = {
     ["<leader>zn"] = newMapping( "<cmd>'<,'>TZNarrow<CR>", "Narrow" ),
@@ -291,7 +289,7 @@ M.telescope = {
   n = {
     -- find
     ["<leader><space>"] = newMapping(function()
-      require('telescope').extensions.frecency.frecency { workspace = 'CWD', previewer = false }
+      require("telescope.builtin").find_files { previewer = false }
     end, "Find files"),
     ["<leader>fF"] = newMapping(function()
       require("telescope.builtin").find_files { cwd = vim.fn.expand "%:p:h" }

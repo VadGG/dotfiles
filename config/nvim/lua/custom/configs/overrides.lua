@@ -316,10 +316,9 @@ M.indentscope = {
 }
 
 M.telescope = {
-  extensions_list = { "themes", "terms", "fzf", "live_grep_args", "projects", "neoclip", "harpoon", "frecency" },
+  extensions_list = { "themes", "terms", "fzf", "live_grep_args", "projects", "neoclip", "harpoon" },
   pickers = {
     find_files = {
-      prompt_prefix = " ",
       find_command = { "rg", "--files", "--hidden" },
     },
     buffers = {
@@ -383,8 +382,6 @@ M.neoclip = {
   },
   config = function(_, opts)
     require("neoclip").setup(opts)
-    local telescope = require "telescope"
-    telescope.load_extension "neoclip"
   end,
 }
 

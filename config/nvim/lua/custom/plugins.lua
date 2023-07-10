@@ -298,10 +298,7 @@ local plugins = {
         "ThePrimeagen/harpoon",
         cmd = "Harpoon",
       },
-      {
-        "nvim-telescope/telescope-frecency.nvim",
-        dependencies = { "kkharji/sqlite.lua" },
-      },
+      
     },
   },
 
