@@ -318,9 +318,9 @@ M.indentscope = {
 M.telescope = {
   extensions_list = { "themes", "terms", "fzf", "live_grep_args", "projects", "neoclip", "harpoon" },
   pickers = {
-    find_files = {
-      find_command = { "rg", "--files", "--hidden" },
-    },
+    -- find_files = {
+    --   find_command = { "rg", "--files", "--hidden" },
+    -- },
     buffers = {
       initial_mode = "normal",
       mappings = {

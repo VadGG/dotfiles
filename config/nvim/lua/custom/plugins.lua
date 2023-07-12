@@ -242,7 +242,7 @@ local plugins = {
   },
   ---------------------------------------- SEARCH AND REPLACE
   {
-    "roobert/search-replace.nvim",
+    "VadGG/search-replace.nvim",
     lazy = false,
     opts = overrides.searchreplace.opts,
     config = overrides.searchreplace.config,

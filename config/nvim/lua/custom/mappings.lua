@@ -60,12 +60,20 @@ M.searchreplace = {
     ["<leader>rW"] = newMapping("<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ord"),
     ["<leader>re"] = newMapping("<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr"),
     ["<leader>rf"] = newMapping("<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile"),
+
     ["<leader>rbs"] = newMapping("<CMD>SearchReplaceMultiBufferSelections<CR>", "[s]election list"),
     ["<leader>rbo"] = newMapping("<CMD>SearchReplaceMultiBufferOpen<CR>", "[o]pen"),
     ["<leader>rbw"] = newMapping("<CMD>SearchReplaceMultiBufferCWord<CR>", "[w]ord"),
     ["<leader>rbW"] = newMapping("<CMD>SearchReplaceMultiBufferCWORD<CR>", "[W]ord"),
     ["<leader>rbe"] = newMapping("<CMD>SearchReplaceMultiBufferCExpr<CR>", "[e]xpr"),
     ["<leader>rbf"] = newMapping("<CMD>SearchReplaceMultiBufferCFile<CR>", "[f]ile"),
+
+    ["<leader>rqs"] = newMapping("<CMD>SearchReplaceQuickFixSelections<CR>", "[s]election list"),
+    ["<leader>rqo"] = newMapping("<CMD>SearchReplaceQuickFixOpen<CR>", "[o]pen"),
+    ["<leader>rqw"] = newMapping("<CMD>SearchReplaceQuickFixCWord<CR>", "[w]ord"),
+    ["<leader>rqW"] = newMapping("<CMD>SearchReplaceQuickFixCWORD<CR>", "[W]ord"),
+    ["<leader>rqe"] = newMapping("<CMD>SearchReplaceQuickFixCExpr<CR>", "[e]xpr"),
+    ["<leader>rqf"] = newMapping("<CMD>SearchReplaceQuickFixCFile<CR>", "[f]ile"),
   },
   v = {
     ["<C-r>"] = newMapping("<cmd>SearchReplaceSingleBufferVisualSelection<cr>", "Replace selected"),
