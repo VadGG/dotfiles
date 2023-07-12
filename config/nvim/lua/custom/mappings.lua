@@ -119,6 +119,13 @@ M.zen = {
   },
 }
 
+M.cheatsheet = {
+  n = {
+    ["<leader>cy"] = newMapping( "<cmd>Cheatsheet<CR>", "General Cheatsheet" ),
+    ["<leader>ce"] = newMapping( "<cmd>CheatsheetEdit<CR>", "General Cheatsheet" ),
+  },
+}
+
 M.harpoon = {
   n = {
     ["<leader>''"] = {
