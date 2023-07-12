@@ -1,0 +1,1 @@
+Getl All pods | kubectl get pods all

@@ -203,6 +203,30 @@ local plugins = {
     opts = {},
   },
 
+  {
+    "VadGG/cheatsheet.nvim",
+    lazy = false,
+    dependencies =  {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/popup.nvim",
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("cheatsheet").setup({
+          bundled_cheatsheets = false,
+          bundled_plugin_cheatsheets = false,
+          include_only_installed_plugins = false,
+
+          -- Key mappings bound inside the telescope window
+          telescope_mappings = {
+              ['<CR>'] = require('cheatsheet.telescope.actions').copy_cheat_value,
+              ['<C-Y>'] = require('cheatsheet.telescope.actions').copy_cheat_value,
+              ['<C-E>'] = require('cheatsheet.telescope.actions').edit_user_cheatsheet,
+          }
+      })
+    end,
+  },
+
   ----------------------------------------------------------- QUICK-FIX
   {
     "milkypostman/vim-togglelist",
