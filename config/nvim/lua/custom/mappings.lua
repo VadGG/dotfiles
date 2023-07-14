@@ -126,6 +126,17 @@ M.cheatsheet = {
   },
 }
 
+M.biscuit = {
+  n = {
+    ["<leader>uc"] = {
+      function()
+        require("nvim-biscuits").toggle_biscuits()
+      end,
+      "Toggle Context Display",
+    },
+  },
+}
+
 M.harpoon = {
   n = {
     ["<leader>''"] = {
