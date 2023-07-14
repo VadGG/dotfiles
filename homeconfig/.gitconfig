@@ -1,0 +1,7 @@
+[user]
+	email = vadm.gagarin@ugmail.com
+	name = Vadim G
+
+[push]
+  default = current
+
