@@ -177,6 +177,14 @@ local plugins = {
     config = function() end,
   },
 
+  {
+    "tzachar/highlight-undo.nvim",
+    event = "BufReadPost",
+    config = function()
+      require("highlight-undo").setup {}
+    end,
+  },
+
   -- auto pairs
   {
     "echasnovski/mini.pairs",
@@ -227,6 +235,38 @@ local plugins = {
     end,
   },
 
+
+  ----------------------------------------------------------- UI
+
+  {
+    "shellRaining/hlchunk.nvim",
+    lazy = false,
+    event = "BufReadPost",
+    config = function()
+      require "custom.configs.hlchunk"
+    end,
+  },
+
+  { 
+    "melkster/modicator.nvim",
+    event = "BufWinEnter",
+    config = function()
+      require "custom.configs.modicator"
+    end,
+  },
+
+ {
+    "code-biscuits/nvim-biscuits",
+    event = "BufRead",
+    lazy = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require "custom.configs.biscuits"
+    end,
+  }, 
+
+  { "lewis6991/whatthejump.nvim", event = "VeryLazy" },
+
   ----------------------------------------------------------- QUICK-FIX
   {
     "milkypostman/vim-togglelist",
@@ -242,7 +282,7 @@ local plugins = {
   },
   ---------------------------------------- SEARCH AND REPLACE
   {
-    "VadGG/search-replace.nvim",
+    "roobert/search-replace.nvim",
     lazy = false,
     opts = overrides.searchreplace.opts,
     config = overrides.searchreplace.config,
@@ -267,13 +307,13 @@ local plugins = {
     },
   },
   -------------------------------------------------------------------------------- INDENTSCOPE
-  {
-    "echasnovski/mini.indentscope",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = { "BufReadPre", "BufNewFile" },
-    opts = overrides.indentscope.opts,
-    init = overrides.indentscope.init,
-  },
+  -- {
+  --   "echasnovski/mini.indentscope",
+  --   version = false, -- wait till new 0.7.0 release to put it back on semver
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   opts = overrides.indentscope.opts,
+  --   init = overrides.indentscope.init,
+  -- },
 
   {
     "ruifm/gitlinker.nvim",
