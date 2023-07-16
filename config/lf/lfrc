@@ -62,6 +62,54 @@ cmd bulk-duplicate ${{
     rm $index $index_edit
 }}
 
+# Select the file or directory via fzf
+cmd fzf-select ${{
+  IFS=' '
+  exclude=$(cat $HOME/exclude | sed 's/^/--exclude /' | tr '\n' ' ')
+  select=$(fd --hidden --follow $exclude | fzf) || true
+  lf -remote "send $id select $select"
+}}
+
+# Copy the file names (including extension) of the selections separated by \n
+cmd copy-filename ${{
+  names="$(echo $fx | tr ' ' '\n' | xargs -I{} basename {})"
+  echo $names | tr ' ' '\n' | pbcopy
+}}
+
+# Copy the absolute paths of selections separated by \n
+cmd copy-absolute-path ${{
+  echo $fx | tr ' ' '\n' | pbcopy
+}}
+
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+
+# Create a directory with the selected items
+cmd new-folder-with-selection ${{
+  set -f
+  printf "Directory name: "
+  read newd
+  mkdir -- "$newd"
+  mv -- $fx "$newd"
+}}
+
+map <space>
+map d
+map y
+
+map yy copy
+map yn copy-filename
+map yP copy-absolute-path
+
+map dd cut
+
+map x delete
+
+<LeftMouse>map <space># give a name and then make a directory
+map <c-n> push :mkdir<space>
+map <a-n> new-folder-with-selection# give a name and then make a directory
+
 map R bulk-rename
 map C bulk-duplicate
 
+map <tab> :toggle;down
+map <c-f> fzf-select
