@@ -20,8 +20,6 @@ hlchunk.setup {
       "*.hpp",
       "*.lua",
       "*.vue",
-      "*.yml",
-      "*.yaml",
       "*.lua",
     },
     chars = {
