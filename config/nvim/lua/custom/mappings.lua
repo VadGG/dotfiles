@@ -93,8 +93,8 @@ M.window = {
   n = {
     ["<leader>\\"] = newMapping( "<cmd>vs<CR>", "Vertical split" ),
     ["<leader>-"] = newMapping( "<cmd>sp<CR>", "Horizontal split" ),
-    ["<leader>wc"] = newMapping( "<cmd>q<CR>", "Close Window" ),
-    ["<leader>wq"] = newMapping( "<cmd>qall!<CR>", "Close all" ),
+    ["<leader>wq"] = newMapping( "<cmd>q<CR>", "Close Window" ),
+    ["<leader>wQ"] = newMapping( "<cmd>qall!<CR>", "Close all" ),
     ["<leader>wd"] = newMapping( "<cmd>windo diffthis<CR>", "Diff windows" ),
     ["<leader>wD"] = newMapping( "<cmd>windo diffoff<CR>", "Turn diff off" ),
   },
