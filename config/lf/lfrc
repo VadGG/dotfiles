@@ -1,8 +1,12 @@
+set shell zsh
 
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
 set icons
+
+set previewer "~/.config/lf/preview"
+
 
 # Bulk rename on selected files or all the non-hidden files in the current directory if no selection
 cmd bulk-rename ${{
