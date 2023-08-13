@@ -86,8 +86,6 @@ cmd copy-absolute-path ${{
 }}
 
 
-# custom wrapper to make a file. Opens in nvim
-cmd mkfile $nvim "$(echo $* | tr ' ' '\ ')"
 
 # Create a directory with the selected items
 cmd new-folder-with-selection ${{
@@ -103,11 +101,16 @@ map d
 map y
 
 cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+cmd mkfile touch "$(echo $* | tr ' ' '\ ')"
 
-# create new file (ctrl + v)
-map <c-v> push :mkfile<space>
+# create new file (ctrl + a)
+map <c-a> push $touch<space>
 
-map V $nvim .
+<LeftMouse>map <space># give a name and then make a directory
+map <c-n> push :mkdir<space>
+map <a-n> new-folder-with-selection# give a name and then make a directory
+
+# map V $nvim .
 
 map yy copy
 map yn copy-filename
@@ -117,16 +120,11 @@ map dd cut
 
 map x delete
 
-<LeftMouse>map <space># give a name and then make a directory
-map <c-n> push :mkdir<space>
-map <a-n> new-folder-with-selection# give a name and then make a directory
-
 map R bulk-rename
 map C bulk-duplicate
 
 map A rename # at the very end (A)
 map a push A<c-a> # at the very beginning (I)
-
 
 map <tab> :toggle;down
 map <c-f> fzf-select
