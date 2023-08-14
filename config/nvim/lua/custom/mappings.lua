@@ -32,6 +32,8 @@ M.general = {
     ["<C-l>"] = newMapping("<cmd> TmuxNavigateRight<cr>", "Move right"),
     ["<C-j>"] = newMapping("<cmd> TmuxNavigateDown<cr>", "Move down"),
     ["<C-k>"] = newMapping("<cmd> TmuxNavigateUp<cr>", "Move up"),
+
+    ["U"] = newMapping("<cmd>redo<cr>", "Redo"),
   },
   v = {
     ["H"] = newMapping("^", "Begining of line"),
@@ -49,6 +51,7 @@ M.general = {
     ["<C-l>"] = newMapping("<cmd> TmuxNavigateRight<cr>", "Move right"),
     ["<C-j>"] = newMapping("<cmd> TmuxNavigateDown<cr>", "Move down"),
     ["<C-k>"] = newMapping("<cmd> TmuxNavigateUp<cr>", "Move up"),
+    ["U"] = newMapping("<cmd>redo<cr>", "Redo"),
   },
 }
 
@@ -94,7 +97,7 @@ M.window = {
     ["<leader>\\"] = newMapping( "<cmd>vs<CR>", "Vertical split" ),
     ["<leader>-"] = newMapping( "<cmd>sp<CR>", "Horizontal split" ),
     ["<leader>wq"] = newMapping( "<cmd>q<CR>", "Close Window" ),
-    ["<leader>wQ"] = newMapping( "<cmd>qall!<CR>", "Close all" ),
+    ["<leader><C-q>"] = newMapping( "<cmd>qall!<CR>", "Close all" ),
     ["<leader>wd"] = newMapping( "<cmd>windo diffthis<CR>", "Diff windows" ),
     ["<leader>wD"] = newMapping( "<cmd>windo diffoff<CR>", "Turn diff off" ),
   },
@@ -230,12 +233,12 @@ M.todo = {
 M.neoclip = {
   n = {
     ["<leader>pp"] = newMapping("<cmd>Telescope neoclip theme=dropdown<cr>", "Clipboard"),
-    ["<leader>pc"] = newMapping(function()
+    ["<leader>y"] = newMapping(function()
       _SET_CLIPBOARD "unnamedplus"
     end, "Toggle clipboard"),
   },
   v = {
-    ["<leader>pc"] = newMapping(function()
+    ["<leader>y"] = newMapping(function()
       _SET_CLIPBOARD "unnamedplus"
     end, "Toggle clipboard"),
   },
@@ -256,7 +259,7 @@ M.noice = {
 
 M.filemanager = {
   n = {
-    ["<leader>d"] = newMapping("<cmd>Lf<cr>", "File explorer"),
+    ["<leader><space>"] = newMapping("<cmd>Lf<cr>", "File explorer"),
   },
 }
 
@@ -314,9 +317,6 @@ M.telescope = {
 
   n = {
     -- find
-    ["<leader><space>"] = newMapping(function()
-      require("telescope.builtin").find_files { previewer = false }
-    end, "Find files"),
     ["<leader>fF"] = newMapping(function()
       require("telescope.builtin").find_files { cwd = vim.fn.expand "%:p:h" }
     end, "Find files in cwd"),
