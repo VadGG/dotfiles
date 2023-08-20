@@ -13,6 +13,9 @@ if [[ -n "$FILE_PATHS" ]]; then
 
   zellij action toggle-floating-panes
   zellij action write-chars ":open $FILE_PATHS"
+  if wezterm --version &> /dev/null; then
+    printf "\r" | wezterm cli send-text  --no-paste
+  fi
   zellij action toggle-floating-panes
   zellij action close-pane
 

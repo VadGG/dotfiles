@@ -8,6 +8,8 @@ keybinds clear-defaults=true {
     }
     locked {
         bind "Ctrl l" { SwitchToMode "Normal"; }
+        bind "Alt z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "Alt p" { TogglePaneFrames; SwitchToMode "Normal"; }
     }
     resize {
         bind "Ctrl e" { SwitchToMode "Normal"; }
@@ -23,7 +25,7 @@ keybinds clear-defaults=true {
         bind "-" { Resize "Decrease"; }
     }
     pane {
-        bind "Ctrl a" { SwitchToMode "Normal"; }
+        bind "Ctrl p" { SwitchToMode "Normal"; }
         // bind "h" { MoveFocus "Left"; }
         // bind "l" { MoveFocus "Right"; }
         // bind "j" { MoveFocus "Down"; }
@@ -72,7 +74,7 @@ keybinds clear-defaults=true {
         bind "Tab" { ToggleTab; }
     }
     scroll {
-        bind "Ctrl u" { SwitchToMode "Normal"; }
+        bind "Ctrl y" { SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
         bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
@@ -86,7 +88,7 @@ keybinds clear-defaults=true {
         // bind "Alt c" { Copy; }
     }
     search {
-        bind "Ctrl u" { SwitchToMode "Normal"; }
+        bind "Ctrl y" { SwitchToMode "Normal"; }
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
         bind "j" "Down" { ScrollDown; }
         bind "k" "Up" { ScrollUp; }
@@ -113,8 +115,8 @@ keybinds clear-defaults=true {
         bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
     }
     session {
-        bind "Ctrl o" { SwitchToMode "Normal"; }
-        bind "Ctrl u" { SwitchToMode "Scroll"; }
+        bind "Ctrl g" { SwitchToMode "Normal"; }
+        bind "Ctrl y" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
         bind "Q" { Quit; }
     }
@@ -157,16 +159,16 @@ keybinds clear-defaults=true {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
     }
     shared_except "pane" "locked" {
-        bind "Ctrl a" { SwitchToMode "Pane"; }
+        bind "Ctrl p" { SwitchToMode "Pane"; }
     }
     shared_except "resize" "locked" {
         bind "Ctrl e" { SwitchToMode "Resize"; }
     }
     shared_except "scroll" "locked" {
-        bind "Ctrl u" { SwitchToMode "Scroll"; }
+        bind "Ctrl y" { SwitchToMode "Scroll"; }
     }
     shared_except "session" "locked" {
-        bind "Ctrl o" { SwitchToMode "Session"; }
+        bind "Ctrl g" { SwitchToMode "Session"; }
     }
     shared_except "tab" "locked" {
         bind "Ctrl t" { SwitchToMode "Tab"; }
