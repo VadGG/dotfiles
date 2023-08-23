@@ -2,6 +2,7 @@ local wezterm = require("wezterm")
 local utils = require("utils")
 local keybinds = require("keybinds")
 local scheme = wezterm.get_builtin_color_schemes()["nord"]
+
 local gpus = wezterm.gui.enumerate_gpus()
 require("on")
 
@@ -120,6 +121,8 @@ local config = {
 	},
 	use_fancy_tab_bar = false,
 	colors = {
+		selection_fg = '#353D4D',
+		selection_bg = '#FFE6CB',
 		tab_bar = {
 			background = scheme.background,
 			new_tab = { bg_color = "#2e3440", fg_color = scheme.ansi[8], intensity = "Bold" },

@@ -8,7 +8,7 @@ local utils = require("utils")
 ---------------------------------------------------------------
 M.tmux_keybinds = {
 	{ key = "n", mods = "ALT|CTRL", action = act({ SpawnTab = "CurrentPaneDomain" }) },
-	{ key = "x", mods = "ALT|CTRL", action = act({ CloseCurrentTab = { confirm = true } }) },
+	{ key = "x", mods = "ALT|CTRL|SHIFT", action = act({ CloseCurrentTab = { confirm = true } }) },
 	{ key = "h", mods = "ALT|CTRL", action = act({ ActivateTabRelative = -1 }) },
 	{ key = "l", mods = "ALT|CTRL", action = act({ ActivateTabRelative = 1 }) },
   { key = "m", mods = "ALT|CTRL", action = wezterm.action.ToggleFullScreen },
@@ -21,7 +21,7 @@ M.tmux_keybinds = {
 		mods = "ALT",
 		action = act.Multiple({ act.CopyMode("ClearSelectionMode"), act.ActivateCopyMode, act.ClearSelection }),
 	},
-	{ key = "p", mods = "ALT|CTRL", action = act({ PasteFrom = "PrimarySelection" }) },
+	{ key = "p", mods = "ALT", action = act({ PasteFrom = "PrimarySelection" }) },
 
 	{ key = "1", mods = "ALT", action = act({ ActivateTab = 0 }) },
 	{ key = "2", mods = "ALT", action = act({ ActivateTab = 1 }) },
@@ -35,8 +35,8 @@ M.tmux_keybinds = {
 
 	{ key = "g", mods = "CTRL", action = act({ EmitEvent = "trigger-lazygit" }) },
 	
-	{ key = "-", mods = "ALT", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
-	{ key = "\\", mods = "ALT", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+	{ key = "j", mods = "ALT|SHIFT", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+	{ key = "l", mods = "ALT|SHIFT", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
 	{ key = "h", mods = "ALT", action = act({ ActivatePaneDirection = "Left" }) },
 	{ key = "l", mods = "ALT", action = act({ ActivatePaneDirection = "Right" }) },
 	{ key = "k", mods = "ALT", action = act({ ActivatePaneDirection = "Up" }) },
@@ -55,8 +55,8 @@ M.default_keybinds = {
 	{ key = "c", mods = "CTRL|SHIFT", action = act({ CopyTo = "Clipboard" }) },
 	{ key = "v", mods = "CTRL|SHIFT", action = act({ PasteFrom = "Clipboard" }) },
 	{ key = "Insert", mods = "SHIFT", action = act({ PasteFrom = "PrimarySelection" }) },
-	{ key = "=", mods = "CTRL", action = "ResetFontSize" },
-	{ key = "+", mods = "CTRL|SHIFT", action = "IncreaseFontSize" },
+	{ key = "+", mods = "CTRL", action = "ResetFontSize" },
+	{ key = "=", mods = "CTRL|SHIFT", action = "IncreaseFontSize" },
 	{ key = "-", mods = "CTRL", action = "DecreaseFontSize" },
 	{ key = "PageUp", mods = "ALT", action = act({ ScrollByPage = -1 }) },
 	{ key = "PageDown", mods = "ALT", action = act({ ScrollByPage = 1 }) },
@@ -71,7 +71,7 @@ M.default_keybinds = {
 	{ key = " ", mods = "ALT", action = wezterm.action.ShowTabNavigator },
 	{ key = "d", mods = "ALT|SHIFT", action = wezterm.action.ShowDebugOverlay },
 	{
-		key = "r",
+		key = "s",
 		mods = "ALT",
 		action = act({
 			ActivateKeyTable = {
@@ -82,9 +82,9 @@ M.default_keybinds = {
 			},
 		}),
 	},
-	{ key = "s", mods = "ALT", action = act.PaneSelect({
-		alphabet = "1234567890",
-	}) },
+	-- { key = "s", mods = "ALT", action = act.PaneSelect({
+	-- 	alphabet = "1234567890",
+	-- }) },
 	{
 		key = "`",
 		mods = "ALT",
