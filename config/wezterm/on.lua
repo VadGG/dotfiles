@@ -150,9 +150,11 @@ wezterm.on("toggle-tmux-keybinds", function(window, pane)
 	local overrides = window:get_config_overrides() or {}
 	if not overrides.window_background_opacity then
 		overrides.window_background_opacity = 0.95
+		overrides.color_scheme = "carbonfox"
 		overrides.keys = keybinds.default_keybinds
 	else
 		overrides.window_background_opacity = nil
+		overrides.color_scheme = "nordfox"
 		overrides.keys = utils.merge_lists(keybinds.default_keybinds, keybinds.tmux_keybinds)
 	end
 	window:set_config_overrides(overrides)
@@ -175,7 +177,8 @@ wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
 		act({
 			SpawnCommandInNewTab = {
 				-- args = { os.getenv("HOME") .. "/.local/share/zsh/zinit/polaris/bin/nvim", name },
-				args = { "vim", "-c", "set number", "-c", "set clipboard=unnamed", name },
+				-- args = { "vim", "-c", "set number", "-c", "set clipboard=unnamed", name },
+				args = { "/usr/people/gagarinv/dev/dotfiles/bin/centos/hx",name },
 			},
 		}),
 		pane
@@ -190,7 +193,7 @@ wezterm.on("trigger-lazygit", function(window, pane)
 		act({
 			SpawnCommandInNewTab = {
 				-- args = { os.getenv("HOME") .. "/.local/share/zsh/zinit/polaris/bin/nvim", name },
-				args = { "/opt/homebrew/bin/lazygit" },
+				args = { "/usr/people/gagarinv/dev/dotfiles/bin/centos/lazygit" },
 			},
 		}),
 		pane

@@ -123,6 +123,8 @@ local config = {
 	colors = {
 		selection_fg = '#353D4D',
 		selection_bg = '#FFE6CB',
+		foreground = "#C7D4ED",
+		background = "#1C2026",
 		tab_bar = {
 			background = scheme.background,
 			new_tab = { bg_color = "#2e3440", fg_color = scheme.ansi[8], intensity = "Bold" },
