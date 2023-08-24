@@ -165,6 +165,13 @@ for _, gpu in ipairs(wezterm.gui.enumerate_gpus()) do
 	end
 end
 
+config.quick_select_patterns = {
+    -- "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
+    -- "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
+    -- "sha256-.{44,128}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
+    "[a-zA-Z0-9-_\\.]*(?<!:-)(?:-[a-zA-Z0-9-_\\.]+)+-?"
+}
+
 config.hyperlink_rules = {
 	-- Matches: a URL in parens: (URL)
 	{
