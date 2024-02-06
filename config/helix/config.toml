@@ -16,6 +16,7 @@ L = ["goto_line_end"]
 H = ["goto_line_start"]
 D = ["kill_to_line_end"]
 C = ["kill_to_line_end", "insert_mode"]
+V = ["copy_selection_on_next_line"]
 
 
 [keys.select]
@@ -52,5 +53,6 @@ C-q = ":quit-all"
 C-s = ":write!"
 g = [":pipe-to wezterm cli split-pane --cwd $(pwd) -- helix-live-grep"]
 # g = [":pipe-to zellij run -f -c -- helix-live-grep"]
-space = [":pipe-to wezterm cli split-pane --cwd $(pwd) -- helix-lf-pick"]
+# space = [":pipe-to wezterm cli split-pane --cwd $(pwd) -- helix-lf-pick"]
+space = [":new", ":insert-output lf-pick", "select_all", "split_selection_on_newline", "goto_file", "goto_last_modified_file", ":buffer-close!", ":redraw"]
 # space = [":pipe-to zellij run -f -c -- helix-lf-pick"]
