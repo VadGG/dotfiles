@@ -1,5 +1,0 @@
-## Docker
-Interactive TTY | docker run -it <name>
-
-## Kubernetes
-Get All pods | kubectl get pods all
