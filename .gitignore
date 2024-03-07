@@ -67,3 +67,4 @@ config/nvim/plugin/packer_compiled.lua
 config/tmux/plugins/tmux-thumbs/target
 config/lazygit/state.yml
 config/tmux/plugins/tmux-thumbs/target/release
+.git-token
