@@ -178,7 +178,7 @@ wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
 			SpawnCommandInNewTab = {
 				-- args = { os.getenv("HOME") .. "/.local/share/zsh/zinit/polaris/bin/nvim", name },
 				-- args = { "vim", "-c", "set number", "-c", "set clipboard=unnamed", name },
-				args = { "/usr/people/gagarinv/dev/dotfiles/bin/centos/hx",name },
+				args = { "/opt/homebrew/bin/hx",name },
 			},
 		}),
 		pane

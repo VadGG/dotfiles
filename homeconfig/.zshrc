@@ -55,3 +55,5 @@ alias penpotdown="docker compose -p penpot -f $PENPOT/docker-compose.yaml down"
 
 alias mpc="open /Applications/PCoIPClient.app -n"
 
+source "$DOTFILES/Kubernetes/kube.sh"
+
