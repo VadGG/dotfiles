@@ -1,0 +1,73 @@
+# https://github.com/AlanJui/nvimX/blob/5d6110b3c5719f962bddce6bae5df68845424214/tools/yabai/skhdrc.bak#L128
+# https://github.com/kcrwfrd/dotfiles/blob/bac4418d0e4a91aaa7f5868364f50fa12d4907ca/skhd/window#L81
+
+# FOCUS ##################################
+##########################################
+cmd - j : yabai -m window --focus south
+cmd - k : yabai -m window --focus north
+cmd - h : yabai -m window --focus west
+cmd - l : yabai -m window --focus east
+
+
+# WARP ###################################
+##########################################
+cmd + shift - h : yabai -m window --warp west
+cmd + shift - j : yabai -m window --warp south
+cmd + shift - k : yabai -m window --warp north
+cmd + shift - l : yabai -m window --warp east
+
+# SWAP ###################################
+##########################################
+cmd + alt + shift - h : yabai -m window --swap west
+cmd + alt + shift - j : yabai -m window --swap south
+cmd + alt + shift - k : yabai -m window --swap north
+cmd + alt + shift - l : yabai -m window --swap east
+
+
+
+# toggle window to float / unfloat in desktop
+cmd + alt - f : yabai -m window --toggle float
+
+shift + cmd - c : yabai -m window --toggle float;\
+                  yabai -m window --grid 4:4:1:1:2:2
+
+# zoom in/out desktop: toggle unfloat window to max size in desktop
+cmd + alt - z        : yabai -m window --toggle zoom-fullscreen
+
+# zoom in screen: toggle window to zoon in/out screen
+ctrl + alt + cmd - z : yabai -m window --toggle native-fullscreen
+
+
+
+# Resize width of a window
+cmd + alt - h : \
+    yabai -m window --resize left:-100:0 ; \
+    yabai -m window --resize right:-100:0
+
+cmd + alt - l : \
+    yabai -m window --resize right:100:0 ; \
+    yabai -m window --resize left:100:0
+
+# Resize height of a window
+cmd + alt - j : \
+    yabai -m window --resize bottom:0:100 ; \
+    yabai -m window --resize top:0:100
+
+cmd + alt - k : \
+    yabai -m window --resize top:0:-100 ; \
+    yabai -m window --resize bottom:0:-100
+
+# Equalize size of windows in desktop (0x18 --> '=')
+cmd + alt - 0    : yabai -m space --balance
+cmd + alt - 0x18 : yabai -m space --balance
+
+
+#--------------------------------------------------
+# Move window in a desktop (space)
+#--------------------------------------------------
+
+# move window by direction (swap window)
+shift + cmd - h : yabai -m window --swap west
+shift + cmd - j : yabai -m window --swap south
+shift + cmd - k : yabai -m window --swap north
+shift + cmd - l : yabai -m window --swap east

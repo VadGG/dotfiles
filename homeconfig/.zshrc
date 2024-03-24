@@ -49,6 +49,10 @@ alias ls='lsd'
 alias ll='ls -al'
 alias whisperenv='conda activate py310-whisper'
 
+alias yabai-start='yabai --start-service'
+alias yabai-stop='yabai --stop-service'
+alias yabai-stop='yabai --restart-service'
+
 export PENPOT="$HOME/TerminalApps/penpot"
 alias penpotup="docker compose -p penpot -f $PENPOT/docker-compose.yaml up -d"
 alias penpotdown="docker compose -p penpot -f $PENPOT/docker-compose.yaml down"
