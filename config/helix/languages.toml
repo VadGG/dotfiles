@@ -1,0 +1,14 @@
+# Language support configuration.
+
+
+[[language]]
+name = "javascript"
+scope = "source.js"
+injection-regex = "(js|javascript)"
+language-id = "javascript"
+shebangs = ["node"]
+comment-token = "//"
+language-servers = [ "typescript-language-server" ]
+indent = { tab-width = 2, unit = "\t" }
+# See the languages documentation: https://docs.helix-editor.com/master/languages.html
+

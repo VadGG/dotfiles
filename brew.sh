@@ -129,8 +129,15 @@ brew install wezterm
 brew install starship
 
 
+brew tap FelixKratz/formulae
+brew install sketchybar
+
+
+
+
 # other tools 
 # https://github.com/dalance/amber - Text Search tool
 
 # Remove outdated versions from the cellar.
 brew cleanup
+

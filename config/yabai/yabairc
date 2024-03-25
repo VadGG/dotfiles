@@ -1,6 +1,7 @@
 
 # global settings
 yabai -m config                                 \
+	external_bar               all:2:0       \
     mouse_follows_focus          off            \
     focus_follows_mouse          off            \
     window_origin_display        default        \
@@ -102,11 +103,16 @@ yabai -m config normal_window_opacity 1.0
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
-yabai -m rule --add app="^PCoIPClient$" manage=off
+# yabai -m rule --add app="^PCoIPClient$" manage=off
 yabai -m rule --add app="Microsoft Remote Desktop" manage=off
-yabai -m rule --add app="Finder" manage=off
+# yabai -m rule --add app="Finder" manage=off
 yabai -m rule --add app="App Store" manage=off
-yabai -m rule --add app="VLC" manage=off
+# yabai -m rule --add app="VLC" manage=off
+
+yabai -m rule --add app="^Docker Desktop$" manage=off
+
+
+
 
 echo "yabai configuration loaded.."
 

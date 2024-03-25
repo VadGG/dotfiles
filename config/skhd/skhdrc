@@ -1,20 +1,50 @@
 # https://github.com/AlanJui/nvimX/blob/5d6110b3c5719f962bddce6bae5df68845424214/tools/yabai/skhdrc.bak#L128
 # https://github.com/kcrwfrd/dotfiles/blob/bac4418d0e4a91aaa7f5868364f50fa12d4907ca/skhd/window#L81
+# https://github.com/koekeishiya/yabai/wiki/Commands
+# https://github.com/sebastianst/yabai3/blob/97ef3f141b28158592db0492d5e09f23d30fc219/skhdrc
+
+# toggle window split type
+cmd + alt - e : yabai -m window --toggle split
+
+# Equalize size of windows in desktop (0x18 --> '=')
+cmd + alt - 0    : yabai -m space --balance
+cmd + alt - 0x18 : yabai -m space --balance
+
+
+# new window insertions
+# cmd + alt - b : yabai -m window --insert south 
+# cmd + alt - v : yabai -m window --insert east 
+
+cmd + alt - return : /Applications/WezTerm.app/Contents/MacOS/wezterm
+cmd + alt - b : yabai -m window --insert south && /Applications/WezTerm.app/Contents/MacOS/wezterm
+cmd + alt - v : yabai -m window --insert east && /Applications/WezTerm.app/Contents/MacOS/wezterm
+
+
+# toggle window fullscreen
+cmd + alt - f : yabai -m window --toggle zoom-fullscreen
+
+# toggle window native fullscreen
+cmd + alt + shift - f : yabai -m window --toggle native-fullscreen
+
+# toggle layout
+#cmd + alt - d : yabai -m space --layout stack
+cmd + alt + shift - d : yabai -m space --layout bsp
 
 # FOCUS ##################################
 ##########################################
-cmd - j : yabai -m window --focus south
-cmd - k : yabai -m window --focus north
-cmd - h : yabai -m window --focus west
-cmd - l : yabai -m window --focus east
-
+# change focused window
+cmd - h : yabai3 focus west
+cmd - j : yabai3 focus south
+cmd - k : yabai3 focus north
+cmd - l : yabai3 focus east
 
 # WARP ###################################
 ##########################################
-cmd + shift - h : yabai -m window --warp west
-cmd + shift - j : yabai -m window --warp south
-cmd + shift - k : yabai -m window --warp north
-cmd + shift - l : yabai -m window --warp east
+# move focused windows
+cmd + shift - h : yabai3 move west
+cmd + shift - j : yabai3 move south
+cmd + shift - k : yabai3 move north
+cmd + shift - l : yabai3 move east
 
 # SWAP ###################################
 ##########################################
@@ -23,51 +53,54 @@ cmd + alt + shift - j : yabai -m window --swap south
 cmd + alt + shift - k : yabai -m window --swap north
 cmd + alt + shift - l : yabai -m window --swap east
 
+# RESIZE #################################
+##########################################
+# resize window mode
+:: resize
+cmd + alt - s ; resize
+resize < escape ; default
+resize < return ; default
+resize < h : yabai3 resize shrink width 96
+resize < j : yabai3 resize grow height 64
+resize < k : yabai3 resize shrink height 64
+resize < l : yabai3 resize grow width 96
 
 
-# toggle window to float / unfloat in desktop
-cmd + alt - f : yabai -m window --toggle float
-
-shift + cmd - c : yabai -m window --toggle float;\
-                  yabai -m window --grid 4:4:1:1:2:2
-
-# zoom in/out desktop: toggle unfloat window to max size in desktop
-cmd + alt - z        : yabai -m window --toggle zoom-fullscreen
-
-# zoom in screen: toggle window to zoon in/out screen
-ctrl + alt + cmd - z : yabai -m window --toggle native-fullscreen
-
+# move window and focus desktop
+cmd + alt - 1 : yabai -m window --space 1; yabai -m space --focus 1
+cmd + alt - 2 : yabai -m window --space 2; yabai -m space --focus 2
+cmd + alt - 3 : yabai -m window --space 3; yabai -m space --focus 3
+cmd + alt - 4 : yabai -m window --space 4; yabai -m space --focus 4
+cmd + alt - 5 : yabai -m window --space 5; yabai -m space --focus 5
+cmd + alt - 6 : yabai -m window --space 6; yabai -m space --focus 6
+cmd + alt - 7 : yabai -m window --space 7; yabai -m space --focus 7
+cmd + alt - 8 : yabai -m window --space 8; yabai -m space --focus 8
+cmd + alt - 9 : yabai -m window --space 9; yabai -m space --focus 9
 
 
-# Resize width of a window
-cmd + alt - h : \
-    yabai -m window --resize left:-100:0 ; \
-    yabai -m window --resize right:-100:0
 
-cmd + alt - l : \
-    yabai -m window --resize right:100:0 ; \
-    yabai -m window --resize left:100:0
-
-# Resize height of a window
-cmd + alt - j : \
-    yabai -m window --resize bottom:0:100 ; \
-    yabai -m window --resize top:0:100
-
-cmd + alt - k : \
-    yabai -m window --resize top:0:-100 ; \
-    yabai -m window --resize bottom:0:-100
-
-# Equalize size of windows in desktop (0x18 --> '=')
-cmd + alt - 0    : yabai -m space --balance
-cmd + alt - 0x18 : yabai -m space --balance
+# create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
+# cmd + alt - n : yabai -m space --create && \
+#                    index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
+#                    yabai -m window --space "${index}" && \
+#                    yabai -m space --focus "${index}"
 
 
-#--------------------------------------------------
-# Move window in a desktop (space)
-#--------------------------------------------------
+# shift + cmd - c : yabai -m window --toggle float; yabai -m window --grid 4:4:1:1:2:2
 
-# move window by direction (swap window)
-shift + cmd - h : yabai -m window --swap west
-shift + cmd - j : yabai -m window --swap south
-shift + cmd - k : yabai -m window --swap north
-shift + cmd - l : yabai -m window --swap east
+# stack window movement mode
+:: stack
+cmd + alt - o ; stack
+stack < escape ; default
+stack < s : yabai -m window --insert stack; skhd -k escape
+stack < return : yabai -m window --insert stack \
+    && wezterm-new; skhd -k escape
+stack < h : yabai3 stack-enter west; skhd -k escape
+stack < j : yabai3 stack-enter south; skhd -k escape
+stack < k : yabai3 stack-enter north; skhd -k escape
+stack < l : yabai3 stack-enter east; skhd -k escape
+stack < shift - h : yabai3 stack-leave west
+stack < shift - j : yabai3 stack-leave south
+stack < shift - k : yabai3 stack-leave north
+stack < shift - l : yabai3 stack-leave east
+

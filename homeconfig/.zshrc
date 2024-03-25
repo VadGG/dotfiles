@@ -58,6 +58,8 @@ alias penpotup="docker compose -p penpot -f $PENPOT/docker-compose.yaml up -d"
 alias penpotdown="docker compose -p penpot -f $PENPOT/docker-compose.yaml down"
 
 alias mpc="open /Applications/PCoIPClient.app -n"
+alias wezterm-new="wezterm cli spawn --new-window; open -a wezterm"
+alias wezterm-app="/Applications/WezTerm.app/Contents/MacOS/wezterm"
 
 source "$DOTFILES/Kubernetes/kube.sh"
 
