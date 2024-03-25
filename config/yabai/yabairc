@@ -112,8 +112,6 @@ yabai -m rule --add app="App Store" manage=off
 yabai -m rule --add app="^Docker Desktop$" manage=off
 
 
-
-
 echo "yabai configuration loaded.."
 
 

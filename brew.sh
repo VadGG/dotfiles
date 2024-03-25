@@ -133,7 +133,8 @@ brew tap FelixKratz/formulae
 brew install sketchybar
 
 
-
+brew tap FelixKratz/formulae
+brew install borders
 
 # other tools 
 # https://github.com/dalance/amber - Text Search tool

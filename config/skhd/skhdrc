@@ -4,31 +4,34 @@
 # https://github.com/sebastianst/yabai3/blob/97ef3f141b28158592db0492d5e09f23d30fc219/skhdrc
 
 # toggle window split type
-cmd + alt - e : yabai -m window --toggle split
+hyper - e : yabai -m window --toggle split
 
 # Equalize size of windows in desktop (0x18 --> '=')
 cmd + alt - 0    : yabai -m space --balance
 cmd + alt - 0x18 : yabai -m space --balance
 
-
 # new window insertions
 # cmd + alt - b : yabai -m window --insert south 
 # cmd + alt - v : yabai -m window --insert east 
 
-cmd + alt - return : /Applications/WezTerm.app/Contents/MacOS/wezterm
-cmd + alt - b : yabai -m window --insert south && /Applications/WezTerm.app/Contents/MacOS/wezterm
-cmd + alt - v : yabai -m window --insert east && /Applications/WezTerm.app/Contents/MacOS/wezterm
+# new terminal
+hyper - t : /Applications/WezTerm.app/Contents/MacOS/wezterm
 
+# new browser
+hyper - i : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+
+# close a window (exit active application)
+hyper - x : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
 
 # toggle window fullscreen
-cmd + alt - f : yabai -m window --toggle zoom-fullscreen
+hyper - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window native fullscreen
-cmd + alt + shift - f : yabai -m window --toggle native-fullscreen
+hyper - g : yabai -m window --toggle native-fullscreen
 
 # toggle layout
-#cmd + alt - d : yabai -m space --layout stack
-cmd + alt + shift - d : yabai -m space --layout bsp
+hyper - b : yabai -m space --layout bsp
+
 
 # FOCUS ##################################
 ##########################################
@@ -57,7 +60,7 @@ cmd + alt + shift - l : yabai -m window --swap east
 ##########################################
 # resize window mode
 :: resize
-cmd + alt - s ; resize
+hyper - s ; resize
 resize < escape ; default
 resize < return ; default
 resize < h : yabai3 resize shrink width 96
