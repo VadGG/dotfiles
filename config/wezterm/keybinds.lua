@@ -52,6 +52,9 @@ M.tmux_keybinds = {
 }
 
 M.default_keybinds = {
+  {key="LeftArrow", mods="OPT", action=wezterm.action{SendString="\x1bb"}},
+  {key="RightArrow", mods="OPT", action=wezterm.action{SendString="\x1bf"}},
+
 	{ key = "c", mods = "CTRL|SHIFT", action = act({ CopyTo = "Clipboard" }) },
 	{ key = "v", mods = "CTRL|SHIFT", action = act({ PasteFrom = "Clipboard" }) },
 	{ key = "Insert", mods = "SHIFT", action = act({ PasteFrom = "PrimarySelection" }) },
