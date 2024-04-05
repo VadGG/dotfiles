@@ -111,6 +111,13 @@ brew install fzf
 brew install bat
 brew install kubent
 brew install lf
+brew nnn
+brew tree
+# preview pdf
+brew install poppler
+# preview markdown
+brew install glow
+
 
 brew install cmake
 brew install ffmpeg

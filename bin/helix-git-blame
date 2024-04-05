@@ -10,7 +10,7 @@ LINE=$(echo $RES | choose 1)
 git blame -L $LINE,+100 $FILE --color-by-age --color-lines | 
   fzf --ansi \
       --border \
-      --delimiter ':' \
+     --delimiter ':' \
       --height '100%' \
       --multi \
       --print-query --exit-0 \
