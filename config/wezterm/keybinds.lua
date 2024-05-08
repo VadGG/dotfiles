@@ -33,7 +33,7 @@ M.tmux_keybinds = {
 	{ key = "8", mods = "ALT", action = act({ ActivateTab = 7 }) },
 	{ key = "9", mods = "ALT", action = act({ ActivateTab = 8 }) },
 
-	{ key = "g", mods = "CTRL", action = act({ EmitEvent = "trigger-lazygit" }) },
+	{ key = "m", mods = "CTRL", action = act({ EmitEvent = "trigger-lazygit" }) },
 	
 	{ key = "j", mods = "ALT|SHIFT", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
 	{ key = "l", mods = "ALT|SHIFT", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },

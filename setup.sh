@@ -15,7 +15,8 @@ for config in $DOTFILES/config/*; do
     target=$HOME/.config/$( basename $config )
     echo "target $target"
     if [ -e $target ]; then
-        echo "~${target#$HOME} already exists... Skipping."
+        # echo "~${target#$HOME} already exists... Skipping."
+        echo ""
     else
         echo "Creating symlink for $config"
         ln -s $config $target
@@ -28,10 +29,15 @@ for hconfig in *; do
     target=$HOME/$( basename $hconfig )
     echo "target $target"
     if [ -e $target ]; then
-        echo "~${target#$HOME} already exists... Skipping."
+        # echo "~${target#$HOME} already exists... Skipping."
+        echo ""
     else
         echo "Creating symlink for $hconfig"
-        ln $hconfig $target
+        if [ -d $hconfig ]; then
+            ln -s $hconfig $target
+        else
+            ln $hconfig $target
+        fi
     fi
 done
 
