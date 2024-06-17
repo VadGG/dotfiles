@@ -6,6 +6,7 @@ auto-save = true
 bufferline = "always"
 color-modes = true
 completion-trigger-len = 1
+rulers = [80, 120]
 
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
@@ -14,6 +15,8 @@ tab = [":buffer-next"]
 X = ["extend_line_up"]
 L = ["goto_line_end"]
 H = ["goto_line_start"]
+J = ["move_visual_line_down","move_visual_line_down","move_visual_line_down"]
+K = ["move_visual_line_up","move_visual_line_up","move_visual_line_up"]
 D = ["kill_to_line_end"]
 C = ["kill_to_line_end", "insert_mode"]
 V = ["copy_selection_on_next_line"]
@@ -31,6 +34,21 @@ select = "underline"
 render = true
 skip-levels = 20
 
+[editor.statusline]
+center = ["version-control"]
+right = [
+  "diagnostics",
+  "primary-selection-length",
+  "selections",
+  "register",
+  "position",
+  "file-encoding",
+  "file-line-ending",
+]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
 [editor.file-picker]
 hidden = false
 
@@ -45,6 +63,7 @@ newline = "none"
 # https://quantonganh.com/2023/08/19/turn-helix-into-ide 
 [keys.normal.space]
 F = "file_picker_in_current_buffer_directory"
+R = ["change_selection", "paste_clipboard_before", "normal_mode"]
 # g = ":pipe-to wezterm cli split-pane -- helix-live-grep"
 # l = ":pipe-to helix-debug-print"
 x = ":buffer-close"

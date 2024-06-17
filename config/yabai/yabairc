@@ -109,7 +109,9 @@ yabai -m rule --add app="Microsoft Remote Desktop" manage=off
 yabai -m rule --add app="App Store" manage=off
 # yabai -m rule --add app="VLC" manage=off
 
+yabai -m rule --add app="Archive Utility" manage=off
 yabai -m rule --add app="^Docker Desktop$" manage=off
+yabai -m rule --add app="^PCoIPClient$" manage=off
 
 
 echo "yabai configuration loaded.."

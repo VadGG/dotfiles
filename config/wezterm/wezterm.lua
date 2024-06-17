@@ -113,7 +113,7 @@ local config = {
 	hide_tab_bar_if_only_one_tab = false,
 	adjust_window_size_when_changing_font_size = false,
 	selection_word_boundary = " \t\n{}[]()\"'`,;:│=&!%",
-	window_decorations = "NONE",
+	-- window_decorations = "NONE",
 	window_padding = {
 		left = 0,
 		right = 0,
