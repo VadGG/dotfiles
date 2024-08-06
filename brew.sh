@@ -129,6 +129,15 @@ brew install youtube-dl
 brew install helm
 brew install nvm
 
+brew install awscli
+brew install deno
+brew install pnpm
+brew install hugo
+brew install mongosh
+brew install oven-sh/bun/bun
+brew install webp
+
+
 brew install helix
 brew install git
 brew install lazygit

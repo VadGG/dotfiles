@@ -12,7 +12,7 @@ FILE=$(eval echo $FILE)
 FILE_PATHS=$(nnn-pick $FILE | tr '\n' ' ' | sed 's/ *$//')
 
 # Get ID of the pane above in wezterm, which should be Helix
-HELIX_PANE_ID=$(wezterm cli get-pane-direction Up)
+HELIX_PANE_ID=$(wezterm cli get-pane-direction Left)
 if [ -z "${HELIX_PANE_ID}" ]; then
   HELIX_PANE_ID=$(wezterm cli split-pane --up --percent 20)
 fi

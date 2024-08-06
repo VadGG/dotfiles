@@ -61,6 +61,7 @@ alias penpotdown="docker compose -p penpot -f $PENPOT/docker-compose.yaml down"
 alias mpc="open /Applications/PCoIPClient.app -n"
 alias wezterm-new="wezterm cli spawn --new-window; open -a wezterm"
 alias wezterm-app="/Applications/WezTerm.app/Contents/MacOS/wezterm"
+alias helm-images-find="helm template . | yq '..|.image? | select(.)' | sort -u"
 
 export EDITOR=hx
 
@@ -101,3 +102,13 @@ n()
     }
 }
 
+
+# pnpm
+export PNPM_HOME="/Users/vadimgagarin/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+[[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
+! { which werf | grep -qsE "^/Users/vadimgagarin/.trdl/"; } && [[ -x "$HOME/bin/trdl" ]] && source $("$HOME/bin/trdl" use werf "2" "stable")
