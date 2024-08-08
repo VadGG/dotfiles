@@ -1,0 +1,65 @@
+
+verbs:
+[
+  {
+   key: ctrl-left
+   internal: ":up_tree"
+  }
+  {
+    key: ctrl-right
+    internal: ":back"
+  }
+  {
+    key: ctrl-o
+    internal: ":back"
+  }
+  {
+      key: ctrl-k
+      execution: ":line_up"
+  }
+  {
+      key: ctrl-j
+      execution: ":line_down"
+  }
+  {
+      key: ctrl-u
+      execution: ":page_up"
+  }
+  {
+      key: ctrl-d
+      execution: ":page_down"
+  }
+  {
+    invocation: mkcd {new_dir}
+    cmd: ":mkdir {new_dir};:focus {new_dir}"
+  }
+  {
+    invocation: rmdir
+    external: rmdir {directory}
+    leave_broot: false
+  }
+  {
+    key: alt-down
+    invocation: go
+    internal: ":focus"
+  }
+  {
+    invocation: go {path}
+    internal: ":focus {path}"
+  }
+  {
+    invocation: clip
+    internal: ":copy_path"
+    leave_broot: false
+  }
+  {
+    invocation: drag
+    external: ripdrag --resizable --icon-size 256 --basename --content-width 500 {file}
+    leave_broot: false
+  }
+  {
+    invocation: dolphin
+    external: dolphin {directory}
+    leave_broot: false
+  }
+]

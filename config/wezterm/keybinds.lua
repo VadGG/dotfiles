@@ -4,6 +4,23 @@ local act = wezterm.action
 local utils = require("utils")
 
 ---------------------------------------------------------------
+--- helper functions
+---------------------------------------------------------------
+local function is_file_browser(pane)
+  local process_info = pane:get_foreground_process_info()
+  local process_name = process_info and process_info.name
+
+  return process_name == "broot" or process_name == "nnn" or  process_name == "lf"
+end
+
+local function is_editor(pane)
+  local process_info = pane:get_foreground_process_info()
+  local process_name = process_info and process_info.name
+
+  return process_name == "nvim" or process_name == "vim" or process_name == "hx"
+end
+
+---------------------------------------------------------------
 --- keybinds
 ---------------------------------------------------------------
 M.tmux_keybinds = {
@@ -33,7 +50,7 @@ M.tmux_keybinds = {
 	{ key = "8", mods = "ALT", action = act({ ActivateTab = 7 }) },
 	{ key = "9", mods = "ALT", action = act({ ActivateTab = 8 }) },
 
-	{ key = "m", mods = "CTRL", action = act({ EmitEvent = "trigger-lazygit" }) },
+	{ key = "g", mods = "ALT|CTRL", action = act({ EmitEvent = "trigger-lazygit" }) },
 	
 	{ key = "j", mods = "ALT|SHIFT", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
 	{ key = "l", mods = "ALT|SHIFT", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
@@ -47,8 +64,21 @@ M.tmux_keybinds = {
 	-- { key = "k", mods = "ALT|SHIFT|CTRL", action = act({ AdjustPaneSize = { "Up", 1 } }) },
 	-- { key = "j", mods = "ALT|SHIFT|CTRL", action = act({ AdjustPaneSize = { "Down", 1 } }) },
 
-	{ key = "Enter", mods = "ALT", action = "QuickSelect" },
+	-- { key = "Enter", mods = "ALT", action = "QuickSelect" },
+	{
+      mods = "ALT",
+      key = "Enter",
+      action = wezterm.action_callback(function(win, pane)
+        if (is_file_browser(pane)) then
+           win:perform_action(act.SendKey({key="Enter", mods="ALT"}), pane)
+        else
+           win:perform_action(act.QuickSelect, pane)
+        end
+      end)
+    },
+
 	{ key = "/", mods = "ALT", action = act.Search("CurrentSelectionOrEmptyString") },
+	
 }
 
 M.default_keybinds = {

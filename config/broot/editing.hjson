@@ -1,0 +1,42 @@
+verbs:
+[
+  {
+    key: ctrl-r
+    invocation: renamer
+    apply_to: file
+    external: "renamer -y {file}"
+    leave_broot: false
+  }
+  {
+    key: ctrl-n
+    invocation: touch {new_file}
+    external: touch {directory}/{new_file}
+    leave_broot: false
+    auto_exec: false
+  }
+  {
+    key: ctrl-e
+    shortcut: e
+    external: $EDITOR {file}
+    leave_broot: false
+  }
+  {
+    invocation: write {subpath}
+    external: $EDITOR {directory}/{subpath}
+    leave_broot: false
+  }
+  {
+    key: ctrl-b
+    invocation: backup {version}
+    external: cp -r {file} {parent}/{file-stem}-{version}{file-dot-extension}
+    leave_broot: false
+    auto_exec: false
+  }
+  {
+    key: ctrl-c
+    invocation: clone {copy_name}
+    external: cp -r {file} {parent}/{copy_name}
+    leave_broot: false
+    auto_exec: false
+  }
+]
