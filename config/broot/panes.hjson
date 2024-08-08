@@ -2,11 +2,11 @@ verbs:
 [
 
   {
-    key: ctrl-l
+    key: ctrl-right
     internal: ":panel_right"
   }
   {
-    key: ctrl-h
+    key: ctrl-left
     internal: ":panel_left"
   }
 ]

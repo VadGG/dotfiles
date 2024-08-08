@@ -2,11 +2,11 @@
 verbs:
 [
   {
-   key: ctrl-left
+   key: ctrl-h
    internal: ":up_tree"
   }
   {
-    key: ctrl-right
+    key: ctrl-l
     internal: ":back"
   }
   {
@@ -30,15 +30,6 @@ verbs:
       execution: ":page_down"
   }
   {
-    invocation: mkcd {new_dir}
-    cmd: ":mkdir {new_dir};:focus {new_dir}"
-  }
-  {
-    invocation: rmdir
-    external: rmdir {directory}
-    leave_broot: false
-  }
-  {
     key: alt-down
     invocation: go
     internal: ":focus"
@@ -50,16 +41,6 @@ verbs:
   {
     invocation: clip
     internal: ":copy_path"
-    leave_broot: false
-  }
-  {
-    invocation: drag
-    external: ripdrag --resizable --icon-size 256 --basename --content-width 500 {file}
-    leave_broot: false
-  }
-  {
-    invocation: dolphin
-    external: dolphin {directory}
     leave_broot: false
   }
 ]
