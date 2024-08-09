@@ -1,0 +1,21 @@
+verbs:
+[
+  {
+    key: tab
+    cmd: ":stage;:next_match"
+    apply_to: file
+  }
+  {
+    key: backtab
+    cmd: ":unstage;:previous_match"
+    apply_to: file
+  }
+  {
+    key: alt-tab
+    internal: ":toggle_staging_area"
+  }
+  {
+    key: ctrl-tab
+    internal: ":clear_stage"
+  }
+]

@@ -172,10 +172,11 @@ imports: [
     verbs.hjson
     navigation.hjson
     editing.hjson
-    select.hjson
+    staging.hjson
     panes.hjson
     view.hjson
-    select_folder.hjson
+    select.hjson
+    launcher.hjson
 
     # This file contains the skin to use when the terminal
     # is dark (or when this couldn't be determined)

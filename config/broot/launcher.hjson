@@ -1,0 +1,10 @@
+verbs:
+[
+  {
+    key: ctrl-f
+    invocation: finder
+    external: open {directory}
+    leave_broot: false
+  }
+]
+

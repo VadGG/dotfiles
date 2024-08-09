@@ -1,13 +1,12 @@
 verbs:
 [
   {
-    key: tab
-    cmd: ":stage;:next_match"
-    apply_to: file
+    key: alt-enter
+    internal: ":print_path"
   }
   {
-    key: backtab
-    cmd: ":unstage;:previous_match"
+    key: enter
+    internal: ":print_path"
     apply_to: file
   }
 ]

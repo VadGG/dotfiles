@@ -57,10 +57,20 @@ verbs:
     auto_exec: false
   }
   {
-    key: ctrl-c
-    invocation: clone {copy_name}
-    external: cp -r {file} {parent}/{copy_name}
+    key: ctrl-d
+    invocation: clone
+    external: cp -r {file} {parent}/{file-stem}_clone{file-dot-extension}
     leave_broot: false
-    auto_exec: false
+    auto_exec: true
+  }
+  {
+    key: ctrl-c
+    external: "cp -r {file} {other-panel-directory}"
+    leave_broot: false
+  }
+  {
+    key: ctrl-v
+    external: "mv {file} {other-panel-directory}"
+    leave_broot: false
   }
 ]

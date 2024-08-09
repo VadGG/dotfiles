@@ -10,10 +10,6 @@ verbs:
     internal: ":back"
   }
   {
-    key: ctrl-o
-    internal: ":back"
-  }
-  {
       key: ctrl-k
       execution: ":line_up"
   }
@@ -24,10 +20,6 @@ verbs:
   {
       key: ctrl-u
       execution: ":page_up"
-  }
-  {
-      key: ctrl-d
-      execution: ":page_down"
   }
   {
     key: alt-down
