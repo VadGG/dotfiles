@@ -17,7 +17,7 @@ verbs:
 
   {
     key: ctrl-shift-n
-    invocation: mkcd {new_dir}
+    invocation: mkd {new_dir}
     cmd: ":mkdir {new_dir}"
     leave_broot: false
     auto_exec: false

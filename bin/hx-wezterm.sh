@@ -31,6 +31,17 @@ basename=$(basename "$filename")
 basename_without_extension="${basename%.*}"
 extension="${filename##*.}"
 
+abspath="$filename"
+if [[ "$abspath" =~ ^~(/|$) ]]; then
+    abspath="${HOME}${abspath:1}"
+fi
+
+if [[ "$abspath" == /* ]]; then
+    abspath="${basedir}/${basename}"
+else
+    abspath="${pwd}/${basename}"
+fi    
+
 case "$1" in
   "blame")
     split_pane_down
@@ -54,11 +65,13 @@ case "$1" in
     fi
 
     left_program=$(wezterm cli list | awk -v pane_id="$left_pane_id" '$3==pane_id { print $6 }')
-    if [ "$left_program" != "br" ]; then
-      echo "export NNN_OPENER=nnn-hx.sh; nnn -c" | wezterm cli send-text --pane-id $left_pane_id --no-paste
+    if [ "$left_program" != "broot" ]; then
+      echo "br" | wezterm cli send-text --pane-id $left_pane_id --no-paste
     fi
 
     wezterm cli activate-pane-direction left
+
+    echo ":focusabs $(dirname $abspath) $(basename $abspath)\r" | wezterm cli send-text --pane-id $left_pane_id --no-paste
     ;;
   "fzf")
     split_pane_down

@@ -86,6 +86,6 @@ space = [":new", ":insert-output lf-pick-current", "select_all", "split_selectio
 
 [keys.normal.";"]
 b = ":sh hx-wezterm.sh blame"
-e = ":sh hx-wezterm.sh explorer"
-f = ":sh hx-wezterm.sh fzf"
+f = ":sh hx-wezterm.sh explorer"
+s = ":sh hx-wezterm.sh fzf"
 g = ":sh hx-wezterm.sh lazygit"

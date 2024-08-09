@@ -6,5 +6,14 @@ verbs:
     external: open {directory}
     leave_broot: false
   }
+
+  {
+    key: enter
+    invocation: hx-open
+    external: "broot-hx.sh {file}"
+    apply_to: file
+    leave_broot: false
+  }
+
 ]
 

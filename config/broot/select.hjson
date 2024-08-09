@@ -5,7 +5,7 @@ verbs:
     internal: ":print_path"
   }
   {
-    key: enter
+    key: alt-enter
     internal: ":print_path"
     apply_to: file
   }
