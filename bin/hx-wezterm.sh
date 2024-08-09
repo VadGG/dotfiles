@@ -67,15 +67,15 @@ case "$1" in
     left_program=$(wezterm cli list | awk -v pane_id="$left_pane_id" '$3==pane_id { print $6 }')
     if [ "$left_program" != "broot" ]; then
       echo "br" | wezterm cli send-text --pane-id $left_pane_id --no-paste
+    else
+        echo ":focusabs $(dirname $abspath) $(basename $abspath)\r" | wezterm cli send-text --pane-id $left_pane_id --no-paste
     fi
 
     wezterm cli activate-pane-direction left
-
-    echo ":focusabs $(dirname $abspath) $(basename $abspath)\r" | wezterm cli send-text --pane-id $left_pane_id --no-paste
     ;;
   "fzf")
     split_pane_down
-    echo "cd $pwd; hx-fzf.sh \$(rg --line-number --column --no-heading --smart-case . | fzf --delimiter : --preview 'bat --style=full --color=always --highlight-line {2} {1}' --preview-window '~3,+{2}+3/2' | awk '{ print \$1 }' | cut -d: -f1,2,3)" | $send_to_bottom_pane
+    echo "cd $pwd; hx-fzf.sh" | $send_to_bottom_pane
     ;;
   "jq")
     split_pane_down
