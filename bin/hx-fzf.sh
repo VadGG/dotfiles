@@ -1,6 +1,16 @@
 #!/bin/bash
  
-selected_file=$(live-grep)
+if [[ $1 == 'grep' ]]; then
+    selected_file=$(live-grep)
+else
+    selected_file=$(live-fzf)
+fi
+
+selected_file=$(for entry in "${selected_file[@]}"; do
+    # echo "${entry%%:*}"
+    echo $(echo "$entry" | cut -d ":" -f 1)
+done | tr ' ' '\n' | sort -u | tr '\n' ' ')
+
 
 top_pane_id=$(wezterm cli get-pane-direction Up)
 if [ -z "$selected_file" ]; then
@@ -30,3 +40,4 @@ else
 fi
 
 # wezterm cli toggle-pane-zoom-state
+

@@ -45,16 +45,7 @@ fi
 case "$1" in
   "blame")
     split_pane_down
-    echo "cd $pwd; tig blame $filename +$line_number" | $send_to_bottom_pane
-    ;;
-  "check")
-    split_pane_down
-    case "$extension" in
-      "rs")
-        run_command="cd $pwd/$(echo $filename | sed 's|src/.*$||'); cargo check; if [ \$status = 0 ]; wezterm cli activate-pane-direction up; end;"
-        ;;
-    esac
-    echo "$run_command" | $send_to_bottom_pane
+    echo "hx-git-blame $filename +$line_number" | $send_to_bottom_pane
     ;;
   "explorer")
     wezterm cli activate-pane-direction up
@@ -68,18 +59,18 @@ case "$1" in
     if [ "$left_program" != "broot" ]; then
       echo "br" | wezterm cli send-text --pane-id $left_pane_id --no-paste
     else
-        echo ":focusabs $(dirname $abspath) $(basename $abspath)\r" | wezterm cli send-text --pane-id $left_pane_id --no-paste
+      echo ":focusabs $(dirname $abspath) $(basename $abspath)\r" | wezterm cli send-text --pane-id $left_pane_id --no-paste
     fi
 
     wezterm cli activate-pane-direction left
     ;;
-  "fzf")
+  "file-search")
     split_pane_down
-    echo "cd $pwd; hx-fzf.sh" | $send_to_bottom_pane
+    echo "cd $pwd; hx-fzf.sh file" | $send_to_bottom_pane
     ;;
-  "jq")
+  "file-grep")
     split_pane_down
-    echo "echo '`pbpaste`' | jq" | $send_to_bottom_pane
+    echo "cd $pwd; hx-fzf.sh grep" | $send_to_bottom_pane
     ;;
   "lazygit")
     split_pane_down
