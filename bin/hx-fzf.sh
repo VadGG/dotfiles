@@ -1,9 +1,9 @@
 #!/bin/bash
  
 if [[ $1 == 'grep' ]]; then
-    selected_file=$(search-grep)
+    selected_file=$(rg-print)
 else
-    selected_file=$(search-fzf)
+    selected_file=$(fzf-print)
 fi
 
 top_pane_id=$(wezterm cli get-pane-direction Up)

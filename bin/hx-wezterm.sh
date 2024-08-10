@@ -74,11 +74,11 @@ case "$1" in
     ;;
   "file-renamer")
     split_pane_down
-    echo "cd $pwd; live-renamer" | $send_to_bottom_pane
+    echo "cd $pwd; fzf-rename" | $send_to_bottom_pane
     ;;
   "file-renamer-grep")
     split_pane_down
-    echo "cd $pwd; live-renamer" | $send_to_bottom_pane
+    echo "cd $pwd; rg-rename" | $send_to_bottom_pane
     ;;
   "lazygit")
     split_pane_down
