@@ -6,13 +6,34 @@ else
     selected_file=$(live-fzf)
 fi
 
-selected_file=$(for entry in "${selected_file[@]}"; do
-    # echo "${entry%%:*}"
-    echo $(echo "$entry" | cut -d ":" -f 1)
-done | tr ' ' '\n' | sort -u | tr '\n' ' ')
-
-
 top_pane_id=$(wezterm cli get-pane-direction Up)
+if [[ -z "$selected_file" ]]; then
+    if [ -n "${top_pane_id}" ]; then
+        wezterm cli activate-pane-direction --pane-id $top_pane_id Up
+        exit 1
+    fi
+fi
+
+# selected_file=$(echo "$selected_file" | awk -F: '{a[$1]=$2} END {for (i in a) print i ":" a[i]}' | tr '\n' ' ')
+
+selected_file=$(echo "$selected_file" | awk -F: '
+{
+    if (NF == 2) {
+        a[$1]=$2
+    } else {
+        a[$1]=""
+    }
+}
+END {
+    for (i in a) {
+        if (a[i] != "") {
+            print i ":" a[i]
+        } else {
+            print i
+        }
+    }
+}' | tr '\n' ' ')
+
 if [ -z "$selected_file" ]; then
     if [ -n "${top_pane_id}" ]; then
         wezterm cli activate-pane-direction --pane-id $top_pane_id Up

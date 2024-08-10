@@ -66,11 +66,19 @@ case "$1" in
     ;;
   "file-search")
     split_pane_down
-    echo "cd $pwd; hx-fzf.sh file" | $send_to_bottom_pane
+    echo "cd $pwd; hx-fzf.sh" | $send_to_bottom_pane
     ;;
   "file-grep")
     split_pane_down
     echo "cd $pwd; hx-fzf.sh grep" | $send_to_bottom_pane
+    ;;
+  "file-renamer")
+    split_pane_down
+    echo "cd $pwd; live-renamer" | $send_to_bottom_pane
+    ;;
+  "file-renamer-grep")
+    split_pane_down
+    echo "cd $pwd; live-renamer" | $send_to_bottom_pane
     ;;
   "lazygit")
     split_pane_down
