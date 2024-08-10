@@ -43,10 +43,15 @@ function process_matches() {
     else
       echo "$line"
     fi
-    # file=$(echo "$line" | cut -d: -f1)
-    # line_number=$(echo "$line" | cut -d: -f2)
-    # # echo "$(pwd)/$file"
-    # echo "$file:$line_number"
+  done | tr ' ' '\n' | sort -u
+}
+
+function process_matches_abs_filepath() {
+  local selected_matches=("$@")
+  for line in "${selected_matches[@]:1}"; do
+    file=$(echo "$line" | cut -d: -f1)
+    line_number=$(echo "$line" | cut -d: -f2)
+    echo "$(pwd)/$file"
   done | tr ' ' '\n' | sort -u
 }
 
