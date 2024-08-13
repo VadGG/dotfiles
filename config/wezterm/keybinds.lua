@@ -38,8 +38,18 @@ M.tmux_keybinds = {
 		mods = "ALT",
 		action = act.Multiple({ act.CopyMode("ClearSelectionMode"), act.ActivateCopyMode, act.ClearSelection }),
 	},
-	{ key = "p", mods = "ALT", action = act({ PasteFrom = "PrimarySelection" }) },
-
+	-- { key = "p", mods = "ALT", action = act({ PasteFrom = "PrimarySelection" }) },
+	{
+      mods = "ALT",
+      key = "p",
+      action = wezterm.action_callback(function(win, pane)
+        if (is_editor(pane)) then
+           win:perform_action(act.SendKey({key="p", mods="ALT"}), pane)
+        else
+           win:perform_action(act({ PasteFrom = "PrimarySelection" }), pane)
+        end
+      end)
+  },
 	{ key = "1", mods = "ALT", action = act({ ActivateTab = 0 }) },
 	{ key = "2", mods = "ALT", action = act({ ActivateTab = 1 }) },
 	{ key = "3", mods = "ALT", action = act({ ActivateTab = 2 }) },

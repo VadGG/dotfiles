@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./live-common.sh
+source live-common.sh
 
 # Set key bindings
 set_keys "$1"
