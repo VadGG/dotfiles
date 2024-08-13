@@ -1,25 +1,25 @@
 verbs:
 [
   {
-    key: ctrl-0
+    key: tab
     cmd: ":stage;:next_match"
     apply_to: file
   }
   {
-    key: ctrl-9
+    key: backtab
     cmd: ":unstage;:previous_match"
     apply_to: file
   }
   {
-    key: alt-tab
+    key: ctrl-tab
     internal: ":toggle_staging_area"
   }
   {
     key: ctrl-6
-    internal: ":clear_stage"
+    internal: ":stage_all_files"
   }
   {
-    key: ctrl-7
-    internal: ":stage_all_files"
+    key: ctrl-0
+    internal: ":clear_stage"
   }
 ]
