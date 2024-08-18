@@ -111,6 +111,9 @@ brew install fzf
 brew install bat
 brew install kubent
 brew install lf
+brew install ast-grep
+brew install serpl
+
 brew nnn
 brew tree
 # preview pdf

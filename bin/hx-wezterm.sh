@@ -30,6 +30,15 @@ split_pane_down() {
   fi
 }
 
+switch_pane_up() {
+  top_pane_id=$(wezterm cli get-pane-direction up)
+  if [ -z "${top_pane_id}" ]; then
+    exit 0
+  fi
+
+  wezterm cli activate-pane-direction --pane-id $bottom_pane_id up
+}
+
 basedir=$(dirname "$filename")
 basename=$(basename "$filename")
 
@@ -59,6 +68,24 @@ case "$1" in
     fi
 
     wezterm cli activate-pane-direction left
+    ;;
+  "file-replace")
+    split_pane_down
+    program=$(wezterm cli list | awk -v pane_id="$pane_id" '$3==pane_id { print $6 }')
+    if [ "$program" = "serpl" ]; then
+        wezterm cli activate-pane-direction down
+    else
+        echo "cd $basedir; serpl" | $send_to_bottom_pane
+    fi
+    ;;
+  "file-replace-cwd")
+    split_pane_down
+    program=$(wezterm cli list | awk -v pane_id="$pane_id" '$3==pane_id { print $6 }')
+    if [ "$program" = "serpl" ]; then
+        wezterm cli activate-pane-direction down
+    else
+        echo "cd $cwd; serpl" | $send_to_bottom_pane
+    fi
     ;;
   "file-search")
     split_pane_down

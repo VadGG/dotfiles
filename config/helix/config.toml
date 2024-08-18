@@ -95,4 +95,7 @@ R = ":sh hx-wezterm.sh file-renamer %{cwd} %{filename} %{linenumber}"
 t = ":sh hx-wezterm.sh file-renamer-grep-cwd %{cwd} %{filename} %{linenumber}"
 T = ":sh hx-wezterm.sh file-renamer-grep %{cwd} %{filename} %{linenumber}"
 
+s = ":sh hx-wezterm.sh file-replace-cwd %{cwd} %{filename} %{linenumber}"
+S = ":sh hx-wezterm.sh file-replace %{cwd} %{filename} %{linenumber}"
+
 "`" = ":sh hx-wezterm.sh lazygit %{cwd} %{filename} %{linenumber}"
