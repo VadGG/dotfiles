@@ -71,3 +71,4 @@ config/tmux/plugins/tmux-thumbs/target/release
 config/helix/runtime
 
 conflict.yaml
+conflict.yaml
