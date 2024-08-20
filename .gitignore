@@ -70,4 +70,3 @@ config/tmux/plugins/tmux-thumbs/target/release
 .git-token
 config/helix/runtime
 
-conflict.yaml
