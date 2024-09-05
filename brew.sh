@@ -27,8 +27,9 @@ brew install bash
 brew install bash-completion2
 
 
-brew install koekeishiya/formulae/yabai
-brew install koekeishiya/formulae/skhd
+# brew install koekeishiya/formulae/yabai
+# brew install koekeishiya/formulae/skhd
+# brew install borders
 
 # Switch to using brew-installed bash as default shell
 if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
@@ -43,7 +44,7 @@ brew install wget --with-iri
 brew install gnupg
 
 # Install more recent versions of some macOS tools.
-brew install vim --with-override-system-vi
+# brew install vim --with-override-system-vi
 brew install grep
 # brew install openssh
 # brew install screen
@@ -149,11 +150,10 @@ brew install starship
 
 
 brew tap FelixKratz/formulae
-brew install sketchybar
+# brew install sketchybar
 
 
 brew tap FelixKratz/formulae
-brew install borders
 
 # other tools 
 # https://github.com/dalance/amber - Text Search tool
