@@ -34,9 +34,9 @@ for hconfig in *; do
     else
         echo "Creating symlink for $hconfig"
         if [ -d $hconfig ]; then
-            ln -s $hconfig $target
+            cp -r $hconfig $target
         else
-            ln $hconfig $target
+            cp -r $hconfig $target
         fi
     fi
 done

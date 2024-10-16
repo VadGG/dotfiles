@@ -1,4 +1,3 @@
-
 eval `dircolors -c $HOME/.config/dircolors/dircolors.zenburn`
 
 # alias dir 'dir --color'

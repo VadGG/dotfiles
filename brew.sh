@@ -122,6 +122,7 @@ brew install poppler
 # preview markdown
 brew install glow
 
+brew install yazi
 
 brew install cmake
 brew install ffmpeg
@@ -149,11 +150,11 @@ brew install wezterm
 brew install starship
 
 
-brew tap FelixKratz/formulae
+# brew tap FelixKratz/formulae
 # brew install sketchybar
 
 
-brew tap FelixKratz/formulae
+# brew tap FelixKratz/formulae
 
 # other tools 
 # https://github.com/dalance/amber - Text Search tool
