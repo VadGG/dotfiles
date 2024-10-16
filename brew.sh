@@ -114,6 +114,7 @@ brew install kubent
 brew install lf
 brew install ast-grep
 brew install serpl
+brew install zellij
 
 brew nnn
 brew tree
