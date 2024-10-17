@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+FILE=$0
 paths=$(yazi --chooser-file=/dev/stdout | while read -r; do printf "%q " "$REPLY"; done)
 
 if [[ -n "$paths" ]]; then

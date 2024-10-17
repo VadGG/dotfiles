@@ -7,7 +7,7 @@ keybinds clear-defaults=true {
         // bind "Alt c" { Copy; }
     }
     locked {
-        bind "Ctrl l" { SwitchToMode "Normal"; }
+        bind "Ctrl ;" { SwitchToMode "Normal"; }
         bind "Alt z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
         bind "Alt p" { TogglePaneFrames; SwitchToMode "Normal"; }
     }
@@ -46,7 +46,7 @@ keybinds clear-defaults=true {
         bind "r" { SwitchToMode "RenamePane"; PaneNameInput 0;}
     }
     move {
-        bind "Ctrl w" { SwitchToMode "Normal"; }
+        bind "Ctrl n" { SwitchToMode "Normal"; }
         bind "n" "Tab" { MovePane; }
         bind "p" { MovePaneBackwards; }
         bind "h" "Left" { MovePane "Left"; }
@@ -144,16 +144,16 @@ keybinds clear-defaults=true {
         bind "x" { CloseFocus; SwitchToMode "Normal"; }
     }
     shared_except "locked" {
-        bind "Ctrl l" { SwitchToMode "Locked"; }
-        bind "Alt n" { NewPane; }
-        bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
-        bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
-        bind "Alt j" "Alt Down" { MoveFocus "Down"; }
-        bind "Alt k" "Alt Up" { MoveFocus "Up"; }
-        bind "Alt =" "Alt +" { Resize "Increase"; }
-        bind "Alt -" { Resize "Decrease"; }
-        bind "Alt [" { PreviousSwapLayout; }
-        bind "Alt ]" { NextSwapLayout; }
+        bind "Ctrl ;" { SwitchToMode "Locked"; }
+        // bind "Ctrl n" { NewPane; }
+        bind "Ctrl h" { MoveFocusOrTab "Left"; }
+        bind "Ctrl l" { MoveFocusOrTab "Right"; }
+        bind "Ctrl j" { MoveFocus "Down"; }
+        bind "Ctrl k" { MoveFocus "Up"; }
+        bind "Ctrl +" { Resize "Increase"; }
+        bind "Ctrl _" { Resize "Decrease"; }
+        bind "Ctrl [" { PreviousSwapLayout; }
+        bind "Ctrl ]" { NextSwapLayout; }
     }
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
@@ -174,7 +174,7 @@ keybinds clear-defaults=true {
         bind "Ctrl t" { SwitchToMode "Tab"; }
     }
     shared_except "move" "locked" {
-        bind "Ctrl w" { SwitchToMode "Move"; }
+        bind "Ctrl n" { SwitchToMode "Move"; }
     }
     shared_except "tmux" "locked" {
         bind "Ctrl b" { SwitchToMode "Tmux"; }
@@ -189,22 +189,22 @@ plugins {
 }
 
 
-theme "custom"
+theme "default"
 
 themes {
-  custom {
-    bg "#6A5475" // Surface2
-    fg "#C4CEF2"
-    red "#B84D48"
-    green "#a6d189"
-    blue "#8caaee"
-    yellow "#e5c890"
-    magenta "#f4b8e4" // Pink
-    orange "#ef9f76" // Peach
-    cyan "#99d1db" // Sky
-    black "#292c3c" // Mantle
-    white "#c6d0f5"
-  }
+    default {
+        fg "#afb4c3"
+        bg "#272b30"
+        black "#272b30"
+        red "#cc6666"
+        green "#bdb968"
+        yellow "#f0c674"
+        blue "#81a2be"
+        magenta "#b08cba"
+        cyan "#7fb2c8"
+        white "#afb4c3"
+        orange "#de935f"
+    }
 }
 
 // Choose what to do when zellij receives SIGTERM, SIGINT, SIGQUIT or SIGHUP
