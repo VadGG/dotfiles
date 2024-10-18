@@ -1,99 +1,70 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# zellij-helper.sh
 
-set -x
+set -e
 
 cmd=$1
 cwd=$2
 filename=$3
 line_number=$4
 
+# Function to run a command in a floating pane
+run_floating_command() {
+    local command="$1"
+    shift
+    zellij run -f -x 10% -y 10% --width 80% --height 80% -- bash -c "$command; hx-zellij-actions-close.sh"
+}
+
+# Get the base directory
 basedir=$(dirname "$filename")
 basename=$(basename "$filename")
 
+# Resolve absolute path
 abspath="$filename"
 if [[ "$abspath" =~ ^~(/|$) ]]; then
     abspath="${HOME}${abspath:1}"
 fi
 
-case "$1" in
-  "blame")
-    split_pane_down
-    echo "cd $basedir;hx-git-blame $filename +$line_number" | $send_to_bottom_pane
-    ;;
-  "explorer")
-    wezterm cli activate-pane-direction up
-
-    left_pane_id=$(wezterm cli get-pane-direction left)
-    if [ -z "${left_pane_id}" ]; then
-      left_pane_id=$(wezterm cli split-pane --left --percent 20)
-    fi
-
-    left_program=$(wezterm cli list | awk -v pane_id="$left_pane_id" '$3==pane_id { print $6 }')
-    if [ "$left_program" != "broot" ]; then
-      echo "br" | wezterm cli send-text --pane-id $left_pane_id --no-paste
-    else
-      echo ":focusabs $(dirname $abspath) $(basename $abspath)" | wezterm cli send-text --pane-id $left_pane_id --no-paste
-    fi
-
-    wezterm cli activate-pane-direction left
-    ;;
-  "file-replace")
-    split_pane_down
-    program=$(wezterm cli list | awk -v pane_id="$pane_id" '$3==pane_id { print $6 }')
-    if [ "$program" = "serpl" ]; then
-        wezterm cli activate-pane-direction down
-    else
-        echo "cd $basedir; serpl" | $send_to_bottom_pane
-    fi
-    ;;
-  "file-replace-cwd")
-    split_pane_down
-    program=$(wezterm cli list | awk -v pane_id="$pane_id" '$3==pane_id { print $6 }')
-    if [ "$program" = "serpl" ]; then
-        wezterm cli activate-pane-direction down
-    else
-        echo "cd $cwd; serpl" | $send_to_bottom_pane
-    fi
-    ;;
-  "file-search")
-    split_pane_down
-    echo "cd $basedir; hx-fzf.sh" | $send_to_bottom_pane
-    ;;
-  "file-search-cwd")
-    split_pane_down
-    echo "cd $cwd; hx-fzf.sh" | $send_to_bottom_pane
-    ;;
-  "file-grep")
-    split_pane_down
-    echo "cd $basedir; hx-fzf.sh grep" | $send_to_bottom_pane
-    ;;
-  "file-grep-cwd")
-    split_pane_down
-    echo "cd $cwd; hx-fzf.sh grep" | $send_to_bottom_pane
-    ;;
-  "file-renamer")
-    split_pane_down
-    echo "cd $basedir; fzf-rename" | $send_to_bottom_pane
-    ;;
-  "file-renamer-cwd")
-    split_pane_down
-    echo "cd $cwd; fzf-rename" | $send_to_bottom_pane
-    ;;
-  "file-renamer-grep")
-    split_pane_down
-    echo "cd $basedir; rg-rename" | $send_to_bottom_pane
-    ;;
-  "file-renamer-grep-cwd")
-    split_pane_down
-    echo "cd $cwd; rg-rename" | $send_to_bottom_pane
-    ;;
-  "lazygit")
-    lazygit
-    zellij action toggle-floating-panes
-    zellij action write 27 # send <Escape> key
-    zellij action write-chars ":reload-all"
-    zellij action write 13 # send <Enter> key
-    zellij action toggle-floating-panes
-    zellij action close-pane
-    ;;
+case "$cmd" in
+    "lazygit")
+        run_floating_command "cd $cwd && lazygit"
+        ;;
+    "serpl")
+        run_floating_command "cd $cwd && serpl"
+        ;;
+    "fzf")
+        run_floating_command "cd $cwd && rg --color=always --line-number --no-heading --smart-case |
+            fzf --ansi \
+                --border \
+                --color \"hl+:$CATPPUCCIN_GREEN:reverse,hl:$CATPPUCCIN_MAUVE:reverse\" \
+                --delimiter ':' \
+                --height '100%' \
+                --multi \
+                --print-query --exit-0 \
+                --preview \"bat {1} --highlight-line {2}\" \
+                --preview-window 'right,+{2}+3/3,~3' \
+                --scrollbar '▍' \
+                --bind \"$KEYS\""
+        ;;
+    "serpl-file")
+        run_floating_command "cd $basedir && serpl"
+        ;;
+    "fzf-file")
+        run_floating_command "cd $basedir && rg --color=always --line-number --no-heading --smart-case |
+            fzf --ansi \
+                --border \
+                --color \"hl+:$CATPPUCCIN_GREEN:reverse,hl:$CATPPUCCIN_MAUVE:reverse\" \
+                --delimiter ':' \
+                --height '100%' \
+                --multi \
+                --print-query --exit-0 \
+                --preview \"bat {1} --highlight-line {2}\" \
+                --preview-window 'right,+{2}+3/3,~3' \
+                --scrollbar '▍' \
+                --bind \"$KEYS\""
+        ;;
+    *)
+        echo "Unknown command: $cmd"
+        exit 1
+        ;;
 esac
