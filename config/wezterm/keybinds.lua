@@ -6,6 +6,13 @@ local utils = require("utils")
 ---------------------------------------------------------------
 --- helper functions
 ---------------------------------------------------------------
+local function is_multiplexer(pane)
+  local process_info = pane:get_foreground_process_info()
+  local process_name = process_info and process_info.name
+
+  return process_name == "zellij"
+end
+
 local function is_file_browser(pane)
   local process_info = pane:get_foreground_process_info()
   local process_name = process_info and process_info.name
@@ -28,16 +35,21 @@ M.tmux_keybinds = {
 	{ key = "x", mods = "ALT|CTRL|SHIFT", action = act({ CloseCurrentTab = { confirm = true } }) },
 	{ key = "h", mods = "ALT|CTRL", action = act({ ActivateTabRelative = -1 }) },
 	{ key = "l", mods = "ALT|CTRL", action = act({ ActivateTabRelative = 1 }) },
+
   { key = "m", mods = "ALT|CTRL", action = wezterm.action.ToggleFullScreen },
-  { key = "z", mods = "ALT", action = wezterm.action.TogglePaneZoomState},
+
 	-- { key = "h", mods = "ALT|CTRL", action = act({ MoveTabRelative = -1 }) },
 	-- { key = "l", mods = "ALT|CTRL", action = act({ MoveTabRelative = 1 }) },
-	{ key = "y", mods = "ALT", action = act.ActivateCopyMode },
+
+  -- { key = "z", mods = "ALT", action = wezterm.action.TogglePaneZoomState},
+	-- { key = "y", mods = "ALT", action = act.ActivateCopyMode },
+	{ key = "e", mods = "ALT", action = act({ EmitEvent = "trigger-nvim-with-scrollback" }) },
 	{
 		key = "y",
 		mods = "ALT",
 		action = act.Multiple({ act.CopyMode("ClearSelectionMode"), act.ActivateCopyMode, act.ClearSelection }),
 	},
+
 	-- { key = "p", mods = "ALT", action = act({ PasteFrom = "PrimarySelection" }) },
 	{
       mods = "ALT",
@@ -50,20 +62,22 @@ M.tmux_keybinds = {
         end
       end)
   },
-	{ key = "1", mods = "ALT", action = act({ ActivateTab = 0 }) },
-	{ key = "2", mods = "ALT", action = act({ ActivateTab = 1 }) },
-	{ key = "3", mods = "ALT", action = act({ ActivateTab = 2 }) },
-	{ key = "4", mods = "ALT", action = act({ ActivateTab = 3 }) },
-	{ key = "5", mods = "ALT", action = act({ ActivateTab = 4 }) },
-	{ key = "6", mods = "ALT", action = act({ ActivateTab = 5 }) },
-	{ key = "7", mods = "ALT", action = act({ ActivateTab = 6 }) },
-	{ key = "8", mods = "ALT", action = act({ ActivateTab = 7 }) },
-	{ key = "9", mods = "ALT", action = act({ ActivateTab = 8 }) },
+
+	-- { key = "1", mods = "ALT", action = act({ ActivateTab = 0 }) },
+	-- { key = "2", mods = "ALT", action = act({ ActivateTab = 1 }) },
+	-- { key = "3", mods = "ALT", action = act({ ActivateTab = 2 }) },
+	-- { key = "4", mods = "ALT", action = act({ ActivateTab = 3 }) },
+	-- { key = "5", mods = "ALT", action = act({ ActivateTab = 4 }) },
+	-- { key = "6", mods = "ALT", action = act({ ActivateTab = 5 }) },
+	-- { key = "7", mods = "ALT", action = act({ ActivateTab = 6 }) },
+	-- { key = "8", mods = "ALT", action = act({ ActivateTab = 7 }) },
+	-- { key = "9", mods = "ALT", action = act({ ActivateTab = 8 }) },
 
 	{ key = "g", mods = "ALT|CTRL", action = act({ EmitEvent = "trigger-lazygit" }) },
-	
+
 	{ key = "j", mods = "ALT|SHIFT", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
 	{ key = "l", mods = "ALT|SHIFT", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+
 	{ key = "h", mods = "ALT", action = act({ ActivatePaneDirection = "Left" }) },
 	{ key = "l", mods = "ALT", action = act({ ActivatePaneDirection = "Right" }) },
 	{ key = "k", mods = "ALT", action = act({ ActivatePaneDirection = "Up" }) },
@@ -74,48 +88,9 @@ M.tmux_keybinds = {
 	-- { key = "k", mods = "ALT|SHIFT|CTRL", action = act({ AdjustPaneSize = { "Up", 1 } }) },
 	-- { key = "j", mods = "ALT|SHIFT|CTRL", action = act({ AdjustPaneSize = { "Down", 1 } }) },
 
-	-- { key = "Enter", mods = "ALT", action = "QuickSelect" },
 	{
-      mods = "ALT",
-      key = "Enter",
-      action = wezterm.action_callback(function(win, pane)
-        if (is_file_browser(pane)) then
-           win:perform_action(act.SendKey({key="Enter", mods="ALT"}), pane)
-        else
-           win:perform_action(act.QuickSelect, pane)
-        end
-      end)
-    },
-
-	{ key = "/", mods = "ALT", action = act.Search("CurrentSelectionOrEmptyString") },
-	
-}
-
-M.default_keybinds = {
-  {key="LeftArrow", mods="OPT", action=wezterm.action{SendString="\x1bb"}},
-  {key="RightArrow", mods="OPT", action=wezterm.action{SendString="\x1bf"}},
-
-	{ key = "c", mods = "CTRL|SHIFT", action = act({ CopyTo = "Clipboard" }) },
-	{ key = "v", mods = "CTRL|SHIFT", action = act({ PasteFrom = "Clipboard" }) },
-	{ key = "Insert", mods = "SHIFT", action = act({ PasteFrom = "PrimarySelection" }) },
-	{ key = "=", mods = "CTRL", action = "ResetFontSize" },
-	{ key = "+", mods = "CTRL|SHIFT", action = "IncreaseFontSize" },
-	{ key = "-", mods = "CTRL", action = "DecreaseFontSize" },
-	{ key = "PageUp", mods = "ALT", action = act({ ScrollByPage = -1 }) },
-	{ key = "PageDown", mods = "ALT", action = act({ ScrollByPage = 1 }) },
-	{ key = "b", mods = "ALT", action = act({ ScrollByPage = -1 }) },
-	{ key = "f", mods = "ALT", action = act({ ScrollByPage = 1 }) },
-	-- { key = "z", mods = "ALT", action = "ReloadConfiguration" },
-	{ key = "Escape", mods = "ALT", action = act({ EmitEvent = "toggle-tmux-keybinds" }) },
-	{ key = "e", mods = "ALT", action = act({ EmitEvent = "trigger-nvim-with-scrollback" }) },
-	{ key = "q", mods = "ALT", action = act({ CloseCurrentPane = { confirm = true } }) },
-	{ key = "x", mods = "ALT", action = act({ CloseCurrentPane = { confirm = true } }) },
-	{ key = "a", mods = "ALT", action = wezterm.action.ShowLauncher },
-	{ key = " ", mods = "ALT", action = wezterm.action.ShowTabNavigator },
-	{ key = "d", mods = "ALT|SHIFT", action = wezterm.action.ShowDebugOverlay },
-	{
-		key = "s",
 		mods = "ALT",
+		key = "s",
 		action = act({
 			ActivateKeyTable = {
 				name = "resize_pane",
@@ -125,6 +100,52 @@ M.default_keybinds = {
 			},
 		}),
 	},
+
+	{ key = "/", mods = "ALT", action = act.Search("CurrentSelectionOrEmptyString") },
+	{ key = "q", mods = "ALT", action = act({ CloseCurrentPane = { confirm = true } }) },
+	{ key = "x", mods = "ALT", action = act({ CloseCurrentPane = { confirm = true } }) },
+
+	
+}
+
+M.default_keybinds = {
+  {key="LeftArrow", mods="OPT", action=wezterm.action{SendString="\x1bb"}},
+  {key="RightArrow", mods="OPT", action=wezterm.action{SendString="\x1bf"}},
+
+  {
+      mods = "ALT",
+      key = "Enter",
+      action = wezterm.action_callback(function(win, pane)
+        if (is_file_browser(pane)) then
+           win:perform_action(act.SendKey({key="Enter", mods="ALT"}), pane)
+        else
+           win:perform_action(act.QuickSelect, pane)
+        end
+      end)
+  },
+
+	{ key = "c", mods = "CTRL|SHIFT", action = act({ CopyTo = "Clipboard" }) },
+	{ key = "v", mods = "CTRL|SHIFT", action = act({ PasteFrom = "Clipboard" }) },
+
+	{ key = "Insert", mods = "SHIFT", action = act({ PasteFrom = "PrimarySelection" }) },
+
+	{ key = "=", mods = "CTRL", action = "ResetFontSize" },
+	{ key = "+", mods = "CTRL|SHIFT", action = "IncreaseFontSize" },
+	{ key = "-", mods = "CTRL", action = "DecreaseFontSize" },
+
+	{ key = "PageUp", mods = "ALT", action = act({ ScrollByPage = -1 }) },
+	{ key = "PageDown", mods = "ALT", action = act({ ScrollByPage = 1 }) },
+
+	{ key = "b", mods = "ALT", action = act({ ScrollByPage = -1 }) },
+	{ key = "f", mods = "ALT", action = act({ ScrollByPage = 1 }) },
+
+	-- { key = "z", mods = "ALT", action = "ReloadConfiguration" },
+	{ key = "Escape", mods = "ALT", action = act({ EmitEvent = "toggle-tmux-keybinds" }) },
+
+	-- { key = "a", mods = "ALT", action = wezterm.action.ShowLauncher },
+	{ key = " ", mods = "ALT", action = wezterm.action.ShowTabNavigator },
+	{ key = "d", mods = "ALT|SHIFT", action = wezterm.action.ShowDebugOverlay },
+
 	-- { key = "s", mods = "ALT", action = act.PaneSelect({
 	-- 	alphabet = "1234567890",
 	-- }) },
@@ -151,6 +172,7 @@ M.default_keybinds = {
 			end),
 		}),
 	},
+
 }
 
 function M.create_keybinds()
@@ -308,10 +330,11 @@ M.key_tables = {
 				act.ActivateCopyMode,
 			}),
 		},
-		{ key = "p", mods = "CTRL", action = act.CopyMode("PriorMatch") },
-		{ key = "n", mods = "CTRL", action = act.CopyMode("NextMatch") },
-		{ key = "r", mods = "CTRL", action = act.CopyMode("CycleMatchType") },
-		{ key = "/", mods = "NONE", action = act.CopyMode("ClearPattern") },
+		-- { key = "p", mods = "CTRL", action = act.CopyMode("PriorMatch") },
+		-- { key = "n", mods = "CTRL", action = act.CopyMode("NextMatch") },
+		-- { key = "r", mods = "CTRL", action = act.CopyMode("CycleMatchType") },
+		-- { key = "/", mods = "NONE", action = act.CopyMode("ClearPattern") },
+
 		-- { key = "u", mods = "CTRL", action = act.CopyMode("ClearPattern") },
 	},
 }

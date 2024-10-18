@@ -78,10 +78,16 @@ get_fzf_command() {
 #######################
 
 case "$cmd" in
-    "lazygit"|"serpl"|"serpl-file")
+    "lazygit"|"serpl")
         # Run lazygit or serpl (in cwd or basedir) in a floating pane
         dir="${cwd}"
-        [[ "$cmd" == "serpl-file" ]] && dir="${basedir}"
+        # [[ "$cmd" == "serpl-cwd" ]] && (dir="${basedir}";cmd="serpl")
+        run_in_floating_pane "$dir" "$cmd" ":reload-all"
+        ;;
+    "serpl-cwd")
+        # Run lazygit or serpl (in cwd or basedir) in a floating pane
+        dir="${basedir}"
+        cmd="serpl"
         run_in_floating_pane "$dir" "$cmd" ":reload-all"
         ;;
     "fzf"|"fzf-file")
@@ -93,7 +99,7 @@ case "$cmd" in
     "yazi")
         # Handle the yazi command separately
         run_yazi
-        ;;
+       ;;
     *)
         # Error handling for unknown commands
         echo "Unknown command: $cmd"
