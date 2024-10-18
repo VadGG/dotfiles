@@ -41,7 +41,7 @@ M.tmux_keybinds = {
 	-- { key = "h", mods = "ALT|CTRL", action = act({ MoveTabRelative = -1 }) },
 	-- { key = "l", mods = "ALT|CTRL", action = act({ MoveTabRelative = 1 }) },
 
-  -- { key = "z", mods = "ALT", action = wezterm.action.TogglePaneZoomState},
+  { key = "z", mods = "ALT", action = wezterm.action.TogglePaneZoomState},
 	-- { key = "y", mods = "ALT", action = act.ActivateCopyMode },
 	{ key = "e", mods = "ALT", action = act({ EmitEvent = "trigger-nvim-with-scrollback" }) },
 	{
