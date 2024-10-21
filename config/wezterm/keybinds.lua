@@ -31,8 +31,9 @@ end
 --- keybinds
 ---------------------------------------------------------------
 M.tmux_keybinds = {
-	{ key = "n", mods = "ALT|CTRL", action = act({ SpawnTab = "CurrentPaneDomain" }) },
 	{ key = "x", mods = "ALT|CTRL|SHIFT", action = act({ CloseCurrentTab = { confirm = true } }) },
+
+	{ key = "n", mods = "ALT|CTRL", action = act({ SpawnTab = "CurrentPaneDomain" }) },
 	{ key = "h", mods = "ALT|CTRL", action = act({ ActivateTabRelative = -1 }) },
 	{ key = "l", mods = "ALT|CTRL", action = act({ ActivateTabRelative = 1 }) },
 
@@ -108,6 +109,63 @@ M.tmux_keybinds = {
 	
 }
 
+M.zellij_keybinds = {
+
+  { key = "m", mods = "ALT|CTRL", action = wezterm.action.TogglePaneZoomState },
+
+	-- { key = "h", mods = "ALT|CTRL", action = act({ MoveTabRelative = -1 }) },
+	-- { key = "l", mods = "ALT|CTRL", action = act({ MoveTabRelative = 1 }) },
+
+  -- { key = "z", mods = "ALT", action = wezterm.action.TogglePaneZoomState},
+
+	-- { key = "y", mods = "ALT", action = act.ActivateCopyMode },
+	{ key = "e", mods = "ALT", action = act({ EmitEvent = "trigger-nvim-with-scrollback" }) },
+
+	{ key = "/", mods = "ALT", action = act.Search("CurrentSelectionOrEmptyString") },
+
+	{
+		key = "y",
+		mods = "ALT",
+		action = act.Multiple({ act.CopyMode("ClearSelectionMode"), act.ActivateCopyMode, act.ClearSelection }),
+	},
+
+	-- { key = "p", mods = "ALT", action = act({ PasteFrom = "PrimarySelection" }) },
+	{
+      mods = "ALT",
+      key = "p",
+      action = wezterm.action_callback(function(win, pane)
+        if (is_editor(pane)) then
+           win:perform_action(act.SendKey({key="p", mods="ALT"}), pane)
+        else
+           win:perform_action(act({ PasteFrom = "PrimarySelection" }), pane)
+        end
+      end)
+  },
+
+
+	-- { key = "g", mods = "ALT|CTRL", action = act({ EmitEvent = "trigger-lazygit" }) },
+
+	{ key = "n", mods = "ALT|CTRL", action=wezterm.action{SendString="󰝜"} },
+	{ key = "h", mods = "ALT|CTRL", action=wezterm.action{SendString="󰌥"} },
+	{ key = "l", mods = "ALT|CTRL", action=wezterm.action{SendString="󰌒"}},
+
+	{ key = "j", mods = "ALT|SHIFT", action=wezterm.action{SendString="󰅊"} },
+	{ key = "l", mods = "ALT|SHIFT", action=wezterm.action{SendString="󰳹"} },
+
+	{ key = "h", mods = "ALT", action=wezterm.action{SendString=""} },
+	{ key = "l", mods = "ALT", action=wezterm.action{SendString=""} },
+	{ key = "k", mods = "ALT", action=wezterm.action{SendString=""} },
+	{ key = "j", mods = "ALT", action=wezterm.action{SendString=""} },
+
+	{ key = "x", mods = "ALT", action=wezterm.action{SendString=""} },
+	{ key = "x", mods = "ALT|CTRL|SHIFT", action=wezterm.action{SendString=""} },
+
+	{ key = "z", mods = "ALT", action=wezterm.action{SendString=""} },
+	{ key = "f", mods = "ALT", action=wezterm.action{SendString="󰉧"} },
+
+	
+}
+
 M.default_keybinds = {
   {key="LeftArrow", mods="OPT", action=wezterm.action{SendString="\x1bb"}},
   {key="RightArrow", mods="OPT", action=wezterm.action{SendString="\x1bf"}},
@@ -176,7 +234,9 @@ M.default_keybinds = {
 }
 
 function M.create_keybinds()
-	return utils.merge_lists(M.default_keybinds, M.tmux_keybinds)
+	return M.default_keybinds
+	-- return utils.merge_lists(M.default_keybinds, M.tmux_keybinds)
+	-- return utils.merge_lists(M.default_keybinds, M.tmux_keybinds)
 end
 
 M.key_tables = {

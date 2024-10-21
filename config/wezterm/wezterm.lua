@@ -78,7 +78,11 @@ local local_config = load_local_config("local")
 --- Config
 ---------------------------------------------------------------
 local config = {
-	-- font = wezterm.font("Cica"),
+	font = wezterm.font("Hack Nerd Font Mono", {
+	  weight="Regular",
+	  stretch="Normal",
+	  style="Normal"
+	}),
 	-- font_size = 10.0,
 	-- font = wezterm.font("UDEV Gothic 35NFLG"),
 	font_size = 14,
@@ -151,12 +155,15 @@ local config = {
 	enable_csi_u_key_encoding = true,
 	leader = { key = "Space", mods = "CTRL|SHIFT" },
 	keys = keybinds.create_keybinds(),
+
 	key_tables = keybinds.key_tables,
 	mouse_bindings = keybinds.mouse_bindings,
 	-- https://github.com/wez/wezterm/issues/2756
 	webgpu_preferred_adapter = gpus[1],
 	front_end = "OpenGL",
 }
+
+wezterm.log_info("Initializing keybinds" )
 
 for _, gpu in ipairs(wezterm.gui.enumerate_gpus()) do
 	if gpu.backend == "Vulkan" and gpu.device_type == "IntegratedGpu" then

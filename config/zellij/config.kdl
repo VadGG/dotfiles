@@ -8,7 +8,37 @@ keybinds clear-defaults=true {
     }
     locked {
         bind "Ctrl g" { SwitchToMode "Normal"; }
-        bind "Alt z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        // bind "Alt z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+    }
+    shared_except "locked" {
+        bind "Ctrl g" { SwitchToMode "Locked"; }
+        // bind "Ctrl n" { NewPane; }
+        // bind "Alt h" { MoveFocusOrTab "Left"; }
+        // bind "Alt l" { MoveFocusOrTab "Right"; }
+        // bind "Alt j" { MoveFocus "Down"; }
+        // bind "Alt k" { MoveFocus "Up"; }
+        bind "" { MoveFocusOrTab "Left"; }  // Shift ←
+        bind "" { MoveFocusOrTab "Right"; } // Shift →
+        bind "" { MoveFocus "Up"; }         // Shift ↑
+        bind "" { MoveFocus "Down"; }       // Shift ↓
+        bind "󰳹" { NewPane  "Right"; }
+        bind "󰅊" { NewPane "Down"; }
+        bind "" { CloseFocus; }
+
+        bind "󰌥" { GoToPreviousTab; }
+        bind "󰌒" { GoToNextTab; }
+        bind "󰝜" { NewTab; }
+        bind "" { CloseTab; }
+
+        bind "" { ToggleFocusFullscreen; }
+        bind "󰉧" { ToggleFloatingPanes; }
+
+        // bind "Ctrl +" { Resize "Increase"; }
+        // bind "Ctrl _" { Resize "Decrease"; }
+
+        bind "Alt [" { PreviousSwapLayout; }
+        bind "Alt ]" { NextSwapLayout; }
+
     }
     resize {
         bind "Alt s" { SwitchToMode "Normal"; }
@@ -141,20 +171,6 @@ keybinds clear-defaults=true {
         bind "d" { Detach; }
         bind "Space" { NextSwapLayout; }
         bind "x" { CloseFocus; SwitchToMode "Normal"; }
-    }
-    shared_except "locked" {
-        bind "Ctrl g" { SwitchToMode "Locked"; }
-        // bind "Ctrl n" { NewPane; }
-        bind "Alt h" { MoveFocusOrTab "Left"; }
-        bind "Alt l" { MoveFocusOrTab "Right"; }
-        bind "Alt j" { MoveFocus "Down"; }
-        bind "Alt k" { MoveFocus "Up"; }
-        bind "Ctrl +" { Resize "Increase"; }
-        bind "Ctrl _" { Resize "Decrease"; }
-        bind "Alt [" { PreviousSwapLayout; }
-        bind "Alt ]" { NextSwapLayout; }
-        bind "Alt z" { ToggleFocusFullscreen; }
-        bind "Alt f" { ToggleFloatingPanes; }
     }
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }

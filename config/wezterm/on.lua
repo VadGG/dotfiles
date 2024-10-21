@@ -8,6 +8,28 @@ local hx_bin_path = "/opt/homebrew/bin/hx"
 local lazygit_bin_path = "/opt/homebrew/bin/lazygit"
 -- local lazygit_bin_path = "/usr/people/gagarinv/dev/dotfiles/bin/centos/lazygit"
 
+local function table_to_string(tbl, indent)
+    if not indent then indent = 0 end
+    local toprint = string.rep(" ", indent) .. "{\n"
+    indent = indent + 2
+    for k, v in pairs(tbl) do
+        toprint = toprint .. string.rep(" ", indent)
+        if type(k) == "number" then
+            toprint = toprint .. "[" .. k .. "] = "
+        elseif type(k) == "string" then
+            toprint = toprint .. k .. " = "
+        end
+        if type(v) == "table" then
+            toprint = toprint .. table_to_string(v, indent + 2) .. ",\n"
+        else
+            toprint = toprint .. tostring(v) .. ",\n"
+        end
+    end
+    toprint = toprint .. string.rep(" ", indent - 2) .. "}"
+    return toprint
+end
+
+
 -- 
 ---------------------------------------------------------------
 --- wezterm on
@@ -141,29 +163,73 @@ local function display_copy_mode(window, pane)
 	return { { Attribute = { Italic = false } }, { Text = name or "" } }
 end
 
-wezterm.on("update-right-status", function(window, pane)
-	-- local tmux = update_tmux_style_tab(window, pane)
-	local ssh = update_ssh_status(window, pane)
-	local copy_mode = display_copy_mode(window, pane)
-	update_window_background(window, pane)
-	local status = utils.merge_lists(ssh, copy_mode)
-	window:set_right_status(wezterm.format(status))
-end)
+-- wezterm.on("update-right-status", function(window, pane)
+-- 	-- local tmux = update_tmux_style_tab(window, pane)
+-- 	local ssh = update_ssh_status(window, pane)
+-- 	local copy_mode = display_copy_mode(window, pane)
+-- 	update_window_background(window, pane)
+-- 	local status = utils.merge_lists(ssh, copy_mode)
+-- 	window:set_right_status(wezterm.format(status))
+-- end)
 
 -- selene: allow(unused_variable)
 ---@diagnostic disable-next-line: unused-local
 wezterm.on("toggle-tmux-keybinds", function(window, pane)
-	local overrides = window:get_config_overrides() or {}
-	if not overrides.window_background_opacity then
-		overrides.window_background_opacity = 0.95
-		overrides.color_scheme = "carbonfox"
-		overrides.keys = keybinds.default_keybinds
-	else
-		overrides.window_background_opacity = nil
-		overrides.color_scheme = "nordfox"
-		overrides.keys = utils.merge_lists(keybinds.default_keybinds, keybinds.tmux_keybinds)
-	end
-	window:set_config_overrides(overrides)
+    local overrides = window:get_config_overrides() or {}
+    local is_zellij_running = false
+
+    local process_info = pane:get_foreground_process_info()
+    if process_info and process_info.name and string.find(process_info.name, "zellij") then
+        is_zellij_running = true
+    end
+
+    -- Log the current state before changes
+    wezterm.log_info("Current overrides keys count: " .. (overrides.keys and #overrides.keys or "nil"))
+
+    if not overrides.window_background_opacity then
+        if is_zellij_running then
+            overrides.window_background_opacity = 0.95
+            overrides.enable_tab_bar = false
+            overrides.keys = utils.merge_lists(keybinds.default_keybinds, keybinds.zellij_keybinds)
+            wezterm.log_info("Switched to Zellij mode - Keys count: " .. #overrides.keys)
+            -- Log specific key we're concerned about
+            for _, key in ipairs(overrides.keys) do
+                if key.key == "n" and key.mods == "ALT|CTRL" then
+                    wezterm.log_info("Found Ctrl+Alt+n binding in Zellij mode")
+                end
+            end
+        else
+            overrides.window_background_opacity = 0.55
+            overrides.enable_tab_bar = false
+            overrides.color_scheme = "carbonfox"
+            overrides.keys = keybinds.default_keybinds
+            wezterm.log_info("Switched to Default mode - Keys count: " .. #overrides.keys)
+            -- Log specific key we're concerned about
+            for _, key in ipairs(overrides.keys) do
+                if key.key == "n" and key.mods == "ALT|CTRL" then
+                    wezterm.log_info("Found Ctrl+Alt+n binding in Default mode")
+                end
+            end
+        end
+    else
+        overrides.window_background_opacity = nil
+        overrides.color_scheme = "nordfox"
+        overrides.enable_tab_bar = true
+        overrides.keys = utils.merge_lists(keybinds.default_keybinds, keybinds.tmux_keybinds)
+        wezterm.log_info("Switched to Tmux mode - Keys count: " .. #overrides.keys)
+        -- Log specific key we're concerned about
+        for _, key in ipairs(overrides.keys) do
+            if key.key == "n" and key.mods == "ALT|CTRL" then
+                wezterm.log_info("Found Ctrl+Alt+n binding in Tmux mode")
+            end
+        end
+    end
+
+    window:set_config_overrides(overrides)
+end)
+
+wezterm.on('window-config-reloaded', function(window, pane)
+  window:toast_notification('wezterm', 'configuration reloaded!', nil, 4000)
 end)
 
 local io = require("io")
