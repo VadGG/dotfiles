@@ -4,7 +4,7 @@ local keybinds = require("keybinds")
 local scheme = wezterm.get_builtin_color_schemes()["nord"]
 local act = wezterm.action
 
-local hx_bin_path = "/opt/homebrew/bin/hx"
+local hx_bin_path = "/Users/vadimgagarin/.cargo/bin/hx"
 local lazygit_bin_path = "/opt/homebrew/bin/lazygit"
 -- local lazygit_bin_path = "/usr/people/gagarinv/dev/dotfiles/bin/centos/lazygit"
 

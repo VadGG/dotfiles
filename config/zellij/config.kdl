@@ -33,13 +33,17 @@ keybinds clear-defaults=true {
         bind "" { ToggleFocusFullscreen; }
         bind "󰉧" { ToggleFloatingPanes; }
 
+        bind "" { EditScrollback; SwitchToMode "Normal"; }
+
+        bind "" { PreviousSwapLayout; }
+        bind "" { NextSwapLayout; }
+
+        bind "󰱝" { Quit; }
+
         // bind "Ctrl +" { Resize "Increase"; }
         // bind "Ctrl _" { Resize "Decrease"; }
-
-        bind "Alt [" { PreviousSwapLayout; }
-        bind "Alt ]" { NextSwapLayout; }
-
     }
+
     resize {
         bind "Alt s" { SwitchToMode "Normal"; }
         bind "h" "Left" { Resize "Increase Left"; }
