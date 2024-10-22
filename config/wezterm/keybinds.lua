@@ -17,7 +17,7 @@ local function is_file_browser(pane)
   local process_info = pane:get_foreground_process_info()
   local process_name = process_info and process_info.name
 
-  return process_name == "broot" or process_name == "nnn" or  process_name == "lf"
+  return process_name == "broot" or process_name == "nnn" or  process_name == "lf" or  process_name == "yazi"
 end
 
 local function is_editor(pane)
