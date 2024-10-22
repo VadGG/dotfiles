@@ -148,10 +148,10 @@ keybinds clear-defaults=true {
         bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
     }
     session {
-        bind "Ctrl x" { SwitchToMode "Normal"; }
+        bind "" { SwitchToMode "Normal"; }
         bind "Alt y" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
-        bind "Q" { Quit; }
+        bind "q" { Quit; }
     }
     tmux {
         bind "[" { SwitchToMode "Scroll"; }
@@ -189,7 +189,7 @@ keybinds clear-defaults=true {
         bind "Alt y" { SwitchToMode "Scroll"; }
     }
     shared_except "session" "locked" {
-        bind "Ctrl x" { SwitchToMode "Session"; }
+        bind "" { SwitchToMode "Session"; }
     }
     shared_except "tab" "locked" {
         bind "Ctrl t" { SwitchToMode "Tab"; }

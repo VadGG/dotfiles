@@ -65,22 +65,7 @@ M.tmux_keybinds = {
 
   { key = "m", mods = "ALT|CTRL", action = wezterm.action.ToggleFullScreen },
 
-	-- { key = "q", mods = "ALT", action = act({ CloseCurrentPane = { confirm = true } }) },
-
-
-
-
-	-- { key = "h", mods = "ALT|CTRL", action = act({ MoveTabRelative = -1 }) },
-	-- { key = "l", mods = "ALT|CTRL", action = act({ MoveTabRelative = 1 }) },
-
-	-- { key = "y", mods = "ALT", action = act.ActivateCopyMode },
-
 	-- { key = "g", mods = "ALT|CTRL", action = act({ EmitEvent = "trigger-lazygit" }) },
-
-	-- { key = "h", mods = "ALT|SHIFT|CTRL", action = act({ AdjustPaneSize = { "Left", 1 } }) },
-	-- { key = "l", mods = "ALT|SHIFT|CTRL", action = act({ AdjustPaneSize = { "Right", 1 } }) },
-	-- { key = "k", mods = "ALT|SHIFT|CTRL", action = act({ AdjustPaneSize = { "Up", 1 } }) },
-	-- { key = "j", mods = "ALT|SHIFT|CTRL", action = act({ AdjustPaneSize = { "Down", 1 } }) },
 
 	{
 		mods = "ALT",
@@ -124,6 +109,7 @@ M.zellij_keybinds = {
 
 	{ key = "f", mods = "ALT", action=wezterm.action{SendString="󰉧"} },
 
+	{ key = "`", mods = "ALT", action=wezterm.action{SendString=""} },
 
 	-- { key = "h", mods = "ALT|CTRL", action = act({ MoveTabRelative = -1 }) },
 	-- { key = "l", mods = "ALT|CTRL", action = act({ MoveTabRelative = 1 }) },
@@ -133,11 +119,9 @@ M.zellij_keybinds = {
 	-- { key = "y", mods = "ALT", action = act.ActivateCopyMode },
 	-- { key = "e", mods = "ALT", action = act({ EmitEvent = "trigger-nvim-with-scrollback" }) },
 
-
 	-- { key = "p", mods = "ALT", action = act({ PasteFrom = "PrimarySelection" }) },
 
 	-- { key = "g", mods = "ALT|CTRL", action = act({ EmitEvent = "trigger-lazygit" }) },
-
 	
 }
 
