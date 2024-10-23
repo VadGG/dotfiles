@@ -163,15 +163,6 @@ local function display_copy_mode(window, pane)
 	return { { Attribute = { Italic = false } }, { Text = name or "" } }
 end
 
--- wezterm.on("update-right-status", function(window, pane)
--- 	-- local tmux = update_tmux_style_tab(window, pane)
--- 	local ssh = update_ssh_status(window, pane)
--- 	local copy_mode = display_copy_mode(window, pane)
--- 	update_window_background(window, pane)
--- 	local status = utils.merge_lists(ssh, copy_mode)
--- 	window:set_right_status(wezterm.format(status))
--- end)
-
 -- selene: allow(unused_variable)
 ---@diagnostic disable-next-line: unused-local
 wezterm.on("toggle-tmux-keybinds", function(window, pane)
@@ -195,16 +186,16 @@ wezterm.on("toggle-tmux-keybinds", function(window, pane)
     if mode == "NORMAL" then
         if is_zellij_running then
             -- overrides.window_background_opacity = 0.95
-            overrides.enable_tab_bar = false
+            -- overrides.enable_tab_bar = false
             mode = "ZELLIJ"
         else
             -- overrides.window_background_opacity = 0.55
-            overrides.enable_tab_bar = false
+            -- overrides.enable_tab_bar = false
             mode = "LOCKED"
         end
     else
         -- overrides.window_background_opacity = 1
-        overrides.enable_tab_bar = true
+        -- overrides.enable_tab_bar = true
         mode = "NORMAL"
     end
 
@@ -245,40 +236,4 @@ wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
 	os.remove(name)
 end)
 
-wezterm.on("trigger-lazygit", function(window, pane)
-	local name = os.tmpname()
-	window:perform_action(
-		act({
-			SpawnCommandInNewTab = {
-				-- args = { os.getenv("HOME") .. "/.local/share/zsh/zinit/polaris/bin/nvim", name },
-				args = { lazygit_bin_path },
-			},
-		}),
-		pane
-	)
-	wezterm.sleep_ms(1000)
-	os.remove(name)
-end)
 
--- https://github.com/wez/wezterm/issues/2979#issuecomment-1447519267
-local hacky_user_commands = {
-	-- selene: allow(unused_variable)
-	---@diagnostic disable-next-line: unused-local
-	["scroll-up"] = function(window, pane, cmd_context)
-		window:perform_action(wezterm.action({ ScrollByPage = -1 }), pane)
-		-- wezterm.action({ ScrollByPage = -1 })
-	end,
-	-- selene: allow(unused_variable)
-	---@diagnostic disable-next-line: unused-local
-	["scroll-down"] = function(window, pane, cmd_context)
-		window:perform_action(wezterm.action({ ScrollByPage = 1 }), pane)
-	end,
-}
-
-wezterm.on("user-var-changed", function(window, pane, name, value)
-	if name == "hacky-user-command" then
-		local cmd_context = wezterm.json_parse(value)
-		hacky_user_commands[cmd_context.cmd](window, pane, cmd_context)
-		return
-	end
-end)

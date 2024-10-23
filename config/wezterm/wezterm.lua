@@ -6,6 +6,9 @@ local scheme = wezterm.get_builtin_color_schemes()["nord"]
 local gpus = wezterm.gui.enumerate_gpus()
 local rose_pine_theme = require('plugins/rose-pine').main
 
+-- local bar = wezterm.plugin.require("plugins/bar.wezterm")
+local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
+
 
 require("on")
 
@@ -240,69 +243,47 @@ table.insert(config.hyperlink_rules, {
 	format = "https://github.com/$1/$3",
 })
 
+local function mode_formatter() 
+		return wezterm.GLOBAL.mode
+end 
 
-local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
-
-local bar_config = {
-  position = "top",
-  max_width = 32,
-  padding = {
-    left = 1,
-    right = 1,
-  },
-  separator = {
-    space = 1,
-    left_icon = wezterm.nerdfonts.fa_long_arrow_right,
-    right_icon = wezterm.nerdfonts.fa_long_arrow_left,
-    field_icon = wezterm.nerdfonts.indent_line,
-  },
-  modules = {
-    tabs = {
-      active_tab_fg = 4,
-      inactive_tab_fg = 6,
+tabline.setup({
+  options = {
+    icons_enabled = true,
+    theme = 'Catppuccin Mocha',
+    color_overrides = {},
+    section_separators = {
+      left = wezterm.nerdfonts.pl_left_hard_divider,
+      right = wezterm.nerdfonts.pl_right_hard_divider,
     },
-    workspace = {
-      enabled = false,
-      icon = wezterm.nerdfonts.cod_window,
-      color = 8,
+    component_separators = {
+      left = wezterm.nerdfonts.pl_left_soft_divider,
+      right = wezterm.nerdfonts.pl_right_soft_divider,
     },
-    leader = {
-      enabled = false,
-      icon = wezterm.nerdfonts.oct_rocket,
-      color = 2,
-    },
-    pane = {
-      enabled = true,
-      icon = wezterm.nerdfonts.cod_multiple_windows,
-      color = 7,
-    },
-    username = {
-      enabled = true,
-      icon = wezterm.nerdfonts.fa_user,
-      color = 6,
-    },
-    hostname = {
-      enabled = true,
-      icon = wezterm.nerdfonts.cod_server,
-      color = 8,
-    },
-    clock = {
-      enabled = true,
-      icon = wezterm.nerdfonts.md_calendar_clock,
-      color = 5,
-    },
-    cwd = {
-      enabled = true,
-      icon = wezterm.nerdfonts.oct_file_directory,
-      color = 7,
-    },
-    spotify = {
-      enabled = false,
+    tab_separators = {
+      left = wezterm.nerdfonts.pl_left_hard_divider,
+      right = wezterm.nerdfonts.pl_right_hard_divider,
     },
   },
-}
-
-bar.apply_to_config(bar_config)
+  sections = {
+    tabline_a = { 'mode', fmt = mode_formatter },
+    -- tabline_a = { test_format },
+    tabline_b = { 'workspace' },
+    tabline_c = { ' ' },
+    tab_active = {
+      'index',
+      { 'tab', padding = 0 },
+      '/',
+      { 'tab', padding = { left = 2, right = 1 } },
+      -- { 'zoomed', padding = 0 },
+    },
+    tab_inactive = { 'index', { 'process', padding = { left = 0, right = 1 } } },
+    tabline_x = { 'ram', 'cpu' },
+    tabline_y = { 'datetime', 'battery' },
+    tabline_z = { '' },
+  },
+  extensions = {},
+})
 
 
 local merged_config = utils.merge_tables(config, local_config)
