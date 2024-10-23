@@ -6,17 +6,17 @@
 local main = {}
 
 local main_palette = {
-    base = '#191724',
-    overlay = '#26233a',
+    base = '#191724', -- Background
+    overlay = '#26233a', -- Background lighter
     highlight = 'rgba(252, 221, 188, 0.15)',
-    muted = '#6e6a86',
-    text = '#e0def4',
-    love = '#eb6f92',
-    gold = '#f6c177',
-    rose = '#ebbcba',
-    pine = '#31748f',
-    foam = '#9ccfd8',
-    iris = '#c4a7e7',
+    muted = '#7F7B82', -- Dark purple
+    text = '#e0def4', -- Light color for text
+    love = '#FF99C9', -- Red
+    gold = '#FCDFA6', -- Yellow
+    rose = '#ebbcba', -- light red
+    pine = '#BEE7B8', -- Green
+    foam = '#7CC6FE', -- Blue
+    iris = '#c4a7e7', -- Purple
     highlight_high = '#524f67',
 }
 
