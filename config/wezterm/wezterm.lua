@@ -6,6 +6,7 @@ local scheme = wezterm.get_builtin_color_schemes()["nord"]
 local gpus = wezterm.gui.enumerate_gpus()
 local rose_pine_theme = require('plugins/rose-pine').main
 
+
 require("on")
 
 -- /etc/ssh/sshd_config
@@ -176,6 +177,7 @@ local config = {
 }
 
 wezterm.log_info("Initializing keybinds" )
+wezterm.log_info(wezterm.GLOBAL.mode)
 
 for _, gpu in ipairs(wezterm.gui.enumerate_gpus()) do
 	if gpu.backend == "Vulkan" and gpu.device_type == "IntegratedGpu" then
@@ -237,6 +239,71 @@ table.insert(config.hyperlink_rules, {
 	regex = [[["]?([\w\d]{1}[-\w\d]+)(/){1}([-\w\d\.]+)["]?]],
 	format = "https://github.com/$1/$3",
 })
+
+
+local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
+
+local bar_config = {
+  position = "top",
+  max_width = 32,
+  padding = {
+    left = 1,
+    right = 1,
+  },
+  separator = {
+    space = 1,
+    left_icon = wezterm.nerdfonts.fa_long_arrow_right,
+    right_icon = wezterm.nerdfonts.fa_long_arrow_left,
+    field_icon = wezterm.nerdfonts.indent_line,
+  },
+  modules = {
+    tabs = {
+      active_tab_fg = 4,
+      inactive_tab_fg = 6,
+    },
+    workspace = {
+      enabled = false,
+      icon = wezterm.nerdfonts.cod_window,
+      color = 8,
+    },
+    leader = {
+      enabled = false,
+      icon = wezterm.nerdfonts.oct_rocket,
+      color = 2,
+    },
+    pane = {
+      enabled = true,
+      icon = wezterm.nerdfonts.cod_multiple_windows,
+      color = 7,
+    },
+    username = {
+      enabled = true,
+      icon = wezterm.nerdfonts.fa_user,
+      color = 6,
+    },
+    hostname = {
+      enabled = true,
+      icon = wezterm.nerdfonts.cod_server,
+      color = 8,
+    },
+    clock = {
+      enabled = true,
+      icon = wezterm.nerdfonts.md_calendar_clock,
+      color = 5,
+    },
+    cwd = {
+      enabled = true,
+      icon = wezterm.nerdfonts.oct_file_directory,
+      color = 7,
+    },
+    spotify = {
+      enabled = false,
+    },
+  },
+}
+
+bar.apply_to_config(bar_config)
+
 
 local merged_config = utils.merge_tables(config, local_config)
 return utils.merge_tables(merged_config, create_ssh_domain_from_ssh_config(merged_config.ssh_domains))

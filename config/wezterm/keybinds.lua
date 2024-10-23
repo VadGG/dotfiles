@@ -1,4 +1,5 @@
-local M = {}
+local M = { }
+
 local wezterm = require("wezterm")
 local act = wezterm.action
 local utils = require("utils")
@@ -202,7 +203,22 @@ M.default_keybinds = {
 }
 
 function M.create_keybinds()
-	return M.default_keybinds
+	if wezterm.GLOBAL.mode == nil then
+		wezterm.GLOBAL.mode = "NORMAL"
+	end
+
+	mode = wezterm.GLOBAL.mode
+
+	if mode == "ZELLIJ" then
+		return utils.merge_lists(M.default_keybinds, M.zellij_keybinds)
+	elseif mode == "NORMAL" then
+		return utils.merge_lists(M.default_keybinds, M.tmux_keybinds)
+	else 
+		return M.default_keybinds
+	end
+  -- Log the current state before changes
+
+	-- return M.default_keybinds
 	-- return utils.merge_lists(M.default_keybinds, M.tmux_keybinds)
 	-- return utils.merge_lists(M.default_keybinds, M.tmux_keybinds)
 end
@@ -386,5 +402,8 @@ M.mouse_bindings = {
 		action = "OpenLinkAtMouseCursor",
 	},
 }
+
+
+
 
 return M

@@ -183,47 +183,33 @@ wezterm.on("toggle-tmux-keybinds", function(window, pane)
         is_zellij_running = true
     end
 
+		if wezterm.GLOBAL.mode == nil then
+			wezterm.GLOBAL.mode = "NORMAL"
+		end
+
+		mode = wezterm.GLOBAL.mode
+
     -- Log the current state before changes
     wezterm.log_info("Current overrides keys count: " .. (overrides.keys and #overrides.keys or "nil"))
 
-    if not overrides.window_background_opacity then
+    if mode == "NORMAL" then
         if is_zellij_running then
-            overrides.window_background_opacity = 0.95
+            -- overrides.window_background_opacity = 0.95
             overrides.enable_tab_bar = false
-            overrides.keys = utils.merge_lists(keybinds.default_keybinds, keybinds.zellij_keybinds)
-            wezterm.log_info("Switched to Zellij mode - Keys count: " .. #overrides.keys)
-            -- Log specific key we're concerned about
-            for _, key in ipairs(overrides.keys) do
-                if key.key == "n" and key.mods == "ALT|CTRL" then
-                    wezterm.log_info("Found Ctrl+Alt+n binding in Zellij mode")
-                end
-            end
+            mode = "ZELLIJ"
         else
-            overrides.window_background_opacity = 0.55
+            -- overrides.window_background_opacity = 0.55
             overrides.enable_tab_bar = false
-            -- overrides.color_scheme = "carbonfox"
-            overrides.keys = keybinds.default_keybinds
-            wezterm.log_info("Switched to Default mode - Keys count: " .. #overrides.keys)
-            -- Log specific key we're concerned about
-            for _, key in ipairs(overrides.keys) do
-                if key.key == "n" and key.mods == "ALT|CTRL" then
-                    wezterm.log_info("Found Ctrl+Alt+n binding in Default mode")
-                end
-            end
+            mode = "LOCKED"
         end
     else
-        overrides.window_background_opacity = nil
-        -- overrides.color_scheme = "nordfox"
+        -- overrides.window_background_opacity = 1
         overrides.enable_tab_bar = true
-        overrides.keys = utils.merge_lists(keybinds.default_keybinds, keybinds.tmux_keybinds)
-        wezterm.log_info("Switched to Tmux mode - Keys count: " .. #overrides.keys)
-        -- Log specific key we're concerned about
-        for _, key in ipairs(overrides.keys) do
-            if key.key == "n" and key.mods == "ALT|CTRL" then
-                wezterm.log_info("Found Ctrl+Alt+n binding in Tmux mode")
-            end
-        end
+        mode = "NORMAL"
     end
+
+    wezterm.GLOBAL.mode = mode
+    overrides.keys = keybinds.create_keybinds()
 
     window:set_config_overrides(overrides)
 end)
