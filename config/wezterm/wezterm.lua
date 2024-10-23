@@ -4,6 +4,8 @@ local keybinds = require("keybinds")
 local scheme = wezterm.get_builtin_color_schemes()["nord"]
 
 local gpus = wezterm.gui.enumerate_gpus()
+local rose_pine_theme = require('plugins/rose-pine').main
+
 require("on")
 
 -- /etc/ssh/sshd_config
@@ -112,34 +114,44 @@ local config = {
 	-- enable_wayland = enable_wayland(),
 	-- https://github.com/wez/wezterm/issues/1772
 	enable_wayland = false,
-	color_scheme = "nordfox",
-	color_scheme_dirs = { os.getenv("HOME") .. "/.config/wezterm/colors/" },
+
+
 	hide_tab_bar_if_only_one_tab = false,
 	adjust_window_size_when_changing_font_size = false,
 	selection_word_boundary = " \t\n{}[]()\"'`,;:│=&!%",
 	-- window_decorations = "NONE",
+
 	window_padding = {
-		left = 0,
-		right = 0,
-		top = 0,
-		bottom = 0,
+		left = 20,
+		right = 20,
+		top = 10,
+		bottom = 10,
 	},
+
 	use_fancy_tab_bar = false,
-	colors = {
-		selection_fg = '#353D4D',
-		selection_bg = '#FFE6CB',
-		foreground = "#C7D4ED",
-		background = "#1C2026",
-		tab_bar = {
-			background = scheme.background,
-			new_tab = { bg_color = "#2e3440", fg_color = scheme.ansi[8], intensity = "Bold" },
-			new_tab_hover = { bg_color = scheme.ansi[1], fg_color = scheme.brights[8], intensity = "Bold" },
-			-- format-tab-title
-			-- active_tab = { bg_color = "#121212", fg_color = "#FCE8C3" },
-			-- inactive_tab = { bg_color = scheme.background, fg_color = "#FCE8C3" },
-			-- inactive_tab_hover = { bg_color = scheme.ansi[1], fg_color = "#FCE8C3" },
-		},
-	},
+
+	colors = rose_pine_theme.colors(),
+	window_frame = rose_pine_theme.window_frame(),
+
+	-- color_scheme_dirs = { "~/.config/wezterm/colors/" },
+	-- color_scheme = "sunset",
+
+	-- colors = {
+	-- 	selection_fg = '#353D4D',
+	-- 	selection_bg = '#FFE6CB',
+	-- 	foreground = "#C7D4ED",
+	-- 	background = "#1C2026",
+	-- 	tab_bar = {
+	-- 		background = scheme.background,
+	-- 		new_tab = { bg_color = "#2e3440", fg_color = scheme.ansi[8], intensity = "Bold" },
+	-- 		new_tab_hover = { bg_color = scheme.ansi[1], fg_color = scheme.brights[8], intensity = "Bold" },
+	-- 		-- format-tab-title
+	-- 		-- active_tab = { bg_color = "#121212", fg_color = "#FCE8C3" },
+	-- 		-- inactive_tab = { bg_color = scheme.background, fg_color = "#FCE8C3" },
+	-- 		-- inactive_tab_hover = { bg_color = scheme.ansi[1], fg_color = "#FCE8C3" },
+	-- 	},
+	-- },
+
 	exit_behavior = "CloseOnCleanExit",
 	tab_bar_at_bottom = false,
 	window_close_confirmation = "AlwaysPrompt",

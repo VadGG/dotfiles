@@ -201,7 +201,7 @@ wezterm.on("toggle-tmux-keybinds", function(window, pane)
         else
             overrides.window_background_opacity = 0.55
             overrides.enable_tab_bar = false
-            overrides.color_scheme = "carbonfox"
+            -- overrides.color_scheme = "carbonfox"
             overrides.keys = keybinds.default_keybinds
             wezterm.log_info("Switched to Default mode - Keys count: " .. #overrides.keys)
             -- Log specific key we're concerned about
@@ -213,7 +213,7 @@ wezterm.on("toggle-tmux-keybinds", function(window, pane)
         end
     else
         overrides.window_background_opacity = nil
-        overrides.color_scheme = "nordfox"
+        -- overrides.color_scheme = "nordfox"
         overrides.enable_tab_bar = true
         overrides.keys = utils.merge_lists(keybinds.default_keybinds, keybinds.tmux_keybinds)
         wezterm.log_info("Switched to Tmux mode - Keys count: " .. #overrides.keys)

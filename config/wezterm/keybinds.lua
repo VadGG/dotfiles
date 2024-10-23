@@ -171,7 +171,7 @@ M.default_keybinds = {
 	-- { key = "b", mods = "ALT", action = act({ ScrollByPage = -1 }) },
 	-- { key = "f", mods = "ALT", action = act({ ScrollByPage = 1 }) },
 
-	-- { key = "z", mods = "ALT", action = "ReloadConfiguration" },
+	{ key = "1", mods = "ALT", action = "ReloadConfiguration" },
 	{ key = "Escape", mods = "ALT", action = act({ EmitEvent = "toggle-tmux-keybinds" }) },
 
 	-- { key = "a", mods = "ALT", action = wezterm.action.ShowLauncher },
