@@ -13,6 +13,8 @@ export PATH="$(go env GOPATH)/bin:$PATH"
 export XDG_CONFIG_HOME="$HOME/.config"
 export PYENCHANT_LIBRARY_PATH="$(brew --prefix enchant)/lib/libenchant-2.dylib"
 export KUBE_EDITOR="hx"
+export HELIX_RUNTIME=/Users/vadimgagarin/Development/HelixBuilders/helix/runtime
+
 
 eval $(gdircolors ~/.config/dircolors/dircolors.zenburn)
 
@@ -112,3 +114,12 @@ esac
 # pnpm end
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
 ! { which werf | grep -qsE "^/Users/vadimgagarin/.trdl/"; } && [[ -x "$HOME/bin/trdl" ]] && source $("$HOME/bin/trdl" use werf "2" "stable")
+
+function c() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}

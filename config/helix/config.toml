@@ -1,4 +1,5 @@
-theme = "rose_pine_custom"
+# theme = "catppuccin_mocha"
+theme = "cp_custom"
 
 [editor]
 cursorline = true
@@ -7,6 +8,7 @@ bufferline = "always"
 color-modes = true
 completion-trigger-len = 1
 rulers = [80, 120]
+true-color = true
 
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
